@@ -109,6 +109,11 @@ You can also use launchd, Windows Task Scheduler, a CI schedule, or just a remin
 If a night is skipped, the app keeps working: it falls back to its built-in diagnostics, generators, kid questions and
 spaced reviews.
 
+**With an assistant.** Any assistant can be the author: give it the export and LESSONS.md and ask for a pack. An
+assistant that has its own computer (like Grok Bot) can run the whole cycle there on its own schedule: export, write,
+validate, publish, and message you only when something needs attention. For a suggested setup prompt, see
+[README → Adapt it to your setup](../README.md#adapt-it-to-your-setup).
+
 **Cloudflare Cron Trigger.** The natural built-in home for this is a
 [Cron Trigger](https://developers.cloudflare.com/workers/configuration/cron-triggers/) on the same Worker
 (`[triggers] crons = ["0 8 * * *"]` ≈ 1:00 AM PT during daylight time; cron times are in UTC). Today the Worker has no

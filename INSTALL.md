@@ -6,6 +6,10 @@
 - **A Cloudflare account** (the free plan is fine) with Workers and Workers KV.
 - **wrangler** (the Cloudflare CLI). It's a dev dependency, so `npm install` installs the pinned version.
 
+> **Adapting it?** You can hand this repo to your own AI coding assistant (Grok, Claude Code or similar) to install it
+> on another host (a Node server like `prototype/`, another serverless platform, or a VPS) or to set up the nightly cycle.
+> See [README → Adapt it to your setup](README.md#adapt-it-to-your-setup) for what to swap and a suggested prompt.
+
 ## 1. Clone and install
 ```bash
 git clone https://github.com/kentlangley/Jane.git jane && cd jane

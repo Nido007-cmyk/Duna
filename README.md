@@ -129,6 +129,29 @@ npm run dev                              # local Worker with local KV
 ./deploy.sh                              # backs up live progress, builds, deploys
 ```
 
+## Adapt it to your setup
+
+The repo is written so you can hand it to your own AI coding assistant or bot (a general-purpose assistant or a coding
+agent, such as Grok, Claude Code or similar) and have it adapted to your setup. Everything it needs is in the docs.
+
+- **Hosting.** The reference deployment is Cloudflare Workers + KV, but any compatible host works: a Node server (the
+  original zero-dependency server is in [`prototype/`](prototype/)), another edge or serverless platform, or a small VPS.
+  To swap the storage layer, implement `get`, `put` and `list` (by key prefix) for the progress record, the daily answer
+  logs (`log:YYYY-MM-DD`) and the lesson packs (`lessons:` / `boost:` keys). The CLI scripts reach the same keys
+  through `lib-cli.mjs`.
+- **Nightly authoring.** Run it on any scheduler, with a person or any assistant as the author
+  (see [docs/NIGHTLY.md](docs/NIGHTLY.md)). An assistant that has its own computer, like Grok Bot, can run the whole
+  nightly cycle there: export, write, validate, publish.
+
+Suggested prompt to paste into your assistant:
+
+> Read README.md, INSTALL.md, LESSONS.md and docs/NIGHTLY.md in this repo. Deploy Jane to `<my host: Cloudflare Workers /
+> a Node server / my VPS>`, creating the storage it needs. Set `LEARNER_NAME` to `<name>`, `LEARNER_AGE` to `<age>` and
+> `LEARNER_GRADE` to `<grade>`, keeping secrets and ids out of git. Back up progress before every deploy. Then schedule
+> the nightly cycle for about 1:00 AM `<my time zone>`: run export-progress.mjs, write tomorrow's quest (or a catch-up
+> boost) following LESSONS.md, validate with publish-lessons.mjs --dry-run, then publish. Only message me if something
+> fails or needs my attention.
+
 ## Privacy
 
 There is **no** child data in this repository. Progress, answer logs, exports, backups, real lesson packs, sandbox data,
