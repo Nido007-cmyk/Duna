@@ -1,0 +1,23 @@
+Jane
+Copyright (c) 2026 Kent Langley and Landon
+
+This product includes the Marble Skill Taxonomy (v1):
+  Marble Skill Taxonomy (v1) · © Generative Spark, Inc. (Marble) · https://withmarble.com
+  · licensed under ODbL 1.0 (database) and CC BY-SA 4.0 (content).
+  Source: https://github.com/withmarbleapp/os-taxonomy
+  Included unchanged in data/marble/ with its LICENSE (ODbL 1.0), LICENSE-CONTENT (CC BY-SA 4.0),
+  PROVENANCE.md and CITATION.cff.
+
+Topics in topics.json link to curriculum standard codes. Their upstream notices (see data/marble/PROVENANCE.md):
+  - Contains public sector information licensed under the Open Government Licence v3.0.
+  - © Copyright 2010 National Governors Association Center for Best Practices and Council of Chief State
+    School Officers.
+  - NGSS is a registered trademark of WestEd. Neither WestEd nor the lead states and partners that developed the
+    Next Generation Science Standards were involved in the production of this product, and do not endorse it.
+
+Derived data (data/kid-prompts/, data/glossary.txt, and the generated public/tax.json and public/glossary.json)
+is adapted from the Marble Skill Taxonomy by Kent Langley and Landon: database under ODbL 1.0, text under
+CC BY-SA 4.0.
+
+Lesson packs, quests and LESSONS.md: © 2026 Kent Langley and Landon, CC BY-SA 4.0.
+Application code: © 2026 Kent Langley and Landon, MIT License (see LICENSE).
