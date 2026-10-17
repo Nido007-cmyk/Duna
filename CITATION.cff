@@ -9,6 +9,10 @@ authors:
     given-names: "Kent"
   - name: "Landon"
 license: MIT
+abstract: >-
+  An adaptive learning app for kids on Cloudflare Workers, built on the Marble Skill Taxonomy.
+  Designed by Kent Langley and Landon; developed with Grok Bot, an AI assistant, which wrote and
+  iterated on the code, content and docs from their feedback and acts as the nightly lesson author.
 references:
   - type: dataset
     title: "Marble Skill Taxonomy"

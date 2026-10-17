@@ -44,6 +44,22 @@ friendly tutor. The name is just a nod to the books: this project has no affilia
 - **Sandbox.** `/api/sandbox?on=1` switches your browser to a copy of the progress for testing, so the real record is
   never touched.
 
+## How this was built
+
+Jane was designed by **Kent Langley and Landon**, and developed with **Grok Bot**, an AI assistant. Grok Bot wrote and
+iterated on the code, the content and these docs from their feedback: what was fun, what was confusing, what was too
+hard. Each night Grok Bot also acts as the **lesson author**. It reads the day's export and writes the next quest
+following [LESSONS.md](LESSONS.md). That role is just the scripts' interface, so anyone can fill it, by hand or with
+any assistant (see [How the nightly cycle works](docs/NIGHTLY.md)).
+
+## Nightly lessons
+
+A nightly cycle turns the day's answers into tomorrow's quest: **export → check the quest cap → write a quest or a
+catch-up boost → validate → publish**. It runs on whatever scheduler you choose (cron, launchd, a CI schedule, or by
+hand). The two scripts are the whole interface, and no outside service is needed. A Cloudflare Cron Trigger is the natural
+built-in option, and a **built-in nightly generator** (a `scheduled()` handler) is a planned feature. Details and a
+diagram: **[docs/NIGHTLY.md](docs/NIGHTLY.md)**.
+
 ## UI polish
 
 The kid app and parent report are plain HTML/CSS/JS (no framework). A small vendored bundle
@@ -104,7 +120,7 @@ Set in the `[vars]` block of your (gitignored) `wrangler.toml`, see `wrangler.to
 ## Getting started
 
 See **[INSTALL.md](INSTALL.md)** (Node 22, wrangler, Cloudflare account, KV namespace, configuration, deploy,
-reset, local dev). For the daily content loop, see **[docs/nightly-packs.md](docs/nightly-packs.md)**.
+reset, local dev). For the daily content loop, see **[How the nightly cycle works](docs/NIGHTLY.md)**.
 
 ```bash
 npm install

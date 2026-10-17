@@ -72,4 +72,4 @@ node backup-progress.mjs     # backups/<PT date>/progress-<time>.json (gitignore
 To restore a backup: `npx wrangler kv key put --binding JANE_KV --remote progress --path backups/<date>/progress-<time>.json`.
 
 ## Daily lesson packs
-See [docs/nightly-packs.md](docs/nightly-packs.md).
+See [How the nightly cycle works](docs/NIGHTLY.md). It runs on any scheduler you choose; the export and publish scripts are the interface.
