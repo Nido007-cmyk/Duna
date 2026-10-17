@@ -64,10 +64,12 @@ docker run -d --name jane --restart unless-stopped -p 127.0.0.1:8787:8787 -v jan
   `8787:8787` instead (the parent page has no passcode yet).
 - Nightly scripts run inside the container, where `STORAGE=file` is already set:
   ```bash
-  docker compose cp packs/2026-10-18.json jane:/tmp/pack.json      # (or docker cp … jane:/tmp/pack.json)
-  docker compose exec jane node publish-lessons.mjs /tmp/pack.json
-  docker compose exec jane node export-progress.mjs                # → /data/exports/
-  docker compose exec jane node backup-progress.mjs                # → /data/backups/
+  # the pack is piped in on stdin (the container's filesystem is read-only)
+  docker compose exec -T jane node publish-lessons.mjs /dev/stdin --dry-run < packs/2026-10-18.json
+  docker compose exec -T jane node publish-lessons.mjs /dev/stdin < packs/2026-10-18.json
+  docker compose exec jane node export-progress.mjs                # → /data/exports/ in the volume
+  docker compose exec jane node backup-progress.mjs                # → /data/backups/ in the volume
+  docker compose exec jane cat /data/exports/progress-2026-10-18.json > export.json   # copy an export out
   ```
 - Back up the volume: `docker run --rm -v jane-data:/data -v "$PWD":/out alpine tar czf /out/jane-data.tgz -C /data .`
   (with Compose the volume is named `<project>_jane-data`, e.g. `jane_jane-data`).
