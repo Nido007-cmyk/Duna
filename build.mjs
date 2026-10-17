@@ -30,7 +30,7 @@ let miss=0;const topics=raw.map((t,i)=>{const k=kid[i],kf=kindFor(t);if(!k&&!kf)
   return{id:t.id,type:t.type,subject:t.subject,domain:t.domain,name:t.name,description:t.description,ageRangeStart:t.ageRangeStart,ageRangeEnd:t.ageRangeEnd,evidence:t.evidence,assessmentPrompt:t.assessmentPrompt,
    sn,ic:ICON[t.domain]||'⭐',tier:D[i]>=g70?'gold':D[i]>=s40?'silver':'bronze',
    kq:k?k[0]:null,ka:k?k[1]:null,kw:k?[k[2],k[3]]:null,
-   self:kf?SELF[kf]:`Hey Landon! Could you explain ${sn.toLowerCase()} to a friend?`};});
+   self:kf?SELF[kf]:`Hey {name}! Could you explain ${sn.toLowerCase()} to a friend?`};}); // {name} is filled in at runtime
 if(miss)throw Error('topics without kid prompt: '+miss);
 fs.writeFileSync('public/tax.json',JSON.stringify({topics,deps}));
 console.log('topics',topics.length,'deps',deps.length,'mcq',Object.keys(kid).length,'tiers g/s',g70,s40);

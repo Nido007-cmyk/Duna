@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-// Dump Landon's progress for nightly lesson planning.
+// Dump the learner's progress for nightly lesson planning (read-only).
 // Usage: node export-progress.mjs [--out file.json] [--date YYYY-MM-DD] [--days 7]   (default out: exports/progress-<date>.json)
 // Adds weakSpots (per topic + per domain: misses, hints, slow answers, failed reviews, unsure self-checks), strengths and goDeeper suggestions.
-import fs from 'fs';import path from 'path';import {kvGet,loadTax,ptDate,DIR,activeQuests,QUEST_CAP} from './lib-cli.mjs';import * as E from './src/engine.js';
+import fs from 'fs';import path from 'path';import {kvGet,loadTax,ptDate,DIR,activeQuests,QUEST_CAP,learnerConfig} from './lib-cli.mjs';import * as E from './src/engine.js';
+E.configure(learnerConfig());const L=E.learner();
 const args=process.argv.slice(2),opt=k=>args.includes(k)?args[args.indexOf(k)+1]:null;
 const date=opt('--date')||ptDate(),out=opt('--out')||path.join(DIR,'exports',`progress-${date}.json`);
 const g=E.graph(loadTax()),now=Date.now();
@@ -13,7 +14,7 @@ const full=(t,extra={})=>({...t,state:E.stateOf(S,g,t.id,now),record:S.ts[t.id]|
   prerequisites:g.pre[t.id].map(e=>({id:e.id,name:g.byId[e.id].name,strength:e.h?'hard':'soft',state:E.stateOf(S,g,e.id,now)})),
   unlocks:g.post[t.id].map(e=>({id:e.id,name:g.byId[e.id].name,strength:e.h?'hard':'soft'})),...extra});
 const sm=E.summary(S,g,now);delete sm.codes;
-const near=t=>Math.abs(t.ageRangeStart-10.5);
+const near=t=>Math.abs(t.ageRangeStart-L.age);
 const frontier=g.topics.filter(t=>['ready','learning'].includes(E.stateOf(S,g,t.id,now))).sort((a,b)=>near(a)-near(b)).map(t=>full(t));
 const reviewDue=g.topics.filter(t=>E.stateOf(S,g,t.id,now)==='review').sort((a,b)=>S.ts[a.id].due-S.ts[b.id].due).map(t=>full(t,{dueAt:new Date(S.ts[t.id].due).toISOString(),box:S.ts[t.id].box}));
 // ---------- weak spots ----------
@@ -35,7 +36,7 @@ const goDeeper=weakTopics.filter(w=>w.weakScore>=2).map(w=>({topicId:w.topicId,n
   suggest:`deep dive: why-card + 5-7 graded steps, start one notch easier, mix formats (avoid only ${Object.keys(w.qtypes).join('/')||'mc'})`,easierSteps:stepDown(w.topicId).slice(0,4)}));
 const strengths=domains.filter(d=>d.weakScore===0&&d.correct>=2).map(d=>({domain:d.domain,subject:d.subject,correct:d.correct,
   stretchTo:frontierStretch(d.domain)}));
-function frontierStretch(dm){return g.topics.filter(t=>t.domain===dm&&['ready','learning'].includes(E.stateOf(S,g,t.id,now))&&t.ageRangeStart>=9).sort((a,b)=>Math.abs(a.ageRangeStart-10.5)-Math.abs(b.ageRangeStart-10.5)).slice(0,3).map(t=>({id:t.id,name:t.name,age:t.ageRangeStart}));}
+function frontierStretch(dm){return g.topics.filter(t=>t.domain===dm&&['ready','learning'].includes(E.stateOf(S,g,t.id,now))&&t.ageRangeStart>=L.age-1.5).sort((a,b)=>Math.abs(a.ageRangeStart-L.age)-Math.abs(b.ageRangeStart-L.age)).slice(0,3).map(t=>({id:t.id,name:t.name,age:t.ageRangeStart}));}
 const weakSpots={window:`${dayList[dayList.length-1]}..${date}`,rules:{slowSec:SLOW,idleIgnoredSec:IDLE,score:'misses×3 + hints×2 + slow + failedReviews×3 + unsure×2'},topics:weakTopics,domains,goDeeper,strengths};
 // ---------- quests (cap 3 active) + glossary lookups ----------
 const A=activeQuests(S);const qinfo=d=>{const p=kvGet('lessons:'+d);if(!p?.quest)return null;const b=kvGet('boost:'+d);const pp=b?E.applyBoost(p,b):p;const qi=E.questInfo(S,g,pp);
@@ -51,7 +52,7 @@ const res={exportedAt:new Date(now).toISOString(),date,timezone:'America/Los_Ang
   todaysPack:pack?{date:pack.date,title:pack.title,topicIds:pack.topics.map(t=>t.topicId)}:null,
   quests,termsLookedUp,weakSpots,todayLog:log,learnedToday:log.filter(l=>l.event==='mastered'),
   frontier,reviewDue,progress:S};
-fs.mkdirSync(path.dirname(out),{recursive:true});fs.writeFileSync(out,JSON.stringify(res,null,1));
+fs.mkdirSync(path.dirname(out),{recursive:true});fs.writeFileSync(out,E.withName(JSON.stringify({learner:L,...res},null,1),JSON.stringify(L.name).slice(1,-1)));
 console.log(`  🗺️ quests: ${quests.nextStep}`);if(termsLookedUp.length)console.log(`  📘 looked up: ${termsLookedUp.slice(0,10).map(t=>t.term+'×'+t.count).join(', ')}`);
 for(const x of goDeeper)console.log(`  🔎 go deeper: ${x.name} (${x.domain}): ${x.why}`);for(const x of strengths)console.log(`  💪 strength: ${x.domain} → stretch to ${x.stretchTo.map(t=>t.name).join(', ')||'(nothing ready)'}`);
 console.log(`✅ wrote ${out}: ${sm.done}/${sm.total} mastered (${sm.pct}%), ${frontier.length} frontier, ${reviewDue.length} review due, ${log.filter(l=>!l.event).length} answers today`);

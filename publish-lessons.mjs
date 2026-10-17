@@ -3,7 +3,12 @@
 // Usage: node publish-lessons.mjs <pack.json> [--date YYYY-MM-DD] [--dry-run] [--force]
 //        node publish-lessons.mjs <boost.json> [--dry-run]     (catch-up boost: file has "boostFor": "<quest date>")
 // A new quest is refused while 3 quests are active (started, unfinished) unless --force; publish a boost instead.
-import fs from 'fs';import {kvPut,kvGet,kvList,loadTax,activeQuests,QUEST_CAP} from './lib-cli.mjs';
+import fs from 'fs';import {kvPut,kvGet,kvList,loadTax,activeQuests,QUEST_CAP,learnerConfig} from './lib-cli.mjs';import * as EN from './src/engine.js';
+// Learner settings from wrangler.toml [vars]. Packs may write {name}; the app fills it in. Prompts must talk to the learner as "you".
+EN.configure(learnerConfig());const LRN=EN.learner();
+const NAMES=[LRN.name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'\\{name\\}','the learner'].join('|');
+const THIRD=new RegExp(`(?:^|[^\\w{])(?:${NAMES}) (?:can|is|has|does|should|wants|gets|saves)\\b|\\bCan (?:${NAMES})|\\bhe\\b|\\bhis\\b`,'i');
+const YOU='talk to the learner as "you"';
 const args=process.argv.slice(2);const file=args.find(a=>!a.startsWith('--')&&args[args.indexOf(a)-1]!=='--date');
 const dateArg=args.includes('--date')?args[args.indexOf('--date')+1]:null,dry=args.includes('--dry-run'),force=args.includes('--force');
 if(!file){console.error('Usage: node publish-lessons.mjs <pack.json> [--date YYYY-MM-DD] [--dry-run]');process.exit(2);}
@@ -11,7 +16,7 @@ const pack=JSON.parse(fs.readFileSync(file,'utf8'));if(dateArg)pack.date=dateArg
 const wcount=x=>String(x||'').trim().split(/\s+/).filter(Boolean).length;
 function checkTerms(terms,P,E,W){if(terms==null)return;if(typeof terms!=='object'||Array.isArray(terms)){E(P,'object {"word": "definition"} or {"word": {"d": "...", "e": "🎣"}}');return;}
   for(const [k,v] of Object.entries(terms)){const d=typeof v==='string'?v:v?.d;if(!k.trim()||typeof d!=='string'||!d.trim()){E(`${P}.${k}`,'needs a definition string');continue;}
-    if(wcount(d)>15)W(`${P}.${k}`,`${wcount(d)} words (definitions ≤ 15)`);if(/\b(Landon|he|his)\b/.test(d))W(`${P}.${k}`,'talk to Landon as "you"');if(v?.e!=null&&typeof v.e!=='string')E(`${P}.${k}.e`,'emoji string');}}
+    if(wcount(d)>15)W(`${P}.${k}`,`${wcount(d)} words (definitions ≤ 15)`);if(THIRD.test(d)||new RegExp(`(?:^|[^\\w{])(?:${NAMES})(?![\\w}])`,'i').test(d))W(`${P}.${k}`,YOU);if(v?.e!=null&&typeof v.e!=='string')E(`${P}.${k}.e`,'emoji string');}}
 // ---------- catch-up boost ----------
 if(pack.boostFor){const errs=[],warns=[];const E=(p,m)=>errs.push(`${p}: ${m}`),W=(p,m)=>warns.push(`${p}: ${m}`);
   if(!/^\d{4}-\d{2}-\d{2}$/.test(pack.boostFor))E('boostFor','quest date YYYY-MM-DD');if(!pack.message)E('message','a short, fun encouragement is required');else if(wcount(pack.message)>25)W('message','≤ 25 words');
@@ -32,7 +37,7 @@ const TYPES=['mc','numeric','text','creative','picture','blank','order','match',
 const TPL={pizza:['slices'],fracbar:['parts'],numberline:['min','max'],timeline:['events'],foodweb:['chain'],orbit:['planets']};
 const unsafe=s=>/<script|<foreignObject|\son\w+\s*=|javascript:|<iframe|<image[^>]+href\s*=\s*["']?https?:/i.test(s);
 const parseNum=s=>{s=String(s).trim();const m=s.match(/^(-?\d+)\s*\/\s*(\d+)$/);return m?+m[1]/+m[2]:+s;};
-const third=p=>/\b(Landon (can|is|has|does|should|wants|gets|saves)|Can Landon|\bhe\b|\bhis\b)/i.test(p||'');
+const third=p=>THIRD.test(p||'');
 function scene(v,P){if(v==null)return;if(!str(v,P))return;if(v.trim().startsWith('<')){if(!/^<svg[\s>]/.test(v.trim()))E(P,'SVG scenes must start with <svg');if(unsafe(v))E(P,'no scripts, event handlers, external images or foreignObject in SVG');if(v.length>12000)W(P,`${v.length} chars of SVG (keep scenes under ~12k)`);}
   else if(v.length>40)W(P,'emoji scene: keep it to a few emoji');}
 function tpl(t,P){if(t==null)return;if(typeof t!=='object'||!TPL[t.type]){E(P+'.type','one of '+Object.keys(TPL).join('|'));return;}for(const k of TPL[t.type])if(t[k]==null)E(P+'.'+k,`required for ${t.type}`);
@@ -41,7 +46,7 @@ if(!/^\d{4}-\d{2}-\d{2}$/.test(pack.date||''))E('date','must be YYYY-MM-DD (or p
 str(pack.title,'title',false);if(!Array.isArray(pack.topics)||!pack.topics.length)E('topics','must be a non-empty array');
 const Q=pack.quest;
 if(Q){str(Q.title,'quest.title');str(Q.hook,'quest.hook');str(Q.emoji,'quest.emoji',false);if(!Q.medal||!str(Q.medal.name,'quest.medal.name')||!str(Q.medal.emoji,'quest.medal.emoji'))E('quest.medal','{name, emoji} required');
-  if(wc(Q.hook)>30)W('quest.hook',`${wc(Q.hook)} words (aim ≤ 30)`);if(third(Q.hook))W('quest.hook','talk to Landon as "you"');
+  if(wc(Q.hook)>30)W('quest.hook',`${wc(Q.hook)} words (aim ≤ 30)`);if(third(Q.hook))W('quest.hook',YOU);
   const last=pack.topics?.[pack.topics.length-1];if(last&&last.format!=='boss')E('topics[last]','a quest ends with a boss finale: set "format":"boss" on the last stage');
   if((pack.topics||[]).filter(t=>t.format==='boss').length>1)W('topics','more than one boss stage; only the last is the finale');
   (pack.topics||[]).forEach((t,i)=>{if(!t.stage?.name)E(`topics[${i}].stage.name`,'every quest stage needs a name');if(!t.stage?.emoji)W(`topics[${i}].stage.emoji`,'add an emoji for the quest path');});}
@@ -62,12 +67,12 @@ const seen=new Set();let nq=0,nGraded=0,nReview=0,nDeep=0;const typesUsed=new Se
   if(t.review)nReview+=graded;nGraded+=graded;nq+=qs.length;
   if(t.deepDive){nDeep++;if(graded<4)E(P,`deep dive needs ≥ 4 graded questions (has ${graded})`);if(graded>5)W(P,`deep dive has ${graded} graded questions (aim 4-5 to keep quests short)`);if(!qs.some(q=>q.type==='why'))E(P,'deep dive needs a "why" card');
     if(new Set(qs.map(q=>q.type).filter(x=>!CARDS.includes(x))).size<3)W(P,'deep dive: mix at least 3 question types');}
-  if(tp&&tp.ageRangeStart<8)W(P,`"${tp.name}" starts at age ${tp.ageRangeStart}: below Landon's level (5th grade, ~10)`);
+  if(tp&&tp.ageRangeStart<LRN.age-2)W(P,`"${tp.name}" starts at age ${tp.ageRangeStart}: below the target level (${LRN.grade}, ~age ${LRN.age})`);
   qs.forEach((q,j)=>{const Qp=`${P}.questions[${j}]`;typesUsed.add(q.type);if(!TYPES.includes(q.type)){E(Qp+'.type',TYPES.join('|'));return;}
     if(q.format&&!FORMATS.includes(q.format))E(Qp+'.format','one of '+FORMATS.join('|'));scene(q.scene,Qp+'.scene');tpl(q.template,Qp+'.template');
-    if(CARDS.includes(q.type)){str(q.title,Qp+'.title');str(q.body,Qp+'.body');str(q.emoji,Qp+'.emoji',false);if(wc(q.body)>30)W(Qp+'.body',`${wc(q.body)} words (cards: ≤ 30)`);if(third(q.body))W(Qp+'.body','talk to Landon as "you"');return;}
+    if(CARDS.includes(q.type)){str(q.title,Qp+'.title');str(q.body,Qp+'.body');str(q.emoji,Qp+'.emoji',false);if(wc(q.body)>30)W(Qp+'.body',`${wc(q.body)} words (cards: ≤ 30)`);if(third(q.body))W(Qp+'.body',YOU);return;}
     str(q.prompt,Qp+'.prompt');str(q.hint,Qp+'.hint');str(q.explanation,Qp+'.explanation');
-    if(wc(q.prompt)>15)W(Qp+'.prompt',`${wc(q.prompt)} words (max 15)`);if(third(q.prompt))W(Qp+'.prompt','talk to Landon as "you"');
+    if(wc(q.prompt)>15)W(Qp+'.prompt',`${wc(q.prompt)} words (max 15)`);if(third(q.prompt))W(Qp+'.prompt',YOU);
     const ans=q.answer;const need=()=>{if(ans==null||ans===''){E(Qp+'.answer','required');return false;}return true;};
     switch(q.type){
      case 'mc':if(need()&&strs(q.choices,Qp+'.choices',2,6)&&!q.choices.includes(String(ans)))E(Qp+'.answer','must exactly match one of choices');if(q.choices?.length>3)W(Qp+'.choices','use 3 options');break;

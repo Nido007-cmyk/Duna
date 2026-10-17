@@ -46,9 +46,9 @@ export function parentData({S,g,now,today,logs,packs,tomorrowPack,boosts}){
   // log + medals
   const log=answers.map(l=>({ts:l.ts,day:l.day,subject:l.subject,topic:l.topic,mode:l.mode,qtype:l.qtype||'',q:l.question,exp:l.expected,given:l.given,ok:!!l.correct,try:l.try,secs:l.elapsedSec,lm:!!l.learningMoment,regraded:l.regraded||null,creative:!!l.creative,stage:l.stage}));
   const medals=[...(S.medals||[]).map(m=>E.medalInfo(m,g)).filter(Boolean),...(S.questMedals||[]).map(q=>({tier:'quest',name:q.name,ic:q.emoji,subject:'Quest',domain:q.title,at:q.at}))].sort((a,b)=>b.at-a.at);
-  return{name:S.name,today,generated:now,head,perDay,growth,subjects:Object.values(subjects),struggles,wins,terms:Object.values(terms).sort((a,b)=>b.count-a.count),quests,tonight,reviews,inferredDue,log,medals,placement:S.placement};}
-export function parentShell(data){const json=JSON.stringify(data).replace(/</g,'\\u003c');
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Parent report: ${data.name}</title>
+  return{name:E.learner().name,grade:E.learner().grade,today,generated:now,head,perDay,growth,subjects:Object.values(subjects),struggles,wins,terms:Object.values(terms).sort((a,b)=>b.count-a.count),quests,tonight,reviews,inferredDue,log,medals,placement:S.placement};}
+export function parentShell(data){const json=E.withName(JSON.stringify(data),JSON.stringify(data.name).slice(1,-1)).replace(/</g,'\\u003c');
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Parent report: ${String(data.name).replace(/[&<>"]/g,'')}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/parent.css"></head><body><div id="app"><p class="loading">Loading report…</p></div>
 <script id="data" type="application/json">${json}</script><script src="/parent.js"></script></body></html>`;}

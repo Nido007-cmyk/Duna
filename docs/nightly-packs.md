@@ -18,6 +18,9 @@ node publish-lessons.mjs packs/2026-10-18.json --dry-run
 node publish-lessons.mjs packs/2026-10-18.json
 ```
 
+- Write `{name}` wherever the learner's name should appear ("Hey {name}!"). The app fills in `LEARNER_NAME` from
+  `wrangler.toml`, so packs never contain a real name. The publisher warns about third person ("Can {name}…", "he").
+- The export starts with `learner` (name, target age, grade) and sorts the frontier by closeness to `LEARNER_AGE`.
 - Start from [`packs/examples/example-quest.json`](../packs/examples/example-quest.json). It validates with
   `node publish-lessons.mjs packs/examples/example-quest.json --dry-run`.
 - Real packs are written from a real child's answers, so they stay **out of git** (`packs/*.json` is ignored).

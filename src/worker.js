@@ -2,12 +2,11 @@ import * as E from './engine.js';import * as PR from './parent.js';
 let G=null;const QUEST_CAP=3;
 async function graph(env){if(!G){const r=await env.ASSETS.fetch(new Request('https://assets.local/tax.json'));G=E.graph(await r.json());}return G;}
 export const ptDate=(ms=Date.now())=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/Los_Angeles',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(ms));
-const J=(o,s=200)=>new Response(JSON.stringify(o),{status:s,headers:{'content-type':'application/json','cache-control':'no-store'}});
-const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const ptTime=ts=>new Date(ts).toLocaleString('en-US',{timeZone:'America/Los_Angeles'});
-// Sandbox (for testing/screenshots without touching Landon's real progress): open /api/sandbox?on=1 (cookie sbx=1, 24 h),
+// Every JSON response goes through J, which fills in the learner's name ({name} placeholder, see engine.configure).
+const J=(o,s=200)=>new Response(E.withName(JSON.stringify(o),JSON.stringify(E.learner().name).slice(1,-1)),{status:s,headers:{'content-type':'application/json','cache-control':'no-store'}});
+// Sandbox (for testing/screenshots without touching the learner's real progress): open /api/sandbox?on=1 (cookie sbx=1, 24 h),
 // POST /api/sandbox/reset {offsetDays} copies the real progress into sandbox:* keys. /api/sandbox?on=0 leaves it.
-export default{async fetch(req,env){const u=new URL(req.url),P=u.pathname,KV=env.LANDON_KV;
+export default{async fetch(req,env){E.configure(env);const u=new URL(req.url),P=u.pathname,KV=env.JANE_KV;
  const sbxQ=u.searchParams.get('sandbox'),sbx=sbxQ!=null?sbxQ==='1':/(?:^|;\s*)sbx=1/.test(req.headers.get('cookie')||'');const K=k=>sbx?'sandbox:'+k:k;
  if(!P.startsWith('/api/')&&P!=='/parent'){const r=await env.ASSETS.fetch(req);if(sbxQ==null)return r;const h=new Headers(r.headers);h.append('set-cookie',`sbx=${sbxQ==='1'?1:0}; Path=/; SameSite=Lax${sbxQ==='1'?'':'; Max-Age=0'}`);return new Response(r.body,{status:r.status,headers:h});}
  const g=await graph(env);
@@ -26,7 +25,7 @@ export default{async fetch(req,env){const u=new URL(req.url),P=u.pathname,KV=env
  const choosePack=async()=>{const A=activeQ();let d=S.questFocus&&A.includes(S.questFocus)?S.questFocus:null;if(!d&&A.length)d=A[0];return d?withBoost(PC[d]):paused()?null:todayPack;};
  let pack=await choosePack();E.refresh(S,g,pack,now);
  const body=req.method==='POST'?await req.json().catch(()=>({})):{};let out,ev=[];
- const pub=()=>{const sm=E.summary(S,g,now);delete sm.codes;return{name:S.name,points:S.points,stars:S.stars,streak:S.streak,bestStreak:S.bestStreak,solved:S.solved,medals:(S.medals||[]).slice(-4).reverse().map(m=>E.medalInfo(m,g)).filter(Boolean),medalCount:(S.medals||[]).length,
+ const pub=()=>{const sm=E.summary(S,g,now);delete sm.codes;return{name:E.learner().name,learner:E.learner(),points:S.points,stars:S.stars,streak:S.streak,bestStreak:S.bestStreak,solved:S.solved,medals:(S.medals||[]).slice(-4).reverse().map(m=>E.medalInfo(m,g)).filter(Boolean),medalCount:(S.medals||[]).length,
    placement:{done:S.placement.done,asked:S.placement.asked},progress:sm,pack:pack?{date:pack.date,title:pack.title}:null,item:E.publicItem(S.current,g),clockOffsetDays:off||undefined,sandbox:sbx||undefined,
    quest:pack?.quest?E.questInfo(S,g,pack):null,newQuest:!!(todayPack?.quest&&!qrec(today).started&&!paused()),
    quests:{active:activeQ().length,cap:QUEST_CAP,paused:paused(),oldest:(()=>{const d=activeQ()[0];return d?{date:d,title:PC[d].quest.title,emoji:PC[d].quest.emoji||'🗺️',pct:E.questInfo(S,g,PC[d]).pct}:null;})(),boost:pack?.boost||null},
@@ -63,20 +62,3 @@ export default{async fetch(req,env){const u=new URL(req.url),P=u.pathname,KV=env
  if(JSON.stringify(S)!==S0)await KV.put(K('progress'),JSON.stringify(S));
  if(ev.length){const k=K('log:'+today);const log=(await KV.get(k,'json'))||[];const ts=new Date(now).toISOString();log.push(...ev.map(e=>({ts,...e})));await KV.put(k,JSON.stringify(log));}
  return J(out);}};
-function parentHtml(S,g,now,today,log,pack){const sm=E.summary(S,g,now);
- const subj=Object.entries(sm.by).map(([s,b])=>`<tr><td>${esc(s)}</td><td>${b.total}</td><td>${b.mastered+b.review}</td><td>${b.review}</td><td>${b.ready}</td><td>${b.learning}</td><td>${b.locked}</td><td><div class=bar><i style="width:${(100*(b.mastered+b.review)/b.total).toFixed(1)}%"></i></div>${(100*(b.mastered+b.review)/b.total).toFixed(1)}%</td></tr>`).join('');
- const learned=log.filter(l=>l.event==='mastered');const inferred=log.filter(l=>l.event==='inferred').reduce((a,l)=>a+l.count,0);const answers=log.filter(l=>!l.event);
- const direct=Object.entries(S.ts).filter(([,r])=>r.how!=='inferred');
- const frontier=g.topics.filter(t=>['ready','learning'].includes(E.stateOf(S,g,t.id,now))&&t.ageRangeStart>=9).slice(0,25);
- const due=g.topics.filter(t=>E.stateOf(S,g,t.id,now)==='review');
- return `<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width"><title>Parent view — Landon</title><style>body{font-family:system-ui,sans-serif;padding:14px;max-width:1100px;margin:auto;color:#222}td,th{border:1px solid #ddd;padding:4px 6px;font-size:14px;text-align:left}table{border-collapse:collapse;margin-bottom:14px}.bar{display:inline-block;width:90px;height:10px;background:#eee;border-radius:5px;margin-right:6px;vertical-align:middle}.bar i{display:block;height:100%;background:linear-gradient(90deg,#ffb300,#ff6d00);border-radius:5px}.ok{color:#2e7d32}.no{color:#c62828}h3{margin-top:22px}</style>
-<h2>Parent view — ${esc(S.name)} <small style="font-weight:normal;color:#666">(${today}, times in PT)</small></h2>
-<p><b>${sm.pct}%</b> of ${sm.total} Marble topics mastered or inferred (${sm.done}) · ${sm.tot.review} review due · ${sm.tot.ready} ready (frontier) · ${sm.tot.learning} learning · ${sm.tot.locked} locked<br>
-Points ${S.points} · Stars ${S.stars} · Solved ${S.solved} · Best streak ${S.bestStreak} · Medals ${(S.medals||[]).length} · Placement ${S.placement.done?'complete':'in progress'} (${S.placement.asked} diagnostic questions) · Today's lesson pack: ${pack?esc(pack.title||pack.date):'none (procedural / self-checks)'}</p>
-<h3>Progress map summary</h3><table><tr><th>Subject</th><th>Topics</th><th>Mastered*</th><th>Review due</th><th>Ready</th><th>Learning</th><th>Locked</th><th>Progress</th></tr>${subj}</table><small>*includes topics inferred from mastering later skills (hard prerequisites 95% confidence per step, soft 70%).</small>
-<h3>Learned today</h3>${learned.length?`<ul>${learned.map(l=>`<li>${ptTime(l.ts)} — <b>${esc(l.topic)}</b> (${l.how==='self'?'self-check':'shown in answers'})</li>`).join('')}</ul>`:'<p>Nothing mastered yet today.</p>'}<p>Plus ${inferred} earlier skills inferred today from those masteries.</p>
-<h3>Today's answers (${answers.length})</h3><table><tr><th>Time (PT)</th><th>Subject › Topic</th><th>Mode</th><th>Question</th><th>Expected</th><th>Given</th><th></th><th>Secs</th></tr>${answers.slice().reverse().map(l=>`<tr><td>${ptTime(l.ts)}</td><td>${esc(l.subject)} › ${esc(l.topic)}</td><td>${esc(l.mode)}${l.stage==='bonus'?' (bonus)':''}</td><td>${esc(l.question)}</td><td>${esc(l.expected)}</td><td>${esc(l.given)}</td><td class=${l.correct?'ok':'no'}>${l.correct?'✅':'❌'}</td><td>${l.elapsedSec??''}</td></tr>`).join('')}</table>
-<h3>Review due (${due.length})</h3><p>${due.slice(0,40).map(t=>esc(t.name)).join(' · ')||'None.'}</p>
-<h3>Frontier (ready, age 9+, first 25)</h3><p>${frontier.map(t=>`${esc(t.subject)}: ${esc(t.name)}`).join(' · ')}</p>
-<h3>Directly assessed topics (${direct.length})</h3><table><tr><th>Topic</th><th>State</th><th>How</th><th>✔</th><th>✘</th><th>Review box</th><th>Next review</th></tr>${direct.map(([id,r])=>`<tr><td>${esc(g.byId[id].subject)} › ${esc(g.byId[id].name)}</td><td>${E.stateOf(S,g,id,now)}</td><td>${r.how}</td><td>${r.c||0}</td><td>${r.w||0}</td><td>${r.st==='mastered'?r.box:''}</td><td>${r.st==='mastered'?ptTime(r.due):''}</td></tr>`).join('')}</table>
-<p><a href="/">← back to the app</a></p>`;}

@@ -14,7 +14,8 @@ function say(t){const b=$('jane');b.innerHTML=gl(t);b.classList.remove('pop');vo
 function confetti(n=40){for(let i=0;i<n;i++){const e=document.createElement('div');e.className='confetti';e.textContent=['🎉','⭐','🍕','✨','🎈','💜'][i%6];e.style.left=Math.random()*100+'vw';e.style.animationDuration=1.5+Math.random()*2+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),4000);}}
 function banner(t){const b=document.createElement('div');b.className='banner';b.innerHTML=`<div>${t}</div>`;document.body.appendChild(b);setTimeout(()=>b.remove(),2000);}
 function chips(s){$('pts').textContent='⭐ '+s.points+' pts';$('stars').textContent='🌟 '+s.stars;$('streak').textContent='🔥 '+s.streak;$('pct').textContent=`🗺️ ${s.progress.pct}%`;}
-function render(s){st=s;chips(s);const p=s.item;clearInterval(timerInt);$('timer').innerHTML='';if(!p)return;
+let LN='Explorer';function setLearner(L){if(!L?.name||L.name===LN&&document.title.includes(LN))return;LN=L.name;document.querySelectorAll('.lname').forEach(e=>e.textContent=LN);document.title=`${LN}'s Learning Adventure with Jane`;}
+function render(s){st=s;if(s?.learner)setLearner(s.learner);chips(s);const p=s.item;clearInterval(timerInt);$('timer').innerHTML='';if(!p)return;
  const f=p.format||'quest';$('frame').className='framebar f-'+f;$('frame').textContent=FRAMES[f]||'🗡️ Quest';$('pcard').className='card '+f;
  $('topic').textContent=`${ISL[p.topic.subject]?.e||'📚'} ${p.topic.name}${p.level?` · Lv ${p.level}`:''}`;
  PACKT=s.terms||{};glReset();if(p.blank)$('q').innerHTML=gl(p.q).replace(/_{2,}/,'<span class="blank" id="blankslot">❓</span>');else $('q').innerHTML=p.type==='card'?'':gl(p.q);$('ev').innerHTML='';
@@ -41,7 +42,7 @@ async function send(v){if(!v)return;const r=await api('/api/answer',{answer:v});
  if(r.retry){if(st.item.type==='input')$('a').select();else if(INTER[st.item.type])setTimeout(()=>render(st),900);return;}
  render(r.state);}
 function ask(prev){$('f').style.display='none';$('mc').innerHTML='';$('extra').innerHTML='<div class="choices">'+[['harder','🚀 Harder!'],['same','👍 Keep going'],['easier','🐢 Easier'],['different','🎨 New subject'],['fractions','🍕 Fractions']].map(([c,l])=>`<button onclick="choose('${c}')">${l}</button>`).join('')+'</div>';
- say(prev+' Hey Landon, what would you like to do next?');}
+ say(prev+` Hey ${LN}, what would you like to do next?`);}
 async function choose(c){const r=await api('/api/choice',{choice:c});say(r.jane);render(r.state);}
 async function skip(){render(await api('/api/skipbonus',{}));say('No problem! Here\'s a new one. 😊');}
 async function next(){if(window._mini){const m=window._mini;window._mini=null;return miniEnd(m);}render(window._next||await api('/api/next',{}));window._next=null;}

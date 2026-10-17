@@ -22,7 +22,7 @@ export CLOUDFLARE_API_TOKEN=...      # keep it in your shell or a secret store, 
 
 ## 3. Create the KV namespace
 ```bash
-npx wrangler kv namespace create LANDON_KV
+npx wrangler kv namespace create JANE_KV
 # → prints:  id = "<32-hex id>"
 ```
 Your account id is shown by `npx wrangler whoami`.
@@ -36,14 +36,16 @@ Edit `wrangler.toml`:
 |---|---|
 | `name` | Worker name. The app is served at `https://<name>.<your-subdomain>.workers.dev` |
 | `account_id` | Your Cloudflare account id. Or delete the line and `export CLOUDFLARE_ACCOUNT_ID=...` |
-| `[[kv_namespaces]] id` | The id from step 3. Keep `binding = "LANDON_KV"` (the code uses that name) |
+| `[[kv_namespaces]] id` | The id from step 3. Keep `binding = "JANE_KV"` (the code uses that name) |
 
 `wrangler.toml` is gitignored, so your ids stay out of git. The scripts refuse to run while `<YOUR_...>` placeholders remain.
 
-Optional tuning (code constants): target age (`TARGET_AGE` in `src/engine.js`),
+Learner settings go in the `[vars]` block: `LEARNER_NAME` (default `Explorer`), `LEARNER_AGE` (target age, default `10`;
+the app is designed around ages ~8-12) and `LEARNER_GRADE` (default `upper elementary`). Changing them needs a redeploy.
+The nightly scripts read the same block.
+
+Optional tuning (code constants):
 spaced-review boxes (`BOXES`) and the quest cap (`QUEST_CAP` in `src/worker.js` and `lib-cli.mjs`).
-The learner's first name is currently written into the UI strings (`NAME` in `src/engine.js`, plus `public/index.html`,
-`public/app.js` and a few prompts). Search for it to change it. A single setting for it is on the to-do list.
 
 ## 5. Deploy
 ```bash
@@ -67,7 +69,7 @@ The original prototype server also runs locally: `cd prototype && npm install &&
 node backup-progress.mjs     # backups/<PT date>/progress-<time>.json (gitignored)
 ./reset.sh                   # asks you to type RESET, backs up, then deletes the live progress record
 ```
-To restore a backup: `npx wrangler kv key put --binding LANDON_KV --remote progress --path backups/<date>/progress-<time>.json`.
+To restore a backup: `npx wrangler kv key put --binding JANE_KV --remote progress --path backups/<date>/progress-<time>.json`.
 
 ## Daily lesson packs
 See [docs/nightly-packs.md](docs/nightly-packs.md).

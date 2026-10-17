@@ -31,7 +31,7 @@ a{color:#7c4dff}
 </style></head><body>
 <header><span class="chip" id="pts">⭐ 0</span><span class="chip" id="stars">🌟 0</span><span class="chip streak" id="streak">🔥 0</span><span class="chip lvl" id="lvl">Level 1</span></header>
 <main>
-<div class="card"><div class="jane"><div class="avatar">👩‍🏫</div><div class="bubble" id="jane">Hi Landon! I'm Jane, your math buddy. Let's have some fun! 🍕</div></div></div>
+<div class="card"><div class="jane"><div class="avatar">👩‍🏫</div><div class="bubble" id="jane">Hi there! I'm Jane, your math buddy. Let's have some fun! 🍕</div></div></div>
 <div class="card" id="pcard"><div class="topic" id="topic"></div><div class="q" id="q">Loading…</div><div class="vis" id="vis"></div>
 <form id="f"><input id="a" autocomplete="off" inputmode="text" placeholder="Your answer (like 3/8)"><button>Check ✔</button></form>
 <div id="extra" style="margin-top:10px"></div></div>
@@ -57,7 +57,7 @@ function say(t){const b=$('jane');b.textContent=t;b.classList.remove('pop');void
 function confetti(n=40){for(let i=0;i<n;i++){const e=document.createElement('div');e.className='confetti';e.textContent=['🎉','⭐','🍕','✨','🎈','💜'][i%6];e.style.left=Math.random()*100+'vw';e.style.animationDuration=1.5+Math.random()*2+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),4000);}}
 function banner(t){const b=document.createElement('div');b.className='banner';b.innerHTML=`<div>${t}</div>`;document.body.appendChild(b);setTimeout(()=>b.remove(),1800);}
 function ask(){ $('f').style.display='none';$('extra').innerHTML='<div class="choices">'+[['harder','🚀 Harder!'],['same','👍 Keep going'],['easier','🐢 Easier'],['different','🎨 New topic'],['fractions','🍕 Fractions']].map(([c,l])=>`<button onclick="choose('${c}')">${l}</button>`).join('')+'</div>';
- say(say.last+' Hey Landon, what would you like to do next?');}
+ say(say.last+' Hey, what would you like to do next?');}
 async function choose(c){const r=await api('/api/choice',{choice:c});say(r.jane);render(r.state);}
 async function skip(){render(await api('/api/skipbonus',{}));say('No problem! Here\'s a new one. 😊');}
 $('f').onsubmit=async e=>{e.preventDefault();const v=$('a').value.trim();if(!v)return;const r=await api('/api/answer',{answer:v});say.last=r.jane;say(r.jane);

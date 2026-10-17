@@ -1,5 +1,7 @@
-// Landon's adaptive learning app — tutor "Jane". Zero dependencies (Node 20).
+// Jane prototype: the original adaptive learning server (tutor "Jane"). Zero dependencies (Node 20+).
+// build.mjs extracts the math generators from this file. Learner name: LEARNER_NAME env var (default Explorer).
 const http=require('http'),fs=require('fs'),path=require('path');
+const NAME=process.env.LEARNER_NAME||'Explorer';
 const PORT=process.env.PORT||8080, DATA=path.join(__dirname,'data'), TAX=path.join(__dirname,'..','data','marble');
 const STATE_F=path.join(DATA,'progress.json'), LOG_F=path.join(DATA,'answers.log.jsonl');
 const LLM_KEY=['XAI_API_KEY','OPENAI_API_KEY','ANTHROPIC_API_KEY'].find(k=>process.env[k]);
@@ -62,7 +64,7 @@ const G={
   return{q:`In the number ${n.toLocaleString('en-US')}, what is the VALUE of the digit ${s[i]} (it's in the ${names[p]} place)?`,a:String(+s[i]*10**p),hint:`The ${names[p]} place means × ${10**p}.`,explain:`${s[i]} × ${10**p} = ${+s[i]*10**p}.`};},
 };
 // ---------- state ----------
-const blank=()=>({name:'Landon',points:0,stars:0,streak:0,bestStreak:0,solved:0,topicId:START,level:3,wrongInRow:0,rightInTopic:0,topics:{},current:null,sinceChoice:0,badges:[]});
+const blank=()=>({name:NAME,points:0,stars:0,streak:0,bestStreak:0,solved:0,topicId:START,level:3,wrongInRow:0,rightInTopic:0,topics:{},current:null,sinceChoice:0,badges:[]});
 let S; try{S=JSON.parse(fs.readFileSync(STATE_F))}catch{S=blank()}
 const save=()=>{fs.writeFileSync(STATE_F+'.tmp',JSON.stringify(S,null,1));fs.renameSync(STATE_F+'.tmp',STATE_F)};
 const log=o=>fs.appendFileSync(LOG_F,JSON.stringify({ts:new Date().toISOString(),...o})+'\n');
@@ -74,7 +76,7 @@ function newProblem(){let p;
 function check(given,ans,cmp,needSimplest){given=String(given).trim();if(cmp)return given.replace(/\s/g,'')===ans||(ans==='>'&&/bigger|greater|first|left/i.test(given))||(ans==='<'&&/smaller|less|second|right/i.test(given));
   const g=parseNum(given),a=parseNum(ans);if(isNaN(g))return false;if(Math.abs(g-a)>1e-6)return false;
   if(needSimplest){const m=given.match(/^(\d+)\s*\/\s*(\d+)$/);if(m&&gcd(+m[1],+m[2])>1)return 'notSimplest';}return true;}
-const praise=['Amazing, Landon! 🎉','You nailed it! 🌟','Brilliant thinking! 🧠','Wow, superstar! ⭐','That\'s exactly right! 🙌','You\'re on fire! 🔥'];
+const praise=[`Amazing, ${NAME}! 🎉`,'You nailed it! 🌟','Brilliant thinking! 🧠','Wow, superstar! ⭐','That\'s exactly right! 🙌','You\'re on fire! 🔥'];
 const comfort=['Ooh, so close! Let\'s think it through together.','Good try! Mistakes help our brains grow. 🌱','Not quite — but I love that you tried!'];
 function moveTopic(dir){const list=(dir==='down'?prereqs:unlocks)[S.topicId]||[];let c=list.filter(usable).filter(id=>dir==='down'||!S.topics[id]?.mastered);
   if(!c.length){const t=byId[S.topicId];c=topics.filter(x=>usable(x.id)&&x.domain===t.domain&&x.id!==S.topicId&&(dir==='down'?x.ageRangeStart<t.ageRangeStart:x.ageRangeStart>=t.ageRangeStart&&!S.topics[x.id]?.mastered)).map(x=>x.id);}
@@ -120,4 +122,4 @@ http.createServer((req,res)=>{const u=new URL(req.url,'http://x');const J=(o,s=2
   const f=path.join(__dirname,'public',u.pathname==='/'?'index.html':path.normalize(u.pathname).replace(/^(\.\.[\/\\])+/,''));
   if(f.startsWith(path.join(__dirname,'public'))&&fs.existsSync(f)&&fs.statSync(f).isFile()){res.writeHead(200,{'content-type':MIME[path.extname(f)]||'application/octet-stream'});return res.end(fs.readFileSync(f));}
   res.writeHead(404);res.end('not found');})().catch(e=>{console.error(e);J({error:String(e)},500)});
-}).listen(PORT,()=>console.log('Landon app on :'+PORT,'engine=',LLM_KEY?'llm':'procedural'));
+}).listen(PORT,()=>console.log('Jane prototype on :'+PORT,'engine=',LLM_KEY?'llm':'procedural'));

@@ -1,15 +1,15 @@
 {
-  "name": "landon-app",
+  "name": "jane-prototype",
   "version": "1.0.0",
-  "description": "",
+  "description": "Original Jane prototype server (math generators are extracted by ../build.mjs)",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Kent Langley and Landon",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "ssh2": "^1.17.0"

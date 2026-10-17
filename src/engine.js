@@ -1,7 +1,13 @@
-// Landon's adaptive engine: topic states over the full Marble taxonomy, graph-based placement & inference,
+// Jane's adaptive engine: topic states over the full Marble taxonomy, graph-based placement & inference,
 // Leitner spaced review, lesson packs -> procedural math -> kid MCQs -> kid self-check (never the raw assessmentPrompt).
 import {G,kindFor,parseNum,gcd} from './gen.js';
-const DAY=864e5, BOXES=[1,3,7,21,60], NAME='Landon', TARGET_AGE=10.5;
+const DAY=864e5, BOXES=[1,3,7,21,60];
+// Learner settings (wrangler.toml [vars]: LEARNER_NAME, LEARNER_AGE, LEARNER_GRADE). Kid-facing strings use the
+// placeholder {name}; the Worker substitutes it in every response, so it is never stored in progress or packs.
+let NAME='Explorer', TARGET_AGE=10, GRADE='upper elementary';
+export function configure(env={}){NAME=String(env.LEARNER_NAME||'Explorer').trim()||'Explorer';const a=parseFloat(env.LEARNER_AGE);TARGET_AGE=a>=4&&a<=16?a:10;GRADE=String(env.LEARNER_GRADE||'upper elementary').trim();}
+export const learner=()=>({name:NAME,age:TARGET_AGE,grade:GRADE});
+export const withName=(s,name=NAME)=>String(s).replace(/\{\{name\}\}|\{name\}/g,()=>name);
 const PIZZA_ID='mt_e7filQgayF';
 const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)), pick=a=>a[Math.floor(Math.random()*a.length)];
 export function graph(TAX){const byId={},pre={},post={};for(const t of TAX.topics){byId[t.id]=t;pre[t.id]=[];post[t.id]=[];}
@@ -77,12 +83,12 @@ function creativeOk(it,a){const n=norm(a);if(!n||n.replace(/[^a-z]/g,'').length<
 const norm=s=>String(s).toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9.\/\s-]/g,'').replace(/\b(the|a|an)\b/g,'').replace(/\s+/g,' ').trim();
 function packQ(S,pack,id){if(!pack)return null;const t=pack.topics.find(x=>x.topicId===id);if(!t)return null;
   for(let i=0;i<t.questions.length;i++){const k=`${pack.date}:${id}:${i}`;if(!S.packSeen[k]&&!t.questions[i]._skip)return{t,q:t.questions[i],i,key:k};}return null;}
-const OPEN=['Hey Landon! ','Quick one! ','Ooh, try this! ','Your turn! ',''];
+const OPEN=['Hey {name}! ','Quick one! ','Ooh, try this! ','Your turn! ',''];
 function opener(q){const o=pick(OPEN);return o&&q.split(' ').length+o.split(' ').length-1<=15?o+q:q;}
 function kidMcq(g,id){const t=g.byId[id];if(!t.kq)return null;const ch=[t.ka,...t.kw].sort(()=>Math.random()-.5);
   return{kind:'quiz',type:'mc',q:opener(t.kq),choices:ch,answer:t.ka,hint:`Think it through. Which one makes the most sense?`,explain:`It's "${t.ka}".`};}
 function selfCheck(g,id){const t=g.byId[id];
-  return{kind:'self',type:'self',q:t.self||`Hey Landon! Could you explain ${t.sn||t.name}?`,choices:['👍 Got it!','🤔 Sort of','🌱 Not yet']};}
+  return{kind:'self',type:'self',q:t.self||`Hey {name}! Could you explain ${t.sn||t.name}?`,choices:['👍 Got it!','🤔 Sort of','🌱 Not yet']};}
 // interactive pack formats -> internal item. Answers stay server-side; the client only gets what it must render.
 const shuf=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;};
 const shufNot=a=>{if(a.length<2)return[...a];let b;do b=shuf(a);while(b.join('|')===a.join('|'));return b;};
@@ -159,7 +165,7 @@ function grade(it,ans,isBonus){const a=String(ans??'').trim();if(isBonus){const 
   if(it.creative){if(fuzzyEq(it.answer,a))return true;if((it.notAnswers||[]).some(b=>fuzzyEq(b,a)))return false;return (it.accept||[]).some(x=>fuzzyEq(x,a))||creativeOk(it,a)?'creative':false;}
   if(it.numeric){const m0=a.replace(/[$,]/g,'').match(/^\s*(-?\d+(?:\.\d+)?(?:\s*\/\s*\d+)?|-?\.\d+)\s*[a-z%][a-z %.]*$/i);const x=parseNum(m0?m0[1]:a.replace(/[$,]/g,'').replace(/\s*(cups?|grams?|g|weeks?|hours?|hrs?|dollars?|cookies?|years?)\.?$/i,'')),e=parseNum(it.answer);return !isNaN(x)&&Math.abs(x-e)<=(it.tol??1e-6);}
   return [it.answer,...(it.accept||[])].some(x=>norm(x)===norm(a)||(it.fuzzy&&it.kind==='pack'&&fuzzyEq(x,a)));}
-const praise=['Amazing, Landon! 🎉','You nailed it! 🌟','Brilliant thinking! 🧠','Wow, superstar! ⭐','That\'s exactly right! 🙌','You\'re on fire! 🔥'];
+const praise=['Amazing, {name}! 🎉','You nailed it! 🌟','Brilliant thinking! 🧠','Wow, superstar! ⭐','That\'s exactly right! 🙌','You\'re on fire! 🔥'];
 const comfort=['Ooh, so close! Let\'s think it through together.','Good try! Mistakes help our brains grow. 🌱','Not quite — but I love that you tried!'];
 export function submit(S,g,answer,now){const it=S.current;if(!it)return{error:'no item'};const ev=[],r={};const isBonus=it.stage==='bonus';const t=g.byId[it.topicId];
   if(it.type==='card'){S.packSeen[it.packKey]=1;S.points+=2;S.current=null;ev.push({event:'card',card:it.card,topicId:it.topicId,topic:t.name,title:it.q});return finish(S,{done:true,correct:true,card:true,jane:it.card==='why'?'Now you know WHY it works! 🧠 +2':'Cool fact unlocked! 🤩 +2'},ev,true);}

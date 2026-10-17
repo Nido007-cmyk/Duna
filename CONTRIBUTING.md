@@ -23,4 +23,5 @@ npm run build                       # rebuilds tax.json, glossary.json, gen.js (
 node publish-lessons.mjs packs/examples/example-quest.json --dry-run --offline
 ./deploy.sh --dry-run --outdir /tmp/jane-dist
 ```
-Kid-facing text follows the voice rules in [LESSONS.md](LESSONS.md): talk to the kid as "you", ≤ 15 words, 5th-grade words.
+Kid-facing text follows the voice rules in [LESSONS.md](LESSONS.md): talk to the kid as "you", ≤ 15 words, grade-level words, and write
+`{name}` instead of a real name (the app fills in `LEARNER_NAME`).

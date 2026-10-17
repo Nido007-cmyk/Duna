@@ -1,7 +1,7 @@
 # Lesson packs (Quests)
 
-A lesson pack is the day's hand-written (or nightly-generated) content for Landon. It lives in Workers KV
-(namespace `LANDON_KV`) under the key `lessons:YYYY-MM-DD`, where the date is the **Pacific Time** calendar day.
+A lesson pack is the day's hand-written (or nightly-generated) content for the learner. It lives in Workers KV
+(namespace `JANE_KV`) under the key `lessons:YYYY-MM-DD`, where the date is the **Pacific Time** calendar day.
 
 ## How the app uses it
 For every item, the engine picks a topic (spaced review ~15-20% → today's pack topics, interleaved with
@@ -12,7 +12,7 @@ placement diagnostics → frontier topics), then chooses content in this order:
 3. **Kid MCQ**: a precomputed 3-option question for the topic (`kq`/`ka`/`kw` in `public/tax.json`, sourced
    from `data/kid-prompts/b*.txt`, one line per topic: `index|question|right|wrong1|wrong2`). All 1,344 non-generator topics have one.
 4. **Self-check** (last resort): the topic's short `self` prompt, answered "Got it! / Sort of / Not yet".
-   The raw Marble `assessmentPrompt` and `evidence` are never shown to Landon.
+   The raw Marble `assessmentPrompt` and `evidence` are never shown to the learner.
 
 Pack topics are served even if the map shows them as locked. Engine spaced reviews use generators or self-checks;
 a started quest replaces them with its own `review` stages. On the map, tapping a green (ready) or blue stone opens
@@ -21,15 +21,15 @@ stones get **Practice now**.
 
 ## Every pack is a Quest
 A pack is one **quest**: a title, a short story hook, a path of **stages** (one per topic or activity, in order),
-a **boss finale** (the last stage, `"format":"boss"`) and a special **quest medal**. When Landon opens the app and
-today's quest hasn't been started, he gets the animated treasure-chest/scroll "New quest!" reveal with a Start button;
+a **boss finale** (the last stage, `"format":"boss"`) and a special **quest medal**. When the learner opens the app and
+today's quest hasn't been started, they get the animated treasure-chest/scroll "New quest!" reveal with a Start button;
 the Quests tab (red dot = new quest) lists today's and past quests with progress. While a started quest is running,
 the app serves its stages in order (no placement diagnostics or engine reviews in between). Finishing every item of
 every stage awards the quest medal (shown in Trophies). Old packs without `quest` still work as plain adventures.
 
 ## Quest cap: max 3 active quests
 A quest is **active** once started and until finished. At most **3** can be active.
-- The app shows `🗺️ x/3` on the quest strip and Quests tab. It plays the quest he picked ("Keep going" / "Play this
+- The app shows `🗺️ x/3` on the quest strip and Quests tab. It plays the quest the learner picked ("Keep going" / "Play this
   quest"), otherwise the **oldest** active one.
 - When 3 are active, today's new quest is **paused**: no "New quest!" reveal, it shows "🔒 Waiting" in the Quests
   tab, and Jane says "Finish your quest to unlock the next one!" pointing at the oldest unfinished quest.
@@ -49,14 +49,14 @@ A quest is **active** once started and until finished. At most **3** can be acti
 ## How to plan tomorrow's quest (rules)
 0. Check `quests.nextStep` first: at the cap, write a boost (above), not a quest.
 Run `node export-progress.mjs` and read `weakSpots` first. Then:
-1. **Go deeper where he struggles.** Every topic in `weakSpots.goDeeper` (misses, hints, slow answers, failed
+1. **Go deeper where the learner struggles.** Every topic in `weakSpots.goDeeper` (misses, hints, slow answers, failed
    reviews, "not yet / sort of" self-checks) gets a **deep dive** stage (`"deepDive": true`): a "Why it works" card
-   first, then **4-5 graded questions** that start one notch easier and climb back to the level he missed, using at
+   first, then **4-5 graded questions** that start one notch easier and climb back to the level they missed, using at
    least 3 different formats. Easier-to-target steps = smaller numbers, one idea per step, the same trick in a new
    setting, then the original hard question last. Use `easierSteps` (hard prerequisites) for ideas.
 2. **Keep stretching strengths.** For each `weakSpots.strengths` domain, add a **new** topic from `stretchTo` (or the
    frontier), short (2-3 questions), with a picture/template.
-3. **Never below the learner's level.** The app targets 5th grade (~age 10, `TARGET_AGE` in `src/engine.js`). No topics starting below age 8 (the publisher warns), no
+3. **Never below the learner's level.** The target age and grade are settings (`LEARNER_AGE`, `LEARNER_GRADE` in `wrangler.toml`; the app is designed around ages ~8-12, upper elementary). No topics starting more than 2 years below the target age (the publisher warns), no
    baby wording. "Easier" means smaller steps, not younger content.
 4. **About 15-20% review.** Mark review stages `"review": true` (topics already mastered, especially `reviewDue` and
    anything mastered yesterday). The publisher reports the review share of graded questions and warns outside 10-25%.
@@ -66,17 +66,20 @@ Run `node export-progress.mjs` and read `weakSpots` first. Then:
 6. **Keep it short:** kid voice (below), boss last, **~8-9 stops and ~28 graded questions** (publisher warns above 30 graded or 9 stops). Spread them out: deep dives 4-5, stretch and review stages 1-3, boss 3-4.
 
 ## Writing style (required for every pack)
-Jane talks **to** Landon, never about him. Every prompt must be:
-- **Second person**: "you / your" ("Your $40 game is 50% off…"), never "Can Landon…" or "he".
+Jane talks **to** the learner, never about them. Every prompt must be:
+- **Second person**: "you / your" ("Your $40 game is 50% off…"), never "Can Sam…", "{name} is…" or "he/she".
 - **Short**: 15 words or fewer, one idea per question. Intros and the quest hook: 1-2 sentences (≤ 25 / ≤ 30 words).
   Cards: ≤ 30 words. Speed-round statements: ≤ 12 words.
-- **5th-grade words**; no jargon unless the question teaches it.
-- **Fun Jane voice**: "Hey Landon!", "Quick one!", pirates, dragons, treasure. Keep it inside the word limit.
+- **Grade-level words** (the configured `LEARNER_GRADE`); no jargon unless the question teaches it.
+- **Fun Jane voice**: "Hey {name}!", "Quick one!", pirates, dragons, treasure. Keep it inside the word limit.
 - **3 options** for multiple choice (1 right, 2 clearly wrong but plausible).
 - Hints nudge, don't give away; explanations are 1-2 short sentences.
 
-Good: `"Hey Landon! Can you name one way people guess risk wrong?"`
-Bad: `"Can Landon explain why taking a risk isn't always irrational — and describe one cognitive bias…"`
+**The learner's name:** write `{name}` (e.g. `"Hey {name}!"`); the app fills in `LEARNER_NAME` when it shows the item,
+so packs never contain a real name. Use it sparingly (hooks, intros, a greeting), never in third person.
+
+Good: `"Hey {name}! Can you name one way people guess risk wrong?"`
+Bad: `"Can Sam explain why taking a risk isn't always irrational — and describe one cognitive bias…"`
 
 ## Fill-ins: never one right answer when many make sense
 - **Rule:** never use a one-right-answer fill-in (`text`, typed `blank`) when many answers make sense. Use 3-choice
@@ -89,7 +92,7 @@ Bad: `"Can Landon explain why taking a risk isn't always irrational — and desc
 - Its `explanation` must say WHY the example works, kindly: "Lions are famous for being brave, so we say brave as a lion!"
 - `publish-lessons.mjs` warns on fill-ins that look open-ended and on one-answer fill-ins.
 - **After 2 misses** the app shows the answer as a **learning moment** with the explanation and +2 points. It is
-  logged (`learningMoment: true`) but doesn't count as a wrong answer on his record or step him down.
+  logged (`learningMoment: true`) but doesn't count as a wrong answer on their record or step them down.
 
 ## Key terms (glossary)
 Key terms in questions, intros, cards, hints and explanations get a playful dotted underline. Hover (desktop) or tap
@@ -100,17 +103,17 @@ taxonomy prompts and packs), built into `public/glossary.json` by `build.mjs`. A
 ```json
 "terms": { "Kraken": {"d": "A giant sea monster from old sailor stories.", "e": "🐙"}, "mph": "Miles per hour." }
 ```
-Definitions: ≤ 15 words, 5th-grade words, "you" where natural (the publisher warns). **Define every new word a quest
+Definitions: ≤ 15 words, grade-level words, "you" where natural (the publisher warns). **Define every new word a quest
 introduces.** Lookups are logged (`event: "term"`), and `export-progress.mjs` lists them in `termsLookedUp`. Reinforce
 those words in the next quest (use them in a question, or add a fun-fact card).
 
 ## Formats
-| type | what Landon does | fields (besides `prompt`, `hint`, `explanation`) |
+| type | what the learner does | fields (besides `prompt`, `hint`, `explanation`) |
 |---|---|---|
 | `mc` | taps one of 3 buttons | `choices`, `answer` (exactly one choice) |
 | `numeric` | types a number (12, 0.75, 3/8, "$20", "6 weeks") | `answer`, `tolerance?` |
 | `text` | types a word (only when ONE word clearly fits) | `answer`, `acceptedAnswers?` (fuzzy: plural/singular, a/an/the, small typos) |
-| `creative` | types his own idea, graded generously: any sensible word/phrase counts, and Jane celebrates it | `answer` (your example), `acceptedAnswers?`, `notAnswers?` (e.g. the subject word), `block?`, `minLength?`(2), `maxWords?`(5), `celebrate?` ("{given}", "{answer}"), `placeholder?` |
+| `creative` | types their own idea, graded generously: any sensible word/phrase counts, and Jane celebrates it | `answer` (your example), `acceptedAnswers?`, `notAnswers?` (e.g. the subject word), `block?`, `minLength?`(2), `maxWords?`(5), `celebrate?` ("{given}", "{answer}"), `placeholder?` |
 | `blank` | fill in the blank: prompt has `___`; tapped word flies into the gap (or typed if no choices; add `"creative": true` for any-sensible-answer) | `choices?`(2-4), `answer`, `acceptedAnswers?` |
 | `picture` | taps the right picture | `choices: [{label, pic}]` (2-4; `pic` = emoji or `<svg>`), `answer` = a label |
 | `order` | drags cards (or ▲▼) into order | `items` in the CORRECT order (3-6; the app shuffles); no `answer` |
@@ -171,7 +174,7 @@ graded questions if fewer. In a quest the stage still plays to the end after mas
   {"type":"fact","emoji":"🎵","title":"Songs love similes","body":"Tons of songs use similes, like \"shine bright like a diamond.\" Listen for them today!"}]}
 ```
 Why it's a good deep dive: it names the trick first, starts with the easiest step (just the word "as"), repeats the
-idea in 5 different formats, and ends with him making his own simile.
+idea in 5 different formats, and ends with the learner making their own simile.
 
 ## Publishing
 ```bash
@@ -193,14 +196,14 @@ node export-progress.mjs --out /tmp/p.json --date 2026-10-16
 The export contains `weakSpots` (per topic and per domain over the last 7 days, `--days N`: first-try misses that
 needed a `hints`, final `misses`, `slow` answers > 30 s, `failedReviews`, `unsure` self-checks, a `weakScore`, plus
 `goDeeper` suggestions with easier prerequisite steps and `strengths` with `stretchTo` topics), `summary` (counts per state and subject), `stats`, `todayLog` (every answer plus `mastered`,
-`inferred` and `demoted` events), `learnedToday`, `frontier` (ready and learning topics, closest to age 10.5 first,
+`inferred` and `demoted` events), `learnedToday`, `frontier` (ready and learning topics, closest to the target age (`LEARNER_AGE`) first,
 with full topic details, prerequisites and unlocks), `reviewDue`, and the raw `progress` record.
 Write tomorrow's quest from `weakSpots`, `frontier` and `reviewDue` using the rules above, dry-run, fix every warning, then publish it.
 
 Both scripts call the repo's `wrangler` (Node 22; a portable Node in `~/.local/node-v22.20.0-linux-x64` is used if present), read the account and KV ids from `wrangler.toml`, and need `CLOUDFLARE_API_TOKEN` set in the environment (never commit it).
 
-## Testing without touching Landon's progress
+## Testing without touching the learner's progress
 Open `https://<your-worker>.<your-subdomain>.workers.dev/api/sandbox?on=1` (sets a 24 h cookie, redirects to the app), then
-`fetch('/api/sandbox/reset',{method:'POST',body:JSON.stringify({offsetDays:1})})` copies his real progress into
+`fetch('/api/sandbox/reset',{method:'POST',body:JSON.stringify({offsetDays:1})})` copies the real progress into
 `sandbox:*` keys and shifts the sandbox clock (1 = see tomorrow's quest). `/api/sandbox?on=0` returns to the real app.
 `/#quest-preview` replays the quest reveal without changing anything.
