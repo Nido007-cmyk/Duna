@@ -7,7 +7,8 @@
 - **wrangler** (the Cloudflare CLI). It's a dev dependency, so `npm install` installs the pinned version.
 
 > **Adapting it?** You can hand this repo to your own AI coding assistant (Grok, Claude Code or similar) to install it
-> on another host (a Node server like `prototype/`, another serverless platform, or a VPS) or to set up the nightly cycle.
+> on another host (another serverless platform, or a Node server / VPS by adapting `src/worker.js`; a standalone Node
+> server is planned for v0.2) or to set up the nightly cycle.
 > See [README → Adapt it to your setup](README.md#adapt-it-to-your-setup) for what to swap and a suggested prompt.
 
 ## 1. Clone and install
@@ -65,8 +66,11 @@ npm run dev          # build + wrangler dev → http://localhost:8787, with a lo
 To try things against the live deployment without changing the real record, use the sandbox:
 `/api/sandbox?on=1` → test → `/api/sandbox?on=0` (see LESSONS.md, "Testing without touching…").
 
-The original prototype server also runs locally: `cd prototype && npm install && node server.js` → http://localhost:8080
-(it stores state in `prototype/data/`, which is gitignored).
+This is the way to run the full app locally today. A standalone Node server (`npm start`, file-based storage) and
+a Docker option are planned for v0.2.
+
+`prototype/` is only the early **math-only** version (not the full app). It still runs on its own:
+`cd prototype && npm install && node server.js` → http://localhost:8080 (state in `prototype/data/`, gitignored).
 
 ## Backups and reset
 ```bash

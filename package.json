@@ -1,6 +1,6 @@
 {
   "name": "jane",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "Jane: an adaptive learning app for kids on Cloudflare Workers, built on the Marble Skill Taxonomy.",
   "type": "module",

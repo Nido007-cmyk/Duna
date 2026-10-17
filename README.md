@@ -6,8 +6,8 @@ It runs as a single Cloudflare Worker with static assets and Workers KV, and it 
 [Marble Skill Taxonomy](https://github.com/withmarbleapp/os-taxonomy): 1,590 micro-topics across 8 subjects,
 linked by 3,221 prerequisite edges.
 
-> This repository is **private for now** (it's a child's learning app). It is set up so Kent can make it public later:
-> all personal data is excluded and every path has a clear license (see [LICENSING.md](LICENSING.md)).
+> **v0.1.0.** It's a child's learning app, so all personal data is excluded from the repo, and every path has a clear
+> license (see [LICENSING.md](LICENSING.md)). What's next: [Roadmap](#roadmap). Changes: [CHANGELOG.md](CHANGELOG.md).
 
 ## Philosophy
 
@@ -31,8 +31,8 @@ Why on purpose:
 - **Reviewable.** Every question and quest is a plain file you can read before (or after) it's shown.
 - **Private.** The kid's answers stay in your own storage, and no model sees them while they play.
 - **Cheap.** No per-question API calls. It runs on a free-tier Worker.
-- **Runs anywhere.** It needs no AI service and no API key, just a small web host. It keeps working if the nightly
-  author skips a night.
+- **Light to run.** It needs no AI service and no API key, just a free-tier Cloudflare Worker today (a standalone
+  Node server is planned for v0.2). It keeps working if the nightly author skips a night.
 - **Transparent for parents.** You can see exactly what gets shown, in the packs and on the parent report.
 
 ## Why "Jane"?
@@ -118,8 +118,9 @@ Workers KV (binding JANE_KV)
   `public/glossary.json`, and extracts the math generators into `src/gen.js`. It also validates the inputs.
 - **CLI scripts** (`export-progress.mjs`, `publish-lessons.mjs`, `backup-progress.mjs`) talk to KV through
   `wrangler` (`lib-cli.mjs`).
-- **`prototype/`** is the original zero-dependency Node server (`server.js`). It's kept because `build.mjs` takes the
-  math generators from it, and it still runs locally.
+- **`prototype/`** is the early, **math-only** version of Jane: a zero-dependency Node server (`server.js`). It is
+  *not* the full app (no taxonomy, quests, map or parent report). It's kept because `build.mjs` takes the math
+  generators from it. A standalone Node server for the full app is planned for v0.2 (see [Roadmap](#roadmap)).
 
 ## Learner settings
 
@@ -140,7 +141,7 @@ Set in the `[vars]` block of your (gitignored) `wrangler.toml`, see `wrangler.to
 | `data/kid-prompts/`, `data/glossary.txt` | Kid-friendly layer derived from the taxonomy |
 | `packs/examples/` | A generic example quest. Real nightly packs (`packs/*.json`) are gitignored |
 | `LESSONS.md`, `docs/` | Lesson-pack rules and the nightly workflow |
-| `prototype/` | Original Node server (math generators) |
+| `prototype/` | Early math-only Node prototype (source of the math generators); not the full app |
 | `build.mjs`, `deploy.sh`, `reset.sh`, `*-progress.mjs`, `publish-lessons.mjs` | Build and ops scripts |
 
 ## Getting started
@@ -151,7 +152,7 @@ reset, local dev). For the daily content loop, see **[How the nightly cycle work
 ```bash
 npm install
 cp wrangler.toml.example wrangler.toml   # fill in your account id and KV namespace id
-npm run dev                              # local Worker with local KV
+npm run dev                              # local Worker (wrangler dev) with simulated local KV
 ./deploy.sh                              # backs up live progress, builds, deploys
 ```
 
@@ -160,9 +161,11 @@ npm run dev                              # local Worker with local KV
 The repo is written so you can hand it to your own AI coding assistant or bot (a general-purpose assistant or a coding
 agent, such as Grok, Claude Code or similar) and have it adapted to your setup. Everything it needs is in the docs.
 
-- **Hosting.** The reference deployment is Cloudflare Workers + KV, but any compatible host works: a Node server (the
-  original zero-dependency server is in [`prototype/`](prototype/)), another edge or serverless platform, or a small VPS.
-  To swap the storage layer, implement `get`, `put` and `list` (by key prefix) for the progress record, the daily answer
+- **Hosting.** Today Jane runs on **Cloudflare Workers + KV**: deploy with `./deploy.sh`, or run it locally with
+  `npm run dev` (wrangler dev with a simulated local KV). There is **no standalone Node server for the full app yet**;
+  [`prototype/`](prototype/) is only the early math-only version. A standalone Node server with file-based storage
+  (`npm start`) and a Docker option are planned for v0.2 (see [Roadmap](#roadmap)). Until then, moving to another
+  host (a Node server, another edge or serverless platform, a VPS) means adapting `src/worker.js`. To swap the storage layer, implement `get`, `put` and `list` (by key prefix) for the progress record, the daily answer
   logs (`log:YYYY-MM-DD`) and the lesson packs (`lessons:` / `boost:` keys). The CLI scripts reach the same keys
   through `lib-cli.mjs`.
 - **Nightly authoring.** Run it on any scheduler, with a person or any assistant as the author
@@ -171,12 +174,25 @@ agent, such as Grok, Claude Code or similar) and have it adapted to your setup. 
 
 Suggested prompt to paste into your assistant:
 
-> Read README.md, INSTALL.md, LESSONS.md and docs/NIGHTLY.md in this repo. Deploy Jane to `<my host: Cloudflare Workers /
-> a Node server / my VPS>`, creating the storage it needs. Set `LEARNER_NAME` to `<name>`, `LEARNER_AGE` to `<age>` and
+> Read README.md, INSTALL.md, LESSONS.md and docs/NIGHTLY.md in this repo. Deploy Jane to `<my host: Cloudflare Workers,
+> or adapt src/worker.js for a Node server / my VPS>`, creating the storage it needs. Set `LEARNER_NAME` to `<name>`, `LEARNER_AGE` to `<age>` and
 > `LEARNER_GRADE` to `<grade>`, keeping secrets and ids out of git. Back up progress before every deploy. Then schedule
 > the nightly cycle for about 1:00 AM `<my time zone>`: run export-progress.mjs, write tomorrow's quest (or a catch-up
 > boost) following LESSONS.md, validate with publish-lessons.mjs --dry-run, then publish. Only message me if something
 > fails or needs my attention.
+
+## Roadmap
+
+See [CHANGELOG.md](CHANGELOG.md) for what's shipped.
+
+**v0.2**
+- **Standalone Node server** for the full app with file-based storage (`npm start`), plus a **Docker** option.
+
+**Later**
+- **Built-in nightly generator** that authors packs offline only, validates every pack before publishing, and never uses live AI during play ([details](docs/NIGHTLY.md#planned-a-built-in-nightly-generator)).
+- **GitHub Action** running gitleaks on every push.
+- **Multi-learner support** (more than one kid per deployment).
+- **Passcode for the parent page.**
 
 ## Privacy
 
