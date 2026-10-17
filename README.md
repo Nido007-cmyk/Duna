@@ -9,6 +9,12 @@ linked by 3,221 prerequisite edges.
 > This repository is **private for now** (it's a child's learning app). It is set up so Kent can make it public later:
 > all personal data is excluded and every path has a clear license (see [LICENSING.md](LICENSING.md)).
 
+## Why "Jane"?
+
+The tutor is named after Jane, the AI who first appears in *Speaker for the Dead*, the second book of Orson Scott Card's
+*Ender's Game* series. In the books, Jane is a companion and teacher to Ender, and that inspired the name of this
+friendly tutor. The name is just a nod to the books: this project has no affiliation with Orson Scott Card or his publishers.
+
 ## Features
 
 - **Adaptive placement over the 1,590-topic graph.** Diagnostic questions walk the prerequisite graph to find where
