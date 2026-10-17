@@ -15,6 +15,7 @@ id_ed25519*
 *.key
 # --- the learner's personal data ---
 backups/
+local-data/
 exports/
 packs/*.json
 !packs/examples/

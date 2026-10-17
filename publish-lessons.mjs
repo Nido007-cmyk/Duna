@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 // Validate a lesson pack / quest JSON file and write it to KV as lessons:<date>.
-// Usage: node publish-lessons.mjs <pack.json> [--date YYYY-MM-DD] [--dry-run] [--force]
+// Usage: node publish-lessons.mjs <pack.json> [--date YYYY-MM-DD] [--dry-run] [--force] [--local]
+//        --local (or STORAGE=file) publishes into the standalone server's DATA_DIR instead of Cloudflare KV.
 //        node publish-lessons.mjs <boost.json> [--dry-run]     (catch-up boost: file has "boostFor": "<quest date>")
 // A new quest is refused while 3 quests are active (started, unfinished) unless --force; publish a boost instead.
-import fs from 'fs';import {kvPut,kvGet,kvList,loadTax,activeQuests,QUEST_CAP,learnerConfig} from './lib-cli.mjs';import * as EN from './src/engine.js';
+import fs from 'fs';import {kvPut,kvGet,kvList,loadTax,activeQuests,QUEST_CAP,learnerConfig,LOCAL} from './lib-cli.mjs';import * as EN from './src/engine.js';
 // Learner settings from wrangler.toml [vars]. Packs may write {name}; the app fills it in. Prompts must talk to the learner as "you".
 EN.configure(learnerConfig());const LRN=EN.learner();
 const NAMES=[LRN.name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'\\{name\\}','the learner'].join('|');
@@ -27,7 +28,7 @@ if(pack.boostFor){const errs=[],warns=[];const E=(p,m)=>errs.push(`${p}: ${m}`),
   checkTerms(pack.terms,'terms',E,W);
   if(warns.length)console.warn('⚠️  '+warns.join('\n  '));if(errs.length){console.error(`❌ ${errs.length} problem(s):\n  `+errs.join('\n  '));process.exit(1);}
   if(dry){console.log(`✅ valid boost for quest ${pack.boostFor} (dry run)`);process.exit(0);}
-  kvPut('boost:'+pack.boostFor,pack);console.log(`✅ published boost:${pack.boostFor} — ${Object.keys(pack.trim||{}).length} trimmed stages, ${Object.keys(pack.hints||{}).length} extra hints`);process.exit(0);}
+  kvPut('boost:'+pack.boostFor,pack);console.log(`✅ published${LOCAL?' (local)':''} boost:${pack.boostFor} — ${Object.keys(pack.trim||{}).length} trimmed stages, ${Object.keys(pack.hints||{}).length} extra hints`);process.exit(0);}
 const tax=loadTax(),byId=Object.fromEntries(tax.topics.map(t=>[t.id,t])),errs=[],warns=[];const E=(p,m)=>errs.push(`${p}: ${m}`),W=(p,m)=>warns.push(`${p}: ${m}`);
 const str=(v,p,req=true)=>{if(v==null||v===''){if(req)E(p,'required string');return false;}if(typeof v!=='string'){E(p,'must be a string');return false;}return true;};
 const strs=(a,p,min,max)=>{if(!Array.isArray(a)||a.length<min||a.length>max||!a.every(x=>typeof x==='string'&&x.trim())){E(p,`${min}-${max} non-empty strings`);return false;}if(new Set(a).size!==a.length)E(p,'items must be unique');return true;};
@@ -102,4 +103,4 @@ if(Q&&!dry&&!force){const S=kvGet('progress');const A=activeQuests(S,pack.date).
   if(A.length>=QUEST_CAP){console.error(`⛔ ${A.length}/${QUEST_CAP} quests are active (${A.join(', ')}). Not publishing a new quest.\n   Publish a catch-up boost for the oldest one instead (see LESSONS.md "Quest cap"), or pass --force.`);process.exit(3);}}
 const sum=`${pack.topics.length} ${Q?'stages':'topics'}, ${nq} items (${nGraded} graded, ${nReview} review = ${nGraded?Math.round(100*nReview/nGraded):0}%, ${nDeep} deep dive${nDeep===1?'':'s'}), formats: ${[...typesUsed].join(', ')}`;
 if(dry){console.log(`✅ valid${Q?` quest "${Q.title}"`:''}: ${sum} for ${pack.date} (dry run, nothing written)`);process.exit(0);}
-kvPut('lessons:'+pack.date,pack);console.log(`✅ published lessons:${pack.date}${Q?` quest "${Q.title}"`:''}: ${sum}`);
+kvPut('lessons:'+pack.date,pack);console.log(`✅ published${LOCAL?' (local)':''} lessons:${pack.date}${Q?` quest "${Q.title}"`:''}: ${sum}`);

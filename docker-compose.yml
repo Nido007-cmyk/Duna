@@ -1,0 +1,26 @@
+# Jane, standalone, with Docker Compose:  docker compose up -d   →  http://localhost:8787  (parent report: /parent)
+# Progress, answer logs, lesson packs, backups and exports live in the "jane-data" volume.
+services:
+  jane:
+    build: .
+    image: jane:0.2.0
+    restart: unless-stopped
+    environment:
+      LEARNER_NAME: "Explorer"           # first name or nickname
+      LEARNER_AGE: "10"                  # target age (designed for ~8-12)
+      LEARNER_GRADE: "upper elementary"  # label for the parent report and pack warnings
+      TZ: "America/Los_Angeles"
+    ports:
+      # Only this computer can reach it. To use it from a tablet on your home network, change to "8787:8787"
+      # (note: the parent page has no passcode yet).
+      - "127.0.0.1:8787:8787"
+    volumes:
+      - jane-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+volumes:
+  jane-data:

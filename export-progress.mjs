@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 // Dump the learner's progress for nightly lesson planning (read-only).
-// Usage: node export-progress.mjs [--out file.json] [--date YYYY-MM-DD] [--days 7]   (default out: exports/progress-<date>.json)
+// Usage: node export-progress.mjs [--out file.json] [--date YYYY-MM-DD] [--days 7] [--local]   (default out: exports/progress-<date>.json;
+//        with --local or STORAGE=file it reads the standalone server's DATA_DIR and writes DATA_DIR/exports/)
 // Adds weakSpots (per topic + per domain: misses, hints, slow answers, failed reviews, unsure self-checks), strengths and goDeeper suggestions.
-import fs from 'fs';import path from 'path';import {kvGet,loadTax,ptDate,DIR,activeQuests,QUEST_CAP,learnerConfig} from './lib-cli.mjs';import * as E from './src/engine.js';
+import fs from 'fs';import path from 'path';import {kvGet,loadTax,ptDate,DIR,activeQuests,QUEST_CAP,learnerConfig,outDir} from './lib-cli.mjs';import * as E from './src/engine.js';
 E.configure(learnerConfig());const L=E.learner();
 const args=process.argv.slice(2),opt=k=>args.includes(k)?args[args.indexOf(k)+1]:null;
-const date=opt('--date')||ptDate(),out=opt('--out')||path.join(DIR,'exports',`progress-${date}.json`);
+const date=opt('--date')||ptDate(),out=opt('--out')||path.join(outDir('exports'),`progress-${date}.json`);
 const g=E.graph(loadTax()),now=Date.now();
 const S=E.migrate(kvGet('progress'),g),log=kvGet('log:'+date)||[],pack=kvGet('lessons:'+date);
 const days=+(opt('--days')||7),dayList=[...Array(days)].map((_,i)=>ptDate(Date.parse(date+'T12:00:00Z')-i*864e5));

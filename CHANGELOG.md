@@ -3,6 +3,34 @@
 All notable changes to Jane are listed here. Versions follow [Semantic Versioning](https://semver.org/).
 Dates are Pacific Time.
 
+## [0.2.0] - 2026-10-17
+
+Run the full app anywhere Node 22 runs, or in Docker. No Cloudflare account needed.
+
+### Added
+- **Standalone Node server** (`npm start`): runs the same Worker code (`src/worker.js`, `src/engine.js`) with static
+  files from `public/` and **file-based storage** (one JSON file per key in `DATA_DIR`, atomic writes, one storage
+  request at a time). No runtime dependencies. Configured by env: `LEARNER_NAME`, `LEARNER_AGE`, `LEARNER_GRADE`,
+  `PORT` (8787), `HOST` (127.0.0.1), `DATA_DIR` (`./local-data`). `GET /healthz` for monitoring.
+- **Local storage for the scripts:** `export-progress.mjs`, `publish-lessons.mjs`, `backup-progress.mjs` and
+  `reset.sh` take `--local` (or `STORAGE=file`) to work against `DATA_DIR`; exports and backups go to
+  `DATA_DIR/exports/` and `DATA_DIR/backups/`.
+- **Docker:** multi-stage `Dockerfile` (build on Node 22, run on Node 22 Alpine with no npm packages), non-root `node`
+  user, `/data` volume, health check; `docker-compose.yml` with a named volume, read-only root filesystem, dropped
+  capabilities and a localhost-only port by default; `.dockerignore` keeps secrets and the learner's data out of the image.
+- **`npm test`:** end-to-end smoke test of the Node server (kid app, `/about`, `/parent`, the first pizza question,
+  publishing a quest locally and seeing it as a new quest, a local export).
+- **INSTALL.md** now covers three options: Node, Docker and Cloudflare.
+
+### Changed
+- README: hosting, architecture, getting started and roadmap updated for the Node server and Docker.
+- Cloudflare deployments are unchanged (no app code changed).
+
+### Known limitations
+- No passcode on the parent page (the Node server and Docker bind to localhost by default).
+- Single learner per deployment.
+- Nightly authoring happens outside the app, by a person or an assistant through the scripts.
+
 ## [0.1.0] - 2026-10-17
 
 First public release.
@@ -38,4 +66,5 @@ First public release.
 - Runs on Cloudflare Workers (or `npm run dev` locally) only; the standalone Node server is planned for v0.2.
   `prototype/` is the early math-only version, not the full app.
 
+[0.2.0]: https://github.com/kentlangley/Jane/releases/tag/v0.2.0
 [0.1.0]: https://github.com/kentlangley/Jane/releases/tag/v0.1.0

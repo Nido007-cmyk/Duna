@@ -8,7 +8,7 @@ on whatever scheduler they like, and write the pack by hand or with any assistan
 
 ```mermaid
 flowchart LR
-  A[Kid plays during the day<br/>answers, hints, glossary taps] -->|Workers KV<br/>progress, log:DATE| B[~1:00 AM scheduler<br/>runs export-progress.mjs]
+  A[Kid plays during the day<br/>answers, hints, glossary taps] -->|storage: KV or DATA_DIR<br/>progress, log:DATE| B[~1:00 AM scheduler<br/>runs export-progress.mjs]
   B --> C{3 quests<br/>already active?}
   C -- no --> D[Write a new quest<br/>per LESSONS.md]
   C -- yes --> E[Write a catch-up boost<br/>for the oldest quest]
@@ -34,7 +34,7 @@ own install, use any scheduler (see [Run it yourself](#run-it-yourself)).
 node export-progress.mjs          # → exports/progress-<PT date>.json (gitignored: it contains the child's data)
 ```
 The export includes:
-- **`learner`**: name, target age and grade from `wrangler.toml` `[vars]`.
+- **`learner`**: name, target age and grade from `wrangler.toml` `[vars]` (or the `LEARNER_*` env vars with `--local`).
 - **`todayLog`**: every answer of the day, plus mastered, inferred and demoted events.
 - **`weakSpots`** (last 7 days, `--days N`): first-try misses, hints, slow answers, failed reviews and "not sure"
   self-checks per topic and domain. Also `goDeeper` (with easier prerequisite steps) and `strengths` (with `stretchTo`
@@ -71,6 +71,7 @@ At most **3 quests** can be active (started and unfinished) at a time. The routi
 node publish-lessons.mjs packs/2026-10-18.json --dry-run   # validate only; fix every error and warning
 node publish-lessons.mjs packs/2026-10-18.json             # → KV lessons:2026-10-18
 node publish-lessons.mjs boost.json                        # at the cap → KV boost:<quest date>
+# Node server / Docker: add --local (or set STORAGE=file) to every command; it reads and writes DATA_DIR instead of KV.
 ```
 Nothing is written if the pack is invalid (the script exits 1 and lists every problem).
 
@@ -99,7 +100,8 @@ struggle spot that keeps coming back, or a big milestone. The parent report (`/p
 
 ## Run it yourself
 You don't need Grok Bot or any other service. The scripts are the whole interface:
-1. **Export:** `node export-progress.mjs` (needs `CLOUDFLARE_API_TOKEN` and your `wrangler.toml`, see [INSTALL.md](../INSTALL.md)).
+1. **Export:** `node export-progress.mjs` (on Cloudflare: needs `CLOUDFLARE_API_TOKEN` and your `wrangler.toml`; on the
+   Node server or Docker: add `--local`, see [INSTALL.md](../INSTALL.md)).
 2. **Author:** write `packs/<tomorrow>.json` by hand, or give the export and [LESSONS.md](../LESSONS.md) to any assistant
    you like and ask it for a pack.
 3. **Publish:** `node publish-lessons.mjs packs/<tomorrow>.json --dry-run`, then without `--dry-run`.
