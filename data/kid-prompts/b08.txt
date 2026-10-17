@@ -1,0 +1,130 @@
+504|a + b = 10. Which pair works?|a = 4, b = 6|a = 4, b = 5|a = 7, b = 4
+505|3, 7, 11, 15… what's next?|19|18|21
+506|Rule A adds 2, rule B adds 4. Starting at 0, B's 3rd term is…|12|6|8
+507|2 shirts and 3 pants. How many outfits?|6|5|9
+508|Cost = $3 × number of tickets. 4 tickets cost…|$12|$7|$34
+509|A number plus 7 is 12. Which equation fits?|n + 7 = 12|n − 7 = 12|7n = 12
+510|What does 3n mean?|3 times n|3 plus n|n minus 3
+511|"Double a number, then add 5" is…|2n + 5|n + 25|5n + 2
+512|Simplify: 2x + 3x|5x|6x|5
+513|Point (−2, 3) is to the… of the y-axis.|Left|Right|Exactly on
+514|Expand: 3(x + 2)|3x + 6|3x + 2|x + 6
+515|Which is an equation?|x + 2 = 5|x + 2|2x
+516|Start at 5, add 4 each time. 3rd term?|13|9|17
+517|Which is true?|−3 < 2|−3 > 2|−3 = 2
+518|Solve: 2x = 14|x = 7|x = 12|x = 28
+519|If a = 4, what is 3a + 1?|13|8|35
+520|Factorise: 4x + 8|4(x + 2)|4(x + 8)|2(x + 8)
+521|y = 2x makes what kind of graph?|A straight line|A circle|A zigzag
+522|Sequence 2, 5, 8, 11… the nth term is…|3n − 1|2n + 3|n + 3
+523|For y = x + 1, when x = 2, y =|3|2|1
+524|Area of a rectangle is…|Length × width|Length + width|Width − length
+525|A graph crosses zero at x = 3. One answer to the equation is…|x = 3|x = 0|x = 30
+526|Expand: (x + 1)(x + 2)|x² + 3x + 2|x² + 2|2x + 3
+527|y = x² makes what shape?|A U-shaped curve|A straight line|A circle
+528|x + y = 5 and x − y = 1. x =|3|2|4
+529|5 apples vs 3 apples. Which group has more?|5 apples|3 apples|Same
+530|You count 1, 2, 3, 4 ducks. How many ducks?|4|1|3
+531|What's one more than 7?|8|6|17
+532|Counting toys, you should touch each one…|Once|Twice|Never
+533|Which shows 3?|●●●|●●|●●●●
+534|2, 4, 6, 8… next?|10|9|12
+535|Count: ★★★★★★★★★★★★. How many?|12|10|11
+536|What comes after 59?|60|50|69
+537|Which is bigger?|9|6|Same
+538|0, 3, 6, 9… next?|12|11|10
+539|Count back by tens: 70, 60, 50…|40|45|30
+540|Count by 5s: 105, 110, 115…|120|116|125
+541|Count by 4s: 4, 8, 12…|16|14|20
+542|Count by 6s: 6, 12, 18…|24|20|22
+543|Which goes in the "fruit" group?|Banana|Carrot|Bread
+544|A tally of 𝍸 (four lines crossed) means…|5|4|10
+545|A tally chart is used to…|Count data|Draw pictures|Spell words
+546|Sorting pets into cats, dogs, and fish uses…|Categories|Fractions|Clocks
+547|8 kids like red, 3 like blue. How many more like red?|5|11|3
+548|In a bar graph, the tallest bar shows the…|Most|Least|Middle
+549|A bar graph shows 12 dogs and 7 cats. Total?|19|5|20
+550|Each ☺ = 2 kids. ☺☺☺ means…|6 kids|3 kids|5 kids
+551|Bars show 25 apples and 15 pears. Difference?|10|40|5
+552|A table shows Monday 8, Tuesday 5. Which day had more?|Monday|Tuesday|Same
+553|The value that appears most often is the…|Mode|Mean|Range
+554|Mean of 2, 4, 6?|4|6|12
+555|A line graph is best for showing…|Change over time|Favorite colors|Shapes
+557|Scores 5, 7, 9: what's the range?|4|9|21
+558|A frequency table shows…|How often things happen|The weather|Colors
+559|A scatter graph plots…|Two sets of data as dots|Only one number|Words
+560|Taller people having bigger feet is a…|Positive correlation|Negative correlation|No link
+628|Which shape has 3 sides?|Triangle|Square|Circle
+629|A ball is shaped like a…|Sphere|Cube|Cone
+630|The cat is ___ the box (inside it).|In|Above|Next to
+631|How many faces does a cube have?|6|4|8
+632|How many sticks to make a square?|4|3|5
+633|Two triangles can make a…|Square|Circle|Star
+634|Which is a solid (3-D) shape?|Cube|Square|Triangle
+635|A half turn faces you…|Backward|The same way|Sideways
+636|What shape are a cube's faces?|Squares|Circles|Triangles
+637|How many corners does a rectangle have?|4|3|5
+638|A shape with 3 straight sides is always a…|Triangle|Square|Hexagon
+639|Stacking two cubes makes a…|Rectangular prism|Sphere|Cone
+640|Two squares side by side make a…|Rectangle|Circle|Triangle
+641|How many edges does a cube have?|12|6|8
+642|Red, blue, red, blue… next?|Red|Blue|Green
+643|Turning a quarter turn clockwise from north faces…|East|West|South
+644|Which is NOT a 3-D shape?|Circle|Cylinder|Pyramid
+645|A pentagon has how many sides?|5|6|4
+646|Which shape has exactly 4 equal sides and 4 right angles?|Square|Rhombus only|Trapezoid
+647|Railroad tracks are…|Parallel|Perpendicular|Curved
+648|How many right angles make a full turn?|4|2|3
+649|An angle measures a…|Turn|Length|Weight
+650|How many lines of symmetry does a square have?|4|2|1
+651|On a grid, (3, 2) means go…|3 across, 2 up|3 up, 2 across|5 across
+652|Sliding a shape without turning is a…|Translation|Rotation|Reflection
+653|Point (0, 0) is called the…|Origin|Middle|Corner
+654|A butterfly's two sides match. That's…|Symmetry|Parallel|An angle
+655|Which net folds into a cube?|A cross of 6 squares|5 squares in a row|3 triangles
+656|Flipping a shape over a line is a…|Reflection|Translation|Rotation
+657|An angle smaller than 90° is…|Acute|Obtuse|Right
+658|A small square in a corner means…|A right angle|A circle|A mistake
+659|Is a square also a rectangle?|Yes|No|Only on Mondays
+660|A cuboid has how many faces?|6|4|8
+661|Angles around a point add to…|360°|180°|90°
+662|A shape with no parallel sides could be a…|Triangle|Rectangle|Square
+663|A full turn is…|360°|180°|90°
+664|An angle of about 120° is…|Obtuse|Acute|Reflex
+665|A line that starts at a point and goes on forever one way is a…|Ray|Segment|Circle
+666|What tool measures angles?|Protractor|Ruler|Compass
+667|Two angles 30° and 40° together make…|70°|10°|120°
+668|A regular polygon has…|All sides and angles equal|Curved sides|No corners
+669|Moving a shape 3 squares right is a…|Translation|Rotation|Reflection
+670|A rectangle's corners are each…|90°|45°|180°
+671|An angle is made by two…|Rays meeting at a point|Circles|Squares
+672|A rectangle 5 cm by 3 cm has a perimeter of…|16 cm|15 cm|8 cm
+673|A shape with 2 circles and a curved side is a…|Cylinder|Cone|Cube
+674|Two angles in a triangle are 60° and 70°. The third?|50°|60°|180°
+675|A shape with exactly one pair of parallel sides is a…|Trapezoid|Square|Circle
+676|Point (−3, −2) is in which part of the grid?|Bottom left|Top right|Top left
+677|The x-axis is the line going…|Across|Up|Diagonal
+678|The distance across a circle through the center is the…|Diameter|Radius|Area
+679|(4, 1): go across 4 and up…|1|4|0
+680|Reflecting a shape over the y-axis flips it…|Left-right|Up-down|Not at all
+681|Angles on a straight line add to…|180°|360°|90°
+682|A square pyramid has how many faces?|5|4|6
+683|Triangle base 6, height 4. Area?|12|24|10
+684|Angles in a triangle add to…|180°|360°|90°
+685|A rotation turns a shape around a…|Point|Line of words|Corner only
+686|To measure 45° you use a…|Protractor|Thermometer|Scale
+687|An isosceles triangle has…|Two equal sides|No equal sides|Four sides
+688|An angle over 180° is…|Reflex|Acute|Right
+689|Two angles make 360° at a point. One is 300°. The other?|60°|30°|180°
+690|Two triangles exactly the same shape and size are…|Congruent|Similar only|Parallel
+691|Parallel lines crossed by a line make equal…|Alternate angles|Circles|Lengths
+692|Circle radius 1. Area is about…|3.14|1|6.28
+693|A shape enlarged ×2 is…|Similar|Congruent|Smaller
+694|What tool draws circles?|Compass|Protractor|Ruler only
+695|In a right triangle, sin = opposite ÷…|Hypotenuse|Adjacent|Area
+696|Right triangle sides 3 and 4. Longest side?|5|7|6
+697|Which word means "the same amount"?|Equal|More|Fewer
+698|Adding 9 is quick if you add 10 then…|Take away 1|Add 1|Double it
+699|Which tool helps you count to 20?|Counters or fingers|A hammer|A spoon
+700|Solving a word problem, first figure out…|What it's asking|The answer|The page number
+701|"3 friends share 6 cookies" is a…|Division problem|Shape problem|Time problem

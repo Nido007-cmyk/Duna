@@ -1,0 +1,166 @@
+0|Which of these uses AI?|Face unlock on a phone|A wooden spoon|A paper map
+1|Which one is secretly a computer?|A smartphone|A pencil|A rock
+2|What does a real robot vacuum do?|Cleans floors by itself|Flies to Mars|Cooks dinner
+3|Which device is "smart"?|A speaker that answers questions|A plain chair|A rubber ball
+4|You make a sandwich in the wrong order. What happens?|It might not work out|Nothing ever changes|The bread disappears
+5|When you ask Siri something, what does it do first?|Listens to your words|Reads your mind|Turns itself off
+6|How does a game character often "decide" what to do?|It follows rules from the code|It feels moody|It asks you secretly
+7|Why can an AI make mistakes?|It only knows what it was shown|It gets sleepy|It is always perfect
+8|Which of these is data a computer can use?|A photo|A wish|A dream you forgot
+9|What are humans better at than machines?|Kindness and common sense|Adding a million numbers fast|Never getting tired
+10|How does a computer learn to spot cats?|By seeing lots of cat examples|By petting a cat|By guessing randomly
+11|An AI sorts fruit by color. What is it spotting?|Patterns|Feelings|Jokes
+12|Why does YouTube keep showing you similar videos?|It tracks what you click|It's random magic|Your friends choose them
+13|Should an AI alone decide who gets a job?|No, people should check it|Yes, AI is never wrong|Only on Tuesdays
+14|What does training a big AI use a lot of?|Energy and water|Glitter|Pencils
+15|How is AI changing jobs?|Some jobs change and new ones appear|All jobs vanish tomorrow|Nothing changes at all
+16|Which is data an app might collect about you?|Where you go|Your thoughts|Your dreams
+17|An AI learned mostly from one group's faces. What might happen?|It works worse for others|It works better for everyone|It stops working on cats
+18|What is a deepfake?|A fake video made by AI|A very deep swimming pool|A magic trick card
+19|Designing a fair AI, what rule matters most?|Treat everyone fairly|Make it super fast only|Keep it secret
+20|What's a smart way to think about future AI?|Hope for good, watch for risks|Ignore it completely|Believe it can do anything
+397|When is the best time to ask for help?|After you've tried and are still stuck|Before reading the question|Never
+398|You finish your work. What's a smart next step?|Check if it makes sense|Throw it away|Hide it
+399|Something feels really hard. What helps you learn?|Keep trying and learn from mistakes|Quit right away|Copy a friend
+400|You feel confused reading. What should you do?|Notice it and reread or ask|Pretend you get it|Skip the whole book
+401|Before a big task, what should you do first?|Make a simple plan|Start randomly|Wait until tomorrow
+402|Starting a new topic, what's a great first question?|What do I already know?|Is it lunch yet?|Who cares?
+403|Learning about frogs, what helps it stick?|Link it to things you know|Forget old facts|Read it once fast
+404|2, 4, 6, 8… what comes next?|10|9|12
+405|What's a great way to check you understand?|Explain it to someone|Read it once|Hide your notes
+406|Your first way of solving isn't working. What now?|Try a different way|Keep doing the same thing|Give up
+407|A pattern goes 5, 10, 15, 20. What's the rule?|Add 5 each time|Add 10 each time|Double it
+408|You got a question wrong. What's the best move?|Find out why|Hide it|Never try again
+409|You learned to estimate in math. Where else could it help?|Shopping|Nowhere|Only in math class
+410|What does a curious learner ask?|Why is this true?|Is this over yet?|Can I skip it?
+411|Before studying spelling, what should you pick?|A strategy, like look-cover-write|Nothing|A random word
+412|After finishing a project, what's smart to ask?|What helped me most?|When is recess?|Who finished first?
+413|How can you find what you don't know yet?|Test yourself on each part|Only do easy parts|Guess
+414|Which is a good learning goal?|Learn my 7 times table this week|Be good at stuff|Win everything
+415|You make cookies and someone pays for one. You are the…|Seller|Buyer|Banker
+416|Which is a SERVICE?|A haircut|A toy car|A loaf of bread
+417|You're making bracelets to sell. What helps people buy them?|Make them nice and useful|Make them messy|Hide them
+418|Who is your customer at a lemonade stand?|The person buying lemonade|The lemons|Your cup
+419|What makes a good seller?|Being honest and fair|Tricking people|Being rude
+420|Lemonade costs $2 to make and sells for $5. What's left?|$3 profit|$7 profit|$2 profit
+421|Where do great business ideas often come from?|Spotting an everyday problem|Copying homework|Sleeping all day
+422|Your bake sale idea flops. What do entrepreneurs do?|Learn and try again|Quit forever|Blame customers
+423|What should a simple business plan include?|What you sell and who buys it|Your favorite color|Nothing at all
+424|How can people find out about your dog-walking business?|Posters and word of mouth|Keep it secret|Hide your phone number
+425|Why do businesses use teams?|People share tasks and skills|To make more mess|Teams are boring
+426|What makes a business ethical?|Being honest and treating workers well|Lying about prices|Polluting rivers
+427|What should a great pitch start with?|The problem your idea solves|Your shoe size|A long boring list
+428|Mikaila Ulmer started a lemonade business at age 4. What does that show?|Kids can be entrepreneurs|Only adults can start businesses|Lemonade is illegal
+429|What happens when a small business scales up?|It makes more and hires people|It shrinks|It closes
+430|A social enterprise uses business to…|Help people or the planet|Only get rich|Trick customers
+431|What is a supply chain?|The steps a product takes to reach you|A chain for bikes|A store's door lock
+432|You pay $5 for a $3 toy. How much change?|$2|$8|$3
+433|Which is worth more?|A quarter|A penny|A nickel
+434|Why do people have jobs?|To earn money and help others|To get bored|Because it's a game
+435|What's a safe place to keep money?|A piggy bank or wallet|On the sidewalk|In the trash
+436|Which is a NEED?|Food|A video game|A fancy hat
+437|Why do people save money?|To buy something bigger later|To throw it away|To lose it
+438|Why do people use money?|To trade for things they need|To decorate walls|To eat
+439|What do ads try to do?|Make you want to buy things|Give you free money|Help you sleep
+440|Why keep money in a bank?|It's safe and can grow|Banks eat money|It disappears
+441|You get $10. A budget helps you…|Plan how to spend it|Lose it faster|Forget it
+442|How can a kid earn money?|Doing chores or jobs|Wishing for it|Hiding coins
+443|What does "fair trade" mean?|Workers get paid fairly|Everything is free|Trades happen at fairs
+444|You pay $1.00 for a 65¢ snack. How much change?|35¢|45¢|25¢
+445|Which is a way to pay without cash?|A debit card|A leaf|A drawing of money
+446|When you borrow money, what must you do?|Pay it back, often with extra|Keep it forever|Forget about it
+447|You want a $60 skateboard. What's a smart plan?|Save a bit every week|Spend everything now|Hope it appears
+448|Why do countries trade with each other?|To get things they can't make|To be mean|For no reason
+449|If lots of people want a toy but there are few, the price usually…|Goes up|Goes down|Disappears
+450|A message says you won a prize — send your password! What do you do?|Don't reply, tell an adult|Send it fast|Share it with friends
+451|What do taxes help pay for?|Schools and roads|Candy for everyone|Nothing
+307|How do we know about ancient Egypt?|Archaeologists dug up clues|Someone guessed|A movie told us
+308|What did ancient Egyptians believe happened after death?|Life went on in an afterlife|Nothing at all|You became a cat
+309|What is the big river in Egypt?|The Nile|The Mississippi|The Amazon
+310|What did many ordinary Egyptians do for work?|Farm near the Nile|Drive cars|Fly planes
+311|What were hieroglyphs?|Picture writing|A type of pyramid|A kind of boat
+312|What were Egyptian kings called?|Pharaohs|Presidents|Emperors of China
+313|Why were pyramids built?|As tombs for pharaohs|As schools|As shopping malls
+314|What is a mummy in ancient Egypt?|A preserved body|A type of bread|A pharaoh's pet
+315|Did ancient Egypt happen before or after the Romans?|Before|After|At the same time as cars
+316|How were pyramid stones moved?|Workers used ramps and sledges|Helicopters|Magic spells
+317|Who was Ra?|The sun god|A pharaoh's dog|A river
+318|Who was at the very top of Egyptian society?|The pharaoh|Farmers|Slaves
+319|What can tomb paintings tell us?|How people lived long ago|Tomorrow's weather|Nothing
+320|What was the first step of mummification?|Washing the body|Painting the pyramid|Building a boat
+321|What helped people finally read hieroglyphs?|The Rosetta Stone|A mummy's map|A pharaoh's diary
+322|Ancient Egypt was split into which two parts?|Upper and Lower Egypt|North and South Rome|East and West Nile
+323|Which idea came from ancient Egypt?|A 365-day calendar|The internet|Pizza
+324|Who was the last pharaoh of Egypt?|Cleopatra|Tutankhamun|Julius Caesar
+325|In Egyptian paintings, people are often shown…|Sideways with eyes facing you|Upside down|As cartoons
+326|What helps you put pharaohs in order?|A timeline|A recipe|A shopping list
+327|Why could Egypt trade so much?|Farms grew extra food|They had money trees|They had no farms
+328|In Egyptian belief, the heart was weighed against…|A feather|A rock|A pyramid
+329|Egyptians believed their pharaoh was…|A living god|An ordinary farmer|A foreign king
+330|How do scientists study mummies today without unwrapping?|CT scans|Peeling them|Guessing
+331|Egyptian builders were great at which subject?|Math and measuring|Video games|Skiing
+332|Which is a clue about ancient Egypt?|Writing carved on temples|A TV show|A comic book
+333|Which neighbor did Egypt trade and fight with?|Nubia|Canada|Japan
+334|Who really built the pyramids?|Skilled Egyptian workers|Aliens|Dinosaurs
+335|Who conquered Egypt near the end?|Rome|The Vikings|The Aztecs
+336|Greece and Italy are next to which sea?|The Mediterranean|The Arctic|The Caribbean
+337|How was a Roman kid's life different from yours?|No electricity or phones|They had tablets|They had cars
+338|Where did Greek gods live?|Mount Olympus|The Moon|Mount Everest
+339|In the myth, what monster did Theseus fight?|The Minotaur|A dragon named Bob|A giant squid
+340|What were Roman soldiers famous for building?|Straight roads|Skyscrapers|Railroads
+341|In the myth, who raised Romulus and Remus?|A wolf|A bear|A lion
+342|Where did the first Olympic Games happen?|Olympia in Greece|Rome|Egypt
+343|What did Athens invent?|Democracy|Pizza|The telephone
+344|Sparta was most famous for its…|Tough warriors|Painters|Libraries
+345|Who was Boudicca?|A queen who fought Rome|A Roman emperor|An Egyptian pharaoh
+346|What was the forum in a Roman town?|A market and meeting place|A bedroom|A farm
+347|Which volcano buried Pompeii?|Mount Vesuvius|Mount Fuji|Mount Rushmore
+348|Who was king of the Greek gods?|Zeus|Ra|Thor
+349|The Romans called Zeus by what name?|Jupiter|Mars|Neptune
+350|What did the ancient Greeks invent?|Theatre plays|Movies|Video games
+351|At Thermopylae, who held back the Persian army?|300 Spartans|The Vikings|Roman gladiators
+352|What was a group of Roman soldiers called?|A legion|A team|A flock
+353|How far did Alexander the Great's empire reach?|From Greece to India|Just one town|Across the Atlantic
+354|How do we learn about Roman life?|Ruins, objects and writings|Guessing|Video recordings
+355|What helped the Western Roman Empire fall?|Invasions and money troubles|A meteor|A flood of pizza
+356|Which Greek column is plain and sturdy?|Doric|Corinthian|Ionic
+357|Which idea comes from Greece and Rome?|Democracy and laws|Smartphones|Fast food
+358|Which Greek is called the father of medicine?|Hippocrates|Hercules|Homer
+359|Which language did the Romans speak?|Latin|English|Spanish
+360|In the Roman Republic, who chose the leaders?|Citizens voted|The emperor picked|A lottery
+361|Whose stories are often missing from Roman history?|Enslaved people and women|Emperors|Generals
+362|Who could vote in ancient Athens?|Only free men citizens|Everyone|Only kids
+363|Is the story of Troy myth or history?|Maybe a bit of both|Totally proven true|Made up last year
+364|Which leader's rise helped end the Roman Republic?|Julius Caesar|Cleopatra|Alexander
+365|Two friends tell a story differently. Why?|They saw it from different views|One is a robot|Stories never change
+366|How do we know about the past?|From evidence like objects|We just guess|From dreams
+367|A diary written at the time is a…|Primary source|Secondary source|Fake source
+368|Two sources disagree. What should a historian do?|Check more sources|Pick one randomly|Ignore both
+369|Before trusting an old letter, what should you ask?|Who wrote it and why?|What color is it?|Is it long?
+370|Why judge people in the past by their own time?|They knew different things then|They were all bad|They were all perfect
+371|"The castle was built in 1200" is…|Evidence|An opinion|An interpretation
+372|What did medieval kings do?|Ruled and made laws|Played video games|Farmed alone
+373|Who did a knight serve?|A lord|A dragon|A wizard
+374|What did peasants mostly wear?|Wool and linen|Silk and gold|Plastic
+375|What did ordinary medieval people eat a lot of?|Bread and stew|Pizza|Sushi
+376|Robin Hood stole from the rich to give to…|The poor|The king|Himself
+377|Where did the Vikings come from?|Scandinavia|Egypt|Australia
+378|What was a medieval village roof often made of?|Thatch (straw)|Glass|Metal
+379|What is a castle's moat?|A water ditch around it|A tower|A secret door
+380|Who settled Britain after the Romans left?|The Anglo-Saxons|The Aztecs|The Egyptians
+381|Who won the Battle of Hastings in 1066?|William the Conqueror|King Arthur|Robin Hood
+382|The earliest castles were made from…|Wood and earth|Steel|Glass
+383|Who was at the bottom of the medieval pyramid of power?|Peasants|Knights|Lords
+384|What siege weapon flung rocks at castles?|A trebuchet|A bulldozer|A cannon ball pit
+385|What was the Black Death?|A deadly plague|A dark castle|A knight's armour
+386|Where did Crusaders travel to?|The Holy Land|America|China
+387|Where did monks live?|Monasteries|Castles|Pyramids
+388|Which king fought the Vikings in England?|Alfred the Great|Julius Caesar|Tutankhamun
+389|Gothic cathedrals are famous for…|Tall pointed arches|Flat roofs|Being underground
+390|What was "trial by ordeal"?|A painful test to decide guilt|A fair jury|A game show
+391|Magna Carta said even the king must…|Obey the law|Wear a crown|Eat first
+392|Which idea comes from medieval times?|Universities|Smartphones|Airplanes
+393|Which place had a "Golden Age" of science in medieval times?|Baghdad|Antarctica|Las Vegas
+394|Who invented the printing press?|Gutenberg|Shakespeare|Newton
+395|What were medieval guilds?|Groups of workers in a trade|Castle guards|Dragons
+396|What did many medieval noblewomen do?|Ran big estates|Fought as knights|Flew kites

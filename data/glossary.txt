@@ -1,0 +1,439 @@
+# term|emoji|kid definition (<= ~15 words). Add synonyms with "/" (first is shown). Built into public/glossary.json by build.mjs.
+phishing|🎣|A trick message that tries to steal your passwords, money or private info.
+password|🔑|A secret word or code that keeps your account locked to others.
+online|🌐|Connected to the internet.
+scam|🚨|A trick to take your money or stuff.
+deepfake|🎭|A fake video or picture made by a computer to look real.
+algorithm|🧾|A step-by-step set of instructions to solve a problem.
+artificial intelligence/AI|🤖|Computer programs that can learn and make smart guesses.
+robot|🤖|A machine that can do jobs by following instructions.
+computer|💻|A machine that stores information and follows instructions super fast.
+device|📱|A gadget like a phone, tablet or computer.
+filter bubble|🫧|When apps only show you stuff you already like, so you miss other views.
+fraction|🍕|A part of a whole, like 3/8 of a pizza.
+numerator|⬆️|The top number of a fraction: how many parts you have.
+denominator|⬇️|The bottom number of a fraction: how many equal parts in the whole.
+common denominator|🤝|The same bottom number, so you can add or compare fractions.
+equivalent|🟰|Worth the same amount, like 1/2 and 2/4.
+simplify/simplest form|✂️|Make a fraction use the smallest numbers possible, like 4/8 → 1/2.
+mixed number|🥧|A whole number plus a fraction, like 2 1/2.
+improper fraction|🔝|A fraction where the top is bigger than the bottom, like 7/4.
+decimal|🔢|A number with a dot to show parts, like 0.5.
+tenths|🔟|Parts of a whole cut into 10 equal pieces.
+hundredths|💯|Parts of a whole cut into 100 equal pieces.
+percent/percentage|💯|"Out of 100." 50% means 50 out of every 100.
+ratio|⚖️|A way to compare amounts, like 2 cups flour for every 1 cup sugar.
+proportion|📐|When two ratios are equal, so things grow or shrink together.
+rate|⏱️|How much of something happens per unit, like miles per hour.
+unit rate|1️⃣|How much for just ONE, like the price of one pack.
+compound unit|🚗|A unit made from two units, like miles per hour.
+speed|💨|How far something goes in a certain time.
+digit|🔢|One of the symbols 0-9 used to write numbers.
+place value|🏠|What a digit is worth because of where it sits in the number.
+estimate|🤔|A smart guess that's close to the real answer.
+rounding/round|🎯|Changing a number to a nearby easier number, like 48 → 50.
+sum|➕|The answer when you add.
+difference|➖|The answer when you subtract.
+product|✖️|The answer when you multiply.
+quotient|➗|The answer when you divide.
+remainder|🧩|What's left over after dividing equally.
+factor|🧱|A number that divides into another evenly, like 3 for 12.
+multiple|🔁|What you get when you multiply a number, like 4, 8, 12.
+prime number/prime|🥇|A number with only two factors: 1 and itself, like 7.
+array|🔲|Objects lined up in equal rows and columns.
+equation|🟰|A math sentence with an equals sign, like 3 + x = 7.
+expression|🧮|Numbers and symbols without an equals sign, like 3 × 4.
+variable|❓|A letter that stands for an unknown number.
+algebra|🔣|Math that uses letters to stand for numbers.
+formula|📜|A rule written with symbols, like area = length × width.
+order of operations|🪜|The rule for which math step to do first.
+brackets/parentheses|( )|Symbols ( ) that show which part to do first.
+negative number|🥶|A number less than zero, like -3.
+integer|🔢|A whole number, positive, negative or zero.
+sequence|➡️|A list of numbers or things in a pattern.
+pattern|🔁|Something that repeats or changes by a rule.
+coordinates|📍|Two numbers that show a point's spot on a grid.
+quadrant|➕|One of the four parts of a grid split by two lines.
+axis|📏|One of the main lines on a graph.
+graph|📈|A picture that shows numbers or data.
+bar graph/bar chart|📊|A graph that uses bars to compare amounts.
+line graph|📈|A graph with dots joined by lines to show change.
+pictogram|🖼️|A chart that uses little pictures to show data.
+tally|✋|Quick marks for counting, grouped in fives.
+average|⚖️|Add all the numbers, then divide by how many there are.
+median|🎯|The middle number when you put them in order.
+probability|🎲|How likely something is to happen.
+likely|👍|Probably going to happen.
+impossible|🚫|Can never happen.
+certain|✅|Will definitely happen.
+outcome|🎯|One possible result, like heads on a coin.
+correlation|🔗|When two things tend to change together.
+scatter plot/scatter graph|✨|A graph of dots that shows how two things are linked.
+perimeter|🧱|The distance all the way around a shape.
+area|🟩|How much flat space a shape covers.
+volume|🧊|How much space something takes up inside.
+capacity|🥛|How much a container can hold.
+mass|⚖️|How much stuff is in an object.
+weight|🏋️|How hard gravity pulls on something.
+temperature|🌡️|How hot or cold something is.
+thermometer|🌡️|A tool that measures how hot or cold something is.
+meter/metre|📏|A length a bit longer than a big step.
+liter/litre|🥤|A unit for liquids, like a big water bottle.
+gram|🪶|A tiny unit of mass, like a paperclip.
+kilogram|🧱|1,000 grams, about a bag of sugar.
+convert/conversion|🔄|Change from one unit to another, like feet to inches.
+duration|⏳|How long something lasts.
+angle|📐|The turn between two lines that meet.
+right angle|🔲|A square corner, exactly 90 degrees.
+acute angle/acute|🔺|An angle smaller than a right angle.
+obtuse angle/obtuse|🔻|An angle bigger than a right angle.
+degrees|🌀|Units for measuring angles or temperature.
+protractor|📐|A half-circle tool for measuring angles.
+parallel|🛤️|Lines that stay the same distance apart and never meet.
+perpendicular|➕|Lines that meet to make a square corner.
+polygon|🔷|A flat shape with straight sides.
+triangle|🔺|A shape with 3 straight sides.
+quadrilateral|🟦|A shape with 4 straight sides.
+rectangle|▭|A 4-sided shape with four square corners.
+hexagon|⬡|A shape with 6 sides.
+symmetry/symmetrical|🦋|When one half matches the other half like a mirror.
+line of symmetry|🪞|A fold line where both halves match exactly.
+rotation|🔄|Turning a shape around a point.
+reflection|🪞|Flipping a shape like in a mirror.
+translation|➡️|Sliding a shape without turning it.
+vertex/vertices|📍|A corner where lines or edges meet.
+cube|🧊|A 3D shape with 6 equal square faces.
+diameter|⭕|A line straight across a circle through the middle.
+radius|🔘|From the middle of a circle to its edge.
+circumference|⭕|The distance around a circle.
+photosynthesis|🌱|How plants use sunlight, water and air to make their own food.
+producer|🌿|A living thing that makes its own food, like a plant.
+consumer|🍽️|A living thing that eats other things for energy.
+herbivore|🥕|An animal that eats only plants.
+carnivore|🥩|An animal that eats other animals.
+omnivore|🍔|An animal that eats plants and animals.
+predator|🦊|An animal that hunts other animals.
+prey|🐰|An animal that gets hunted.
+decomposer|🍄|A living thing that breaks down dead stuff, like mushrooms.
+food chain|⛓️|Shows who eats whom, starting with a plant.
+food web|🕸️|Many food chains linked together.
+ecosystem|🌳|Living things and their surroundings working together.
+habitat|🏡|The natural home of an animal or plant.
+interdependence|🤝|When living things need each other to survive.
+biodiversity|🌈|The variety of different living things in a place.
+species|🦁|A group of living things that are the same kind.
+adaptation|🦎|A body part or habit that helps a living thing survive.
+camouflage|🦎|Colors or patterns that help an animal hide.
+hibernation/hibernate|🐻|A deep winter sleep some animals take.
+migration/migrate|🦅|Moving to a new place each season.
+nocturnal|🦉|Awake at night and asleep in the day.
+endangered|⚠️|At risk of disappearing forever.
+extinct/extinction|🦤|Gone forever; none are left alive.
+invasive species/invasive|🐍|A living thing that moves in and harms its new home.
+symbiosis|🤝|Two different living things living together and helping each other.
+organism|🧫|Any living thing.
+tissue|🧵|A group of similar cells working together.
+mammal|🐋|A warm-blooded animal with hair that feeds babies milk.
+reptile|🦎|A cold-blooded animal with scales, like a snake.
+amphibian|🐸|An animal that lives in water, then on land, like a frog.
+vertebrate|🦴|An animal with a backbone.
+invertebrate|🐛|An animal without a backbone.
+insect|🐞|A small animal with 6 legs and 3 body parts.
+life cycle|🔄|The stages a living thing goes through as it grows.
+metamorphosis|🦋|A big body change, like caterpillar to butterfly.
+chrysalis|🐛|The case a caterpillar makes while becoming a butterfly.
+pollination/pollen|🐝|Moving pollen between flowers so plants can make seeds.
+reproduction|🐣|How living things make babies or new plants.
+inherited/inherit|🧬|Passed down from parents, like eye color.
+genes|🧬|Tiny instructions in your cells that come from your parents.
+evolution/evolve|🐒|How living things slowly change over many, many years.
+natural selection|🏆|Living things best fit for their home survive and pass on traits.
+fossil|🦴|The remains or print of a living thing from long ago.
+paleontologist/palaeontologist|🦖|A scientist who studies fossils and dinosaurs.
+skeleton|💀|All the bones that hold up your body.
+muscle|💪|Body parts that pull bones so you can move.
+lungs|🫁|Organs that take in air when you breathe.
+digestion/digestive|🍎|How your body breaks food down for energy.
+circulation/circulatory|❤️|Blood moving around your body, pumped by your heart.
+nutrients|🥦|The good stuff in food your body needs to grow.
+bacteria|🦠|Tiny living things; some help you, some make you sick.
+germs|🦠|Tiny bugs that can make you sick.
+immune system|🛡️|Your body's defense team that fights germs.
+vaccine|💉|Medicine that trains your body to fight a germ.
+neuron|🧠|A nerve cell that sends messages in your brain and body.
+puberty|🌱|When a kid's body starts changing into a grown-up's.
+microscope|🔬|A tool that makes tiny things look big.
+telescope|🔭|A tool that makes far-away things look closer.
+particles|⚛️|Tiny bits that everything is made of.
+atom|⚛️|The tiniest building block of matter.
+molecule|🧬|A few atoms stuck together.
+solid|🧊|Matter that keeps its own shape, like ice.
+liquid|💧|Matter that flows and takes the shape of its container.
+gas|💨|Matter that spreads out to fill any space, like steam.
+states of matter|🧊|The forms matter takes: solid, liquid or gas.
+melting/melt|🫠|Changing from a solid to a liquid.
+freezing/freeze|🥶|Changing from a liquid to a solid.
+evaporation/evaporate|♨️|When a liquid turns into a gas, like a puddle drying up.
+condensation|💦|When a gas cools and turns into liquid drops.
+water vapor/vapour|♨️|Water as an invisible gas in the air.
+dissolve|🥄|When a solid mixes into a liquid and seems to vanish.
+solution|🧃|A mix where one thing dissolves into another.
+mixture|🥗|Different things mixed together that can be separated.
+conservation of mass|⚖️|In a change, no stuff is lost; the mass stays the same.
+reversible|↩️|A change you can undo, like melting ice.
+irreversible|🔥|A change you can't undo, like burning toast.
+chemical reaction|🧪|When substances change into something new.
+transparent|🪟|You can see clearly through it.
+translucent|🌫️|Lets some light through, but you can't see clearly.
+opaque|🧱|Light can't pass through it at all.
+conductor|⚡|A material that lets heat or electricity pass through easily.
+insulator|🧤|A material that blocks heat or electricity.
+renewable|♻️|Won't run out, like sun and wind power.
+electricity|⚡|Energy that flows through wires to power things.
+circuit|🔋|A loop that electricity flows around.
+battery|🔋|Stores energy and pushes electricity around a circuit.
+voltage|⚡|How hard the battery pushes the electricity.
+resistance|🚧|How much something slows electricity down.
+static electricity|🎈|Electricity that builds up, like a balloon sticking to hair.
+magnet/magnetic|🧲|An object that pulls on iron and steel.
+gravity|🍎|The force that pulls things toward each other, like toward Earth.
+friction|🛷|A force that slows things when they rub together.
+air resistance|🪂|Air pushing back on moving things, like a parachute.
+balanced forces/balanced|⚖️|Pushes and pulls that are equal, so nothing changes.
+unbalanced|➡️|When one push or pull is stronger, so motion changes.
+pressure|🗜️|How much force presses on an area.
+vibration|〰️|A quick back-and-forth shake that can make sound.
+wave|🌊|Energy that travels in a moving pattern.
+pitch|🎵|How high or low a sound is.
+refraction|🥢|Light bending as it moves into water or glass.
+shadow|👤|A dark shape made when something blocks light.
+solar system|☀️|The Sun and all the planets and things circling it.
+planet|🪐|A big round world that circles a star.
+orbit|🛰️|The curved path one thing travels around another.
+axis of rotation|🌍|Earth leans a bit, which makes seasons.
+seasons|🍂|Parts of the year with different weather: spring, summer, fall, winter.
+constellation|✨|A group of stars that makes a picture in the sky.
+comet|☄️|An icy space rock with a glowing tail.
+dwarf planet|🪐|A small round world, like Pluto.
+astronaut|👩‍🚀|A person trained to travel into space.
+atmosphere|🌫️|The blanket of air around Earth.
+climate|🌍|The usual weather in a place over many years.
+climate change|🌡️|Earth's weather slowly changing, mostly warming, over many years.
+greenhouse effect/greenhouse gas|🏠|Gases trap heat around Earth like a cozy blanket.
+carbon dioxide/CO2|💨|A gas we breathe out and plants breathe in.
+oxygen|🫧|The gas in air that you need to breathe.
+water cycle|💧|Water evaporating, making clouds, raining and flowing back again.
+erosion|🏞️|Wind or water slowly wearing away rock and soil.
+weathering|🪨|Rocks breaking into smaller pieces over time.
+sedimentary rock/sedimentary|🪨|Rock made from layers of sand and mud pressed together.
+igneous rock/igneous|🌋|Rock made when hot melted rock cools.
+metamorphic rock/metamorphic|💎|Rock changed by heat and pressure deep underground.
+crust|🌎|Earth's hard outer layer.
+tectonic plates|🧩|Giant pieces of Earth's crust that slowly move.
+volcano|🌋|An opening where hot melted rock bursts out of Earth.
+magma|🔥|Hot melted rock under the ground.
+lava|🌋|Melted rock that has come out of a volcano.
+earthquake|🫨|Shaking ground when Earth's plates suddenly move.
+dormant|😴|Sleeping for now, like a quiet volcano.
+seismic|📈|About earthquakes and ground shaking.
+equator|🌐|An imaginary line around Earth's middle.
+tundra|❄️|A cold, treeless land where the ground stays frozen.
+glacier|🧊|A giant, slow-moving river of ice.
+rainforest|🌴|A thick, rainy forest full of plants and animals.
+hypothesis|💡|A smart guess you can test.
+experiment|🧪|A test to find out if your idea is right.
+fair test|⚖️|An experiment where you change only one thing.
+evidence|🔎|Facts or clues that show something is true.
+observation/observe|👀|Something you notice using your senses.
+conclusion|🏁|What you decide at the end, based on evidence.
+noun|🏷️|A word for a person, place or thing.
+verb|🏃|An action word, like run or think.
+adjective|🎨|A word that describes a noun, like shiny.
+adverb|🐢|A word that tells how, when or where, like slowly.
+pronoun|👉|A word like he, she or it that replaces a noun.
+preposition|📦|A word showing where or when, like under or after.
+conjunction|🔗|A joining word, like and, but or because.
+determiner|☝️|A word before a noun, like the, a or some.
+clause|🧩|Part of a sentence with a subject and a verb.
+phrase|💬|A small group of words that isn't a full sentence.
+tense|⏰|Shows when something happens: past, present or future.
+past tense|⏪|Shows something already happened, like jumped.
+active voice|💪|The subject does the action: "The dog chased the ball."
+passive voice|🙃|The action happens to the subject: "The ball was chased."
+modal verb|🤔|Helper verbs like can, might or should.
+plural|👯|More than one, like cats.
+possession/possessive|🎒|Shows who owns something, like Sam's bag.
+apostrophe|’|A little mark for owning (Sam's) or short words (don't).
+contraction|🤏|Two words squished together, like can't.
+comma|,|A little mark that tells you to pause.
+punctuation|❗|Marks like . , ? ! that help you read sentences.
+prefix|⬅️|Letters added to the start of a word, like un- in undo.
+suffix|➡️|Letters added to the end of a word, like -ful.
+root word|🌳|The main part of a word that holds its meaning.
+syllable|👏|A beat in a word; "pizza" has two.
+homophone|👂|Words that sound the same but mean different things, like there/their.
+synonym|👯|A word that means the same as another, like big and large.
+antonym|↔️|A word that means the opposite, like hot and cold.
+thesaurus|📗|A book or app that lists words with similar meanings.
+vocabulary|💬|All the words you know and use.
+context|🔍|The words around a word that help explain it.
+simile|🐆|Compares two things using like or as: "fast like a cheetah."
+metaphor|🌟|Says one thing IS another: "The classroom was a zoo."
+figurative language/figurative|🎨|Words that mean more than their exact meaning, like similes.
+personification|🗣️|Giving human actions to things: "The wind whispered."
+idiom|🐱|A saying that doesn't mean exactly what it says.
+narrator|🎙️|The voice telling the story.
+point of view|👁️|Who is telling the story and how they see it.
+unreliable narrator|🤥|A storyteller you can't fully trust.
+moral|🦊|The lesson a story teaches.
+fable|🐢|A short story, often with animals, that teaches a lesson.
+myth|🐉|An old story that explains nature or tells of gods and heroes.
+genre|📚|A type of story, like mystery or fantasy.
+fiction|🐉|Made-up stories.
+non-fiction/nonfiction|📰|True writing about real things.
+summary/summarize|📝|A short retelling of just the main ideas.
+paragraph|📄|A group of sentences about one idea.
+persuasive|📣|Trying to convince someone to agree with you.
+argument|🗣️|Reasons that support what you think.
+audience|👥|The people who read or listen to you.
+formal|🎩|Polite, careful language for school or speeches.
+informal|🧢|Relaxed, everyday language for friends.
+Standard English|📘|The careful kind of English used in school, books and news.
+debate|🗣️|A friendly contest where sides argue for and against an idea.
+presentation|🎤|A short talk you give to a group.
+dialogue|💬|Characters talking in a story.
+reliable|👍|Can be trusted to be true.
+bias|⚖️|Leaning toward one side without being fair.
+cognitive bias|🧠|A brain shortcut that can make you guess wrong.
+pharaoh|👑|A king or queen of Ancient Egypt.
+pyramid|🔺|A giant stone tomb with a pointy top, built in Egypt.
+afterlife|✨|Life after death that Ancient Egyptians believed in.
+mummy/mummification|🧻|A body dried and wrapped to last a very long time.
+hieroglyphs/hieroglyphics|𓂀|Ancient Egyptian writing made of little pictures.
+tomb|⚱️|A room or building where someone is buried.
+archaeology/archaeologist|⛏️|Studying the past by digging up old objects.
+artifact|🏺|An object made by people long ago.
+BC|⏪|Years before year 1; bigger BC numbers are longer ago.
+timeline|📅|A line showing events in the order they happened.
+civilization|🏙️|A big group of people with cities, rules and culture.
+empire|👑|Many lands ruled by one powerful leader.
+emperor|🤴|The ruler of an empire.
+republic|🗳️|A country where people choose their leaders.
+democracy|🗳️|Government where people vote to make choices.
+citizen|🧑‍🤝‍🧑|A member of a country or city.
+gladiator|⚔️|A fighter who battled for crowds in Ancient Rome.
+medieval|🏰|From the Middle Ages, about 500 to 1500 AD.
+knight|🛡️|A medieval soldier who rode a horse and served a king.
+castle|🏰|A big, strong stone building to protect people.
+siege|🏹|Surrounding a castle or city to force it to give up.
+Magna Carta|📜|A 1215 paper that made even kings follow the law.
+Vikings|⛵|Sea raiders and traders from Scandinavia long ago.
+printing press|🖨️|A machine that printed books fast, invented around 1440.
+philosopher|🤔|A thinker who asks big questions about life.
+legacy|🎁|Something left behind that people still use or remember.
+historian|📚|A person who studies the past.
+primary source|📜|Something made at the time, like a diary.
+secondary source|📖|Something written later about the past.
+budget|📒|A plan for how to spend and save money.
+profit|💰|Money you keep after paying your costs.
+borrow|🤲|Take something now and give it back later.
+tax/taxes|🏛️|Money people pay the government for roads and schools.
+entrepreneur|🚀|Someone who starts their own business.
+customer|🛍️|A person who buys things.
+supply and demand/supply|📦|How much there is vs how much people want it.
+economy|🏦|How a place makes, buys and sells things.
+empathy|🤗|Feeling and understanding what someone else feels.
+sympathy|💐|Feeling sorry for someone who is having a hard time.
+emotions|😊|Feelings like happy, sad, angry or scared.
+resilience|🌱|Bouncing back after something hard.
+growth mindset|🧠|Believing your brain grows when you practice and try hard.
+self-talk|💬|The things you say to yourself in your head.
+peer pressure|👥|When friends push you to do something.
+assertive|💪|Saying what you need clearly and kindly.
+bullying|🚫|Hurting someone on purpose again and again.
+ethics/ethical|⚖️|Thinking about what is right and fair.
+stereotype|🏷️|An unfair idea that everyone in a group is the same.
+discrimination|🚫|Treating people unfairly because of who they are.
+strategy|🧠|A plan for how to do something.
+spaced review|📅|Practicing again after a few days so you remember longer.
+comparative|📏|A word that compares two things, like bigger or faster.
+superlative|🏆|A word that means the most, like biggest or fastest.
+fragment|🧩|A broken-off piece of a sentence that isn't complete.
+run-on sentence/run-on|🏃|Two sentences smushed together without the right punctuation.
+colon|:|A mark (:) that introduces a list or explanation.
+semicolon|;|A mark (;) that joins two closely linked sentences.
+hyphen|➖|A short dash that joins words, like well-known.
+subjunctive|🌈|A verb form for wishes or ideas: "If I were a pirate..."
+motivation|🔥|The reason someone wants to do something.
+trait|🌟|A quality someone has, like brave or kind.
+allusion|🔗|A quick mention of a famous story, person or event.
+firsthand account|👀|A story told by someone who was there.
+secondhand account|📖|A story told by someone who heard about it later.
+prose|📄|Normal writing in sentences, not poems.
+drama|🎭|A story written to be acted out, like a play.
+poem/poetry|📜|Writing with rhythm, sound and feeling, often in lines.
+stanza|📝|A group of lines in a poem, like a paragraph.
+script|🎬|The written words actors say in a play or show.
+paraphrase|🔁|Say someone's idea again in your own words.
+quote/quotation|❝|The exact words someone said or wrote.
+multimedia|🎞️|Using text, pictures, sound and video together.
+viewpoint|👁️|How someone sees or thinks about something.
+revise/revising|🔧|Changing your writing to make it better.
+edit/editing|✏️|Fixing spelling, punctuation and grammar mistakes.
+research|🔎|Looking for facts to learn about a topic.
+narrative|📖|A story, true or made-up.
+architecture|🏛️|The design and building of buildings.
+engineering|⚙️|Using science and math to design and build things.
+Latin|🏛️|The language of Ancient Rome; many English words come from it.
+Christianity|✝️|A religion based on the teachings of Jesus.
+goal|🎯|Something you want to do or reach.
+trade|🤝|Swapping goods or money between people or countries.
+inverse operation/inverse|🔄|The opposite math step, like × undoes ÷.
+number line|📏|A line with numbers in order that helps you count and compare.
+mental math|🧠|Solving math in your head.
+times tables|✖️|Lists of multiplication facts, like 7 × 8 = 56.
+number sentence|🟰|Math written as a sentence, like 4 + 5 = 9.
+substitute|🔁|Swap a letter for a number in a formula.
+notation|✍️|Special symbols for writing math.
+Venn diagram|⭕|Overlapping circles that sort things into groups.
+complementary events|☯️|Two results where one must happen, like heads or tails.
+theoretical probability|📐|What should happen, worked out with math.
+experimental probability|🧪|What actually happened when you tried it many times.
+similar shapes|🔍|Same shape but different sizes.
+scale|🗺️|How much smaller or bigger a drawing is than the real thing.
+24-hour time/24-hour clock|🕐|Telling time from 0 to 23, like 15:00 for 3 pm.
+kilometer/kilometre|🛣️|1,000 meters, about a 12-minute walk.
+mile|🚗|About 1.6 kilometers.
+line plot|📍|A number line with X marks showing how often each value appears.
+identity|🪪|Who you are and what makes you, you.
+belonging|🏡|Feeling accepted as part of a group.
+allyship/ally|🤝|Standing up for people who are treated unfairly.
+inequality|⚖️|When things aren't fair or equal between people.
+conflict|⚡|A fight or disagreement.
+feedback|💬|Comments that help you improve.
+leadership/leader|🧭|Guiding and helping a group toward a goal.
+coping|🧘|Ways you handle hard feelings.
+stress|😰|A tight, worried feeling when things feel like a lot.
+habit|🔁|Something you do so often it becomes automatic.
+adversity|⛰️|Hard times or big challenges.
+cladogram|🌳|A branching diagram showing how living things are related.
+relative dating|🪨|Telling which rock layer is older by its position.
+classification key|🔑|Yes/no questions that help you name a living thing.
+mutation|🧬|A change in a living thing's genes.
+collide/collision|💥|Crash into each other.
+energy transfer/transfer|🔀|Energy moving from one place or thing to another.
+efficiency|⚙️|How much energy is used well instead of wasted.
+lever|🪵|A bar that turns on a point to lift heavy things easily.
+pulley|🪢|A wheel and rope that makes lifting easier.
+gear|⚙️|A toothed wheel that turns other wheels.
+Newton's laws|🍎|Three rules about how forces make things move.
+resultant force|➡️|The total of all forces pushing or pulling on something.
+physical change|🧊|A change in shape or state, not a new substance.
+periodic table|🧪|A chart of all the elements, the building blocks of matter.
+element|⚛️|A pure substance made of only one kind of atom.
+acid|🍋|A sour substance, like lemon juice.
+alkali|🧼|The opposite of an acid, like soap.
+pH|🧪|A 0-14 scale showing how acidic or alkaline something is.
+polymer|🧵|A material made of long chains of molecules, like plastic.
+recycling/recycle|♻️|Turning old things into new things instead of trash.
+finite|⏳|Will run out someday, like oil.
