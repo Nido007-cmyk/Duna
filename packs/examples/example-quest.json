@@ -1,0 +1,432 @@
+{
+ "date": "2026-01-01",
+ "title": "Captain Comet's Lost Treasure (example)",
+ "quest": {
+  "title": "Captain Comet's Lost Treasure",
+  "emoji": "🏴‍☠️",
+  "hook": "Captain Comet hid her treasure across 5 islands. Solve each clue, then beat the Fraction Kraken!",
+  "medal": {
+   "name": "Comet Treasure Medal",
+   "emoji": "💎"
+  }
+ },
+ "topics": [
+  {
+   "topicId": "mt_W5euSyU2sO",
+   "review": true,
+   "format": "mystery",
+   "stage": {
+    "name": "Phishing Lagoon",
+    "emoji": "🎣"
+   },
+   "intro": {
+    "emoji": "🎣",
+    "title": "Phishing Lagoon",
+    "story": "Sneaky pirates fish for passwords here. Spot their tricks and sail on!"
+   },
+   "questions": [
+    {
+     "type": "picture",
+     "prompt": "Quick one! Which message is phishing?",
+     "choices": [
+      {
+       "label": "\"You won! Send your password!\"",
+       "pic": "🎣"
+      },
+      {
+       "label": "\"Practice is at 4 today.\"",
+       "pic": "⚽"
+      },
+      {
+       "label": "\"Happy birthday, Sam!\"",
+       "pic": "🎂"
+      }
+     ],
+     "answer": "\"You won! Send your password!\"",
+     "hint": "Who would ever need your password?",
+     "explanation": "Real friends and companies never ask for your password. That one is a phishing trick."
+    },
+    {
+     "type": "truefalse",
+     "seconds": 30,
+     "prompt": "Speed round! Is it SAFE online?",
+     "statements": [
+      [
+       "Keep your password a secret.",
+       true
+      ],
+      [
+       "Click a prize link from a stranger.",
+       false
+      ],
+      [
+       "Tell a grown-up about a weird message.",
+       true
+      ],
+      [
+       "Share your password with a new friend.",
+       false
+      ]
+     ],
+     "hint": "Passwords stay secret. Strangers with prizes are a red flag.",
+     "explanation": "Keep passwords secret, skip stranger links, and tell a grown-up."
+    }
+   ]
+  },
+  {
+   "topicId": "mt_hJW7hVflm3",
+   "deepDive": true,
+   "format": "story",
+   "stage": {
+    "name": "Simile Swamp (deep dive)",
+    "emoji": "🐊"
+   },
+   "intro": {
+    "emoji": "🐊",
+    "title": "Simile Swamp",
+    "story": "The swamp guard only talks in similes and metaphors. Learn the trick to pass!"
+   },
+   "questions": [
+    {
+     "type": "why",
+     "emoji": "🔍",
+     "title": "The 'like or as' trick",
+     "body": "A simile compares with LIKE or AS. A metaphor says one thing IS another. Look for like or as!"
+    },
+    {
+     "type": "blank",
+     "prompt": "A simile uses the word like or ___.",
+     "choices": [
+      "as",
+      "is",
+      "and"
+     ],
+     "answer": "as",
+     "hint": "\"As brave as a lion.\"",
+     "explanation": "Similes use like or as."
+    },
+    {
+     "type": "mc",
+     "prompt": "\"You run like a cheetah.\" Simile or metaphor?",
+     "choices": [
+      "Simile",
+      "Metaphor",
+      "Neither"
+     ],
+     "answer": "Simile",
+     "hint": "Spot the word like.",
+     "explanation": "It uses like, so it's a simile."
+    },
+    {
+     "type": "match",
+     "prompt": "Match each sentence to its type!",
+     "pairs": [
+      [
+       "Quiet as a mouse",
+       "Uses AS: simile"
+      ],
+      [
+       "Sleeps like a log",
+       "Uses LIKE: simile"
+      ],
+      [
+       "Time is money",
+       "Says IS: metaphor"
+      ]
+     ],
+     "hint": "Look for like or as first.",
+     "explanation": "\"As\" and \"like\" make similes. \"Time is money\" is a metaphor."
+    },
+    {
+     "type": "truefalse",
+     "seconds": 30,
+     "prompt": "Speed round! Is it a SIMILE?",
+     "statements": [
+      [
+       "Her eyes were stars.",
+       false
+      ],
+      [
+       "Cold as ice.",
+       true
+      ],
+      [
+       "He swims like a fish.",
+       true
+      ],
+      [
+       "My room is a pigsty.",
+       false
+      ]
+     ],
+     "hint": "Simile = like or as.",
+     "explanation": "Cold as ice and swims like a fish are similes. The others are metaphors."
+    },
+    {
+     "type": "creative",
+     "prompt": "Finish the simile: The pirate was as brave as a ___.",
+     "answer": "lion",
+     "hint": "Any brave animal or hero works. Just one or two words!",
+     "explanation": "Lions are famous for being brave, so we say brave as a lion!",
+     "acceptedAnswers": [
+      "tiger",
+      "bear",
+      "knight",
+      "hero",
+      "superhero",
+      "dragon",
+      "shark",
+      "wolf",
+      "soldier",
+      "firefighter",
+      "warrior",
+      "eagle"
+     ],
+     "notAnswers": [
+      "pirate",
+      "brave"
+     ],
+     "placeholder": "Any brave thing!",
+     "celebrate": "Nice! A lion is a classic, but \"{given}\" works too! 🦁"
+    },
+    {
+     "type": "fact",
+     "emoji": "🎵",
+     "title": "Songs love similes",
+     "body": "Tons of songs use similes, like \"shine bright like a diamond.\" Listen for them today!"
+    }
+   ]
+  },
+  {
+   "topicId": "mt_YQ64pzcLDl",
+   "deepDive": true,
+   "format": "story",
+   "stage": {
+    "name": "Who-Which Bridge (deep dive)",
+    "emoji": "🌉"
+   },
+   "intro": {
+    "emoji": "🌉",
+    "title": "Who-Which Bridge",
+    "story": "The bridge troll loves extra info. Add it with who, which, or that to cross!"
+   },
+   "questions": [
+    {
+     "type": "why",
+     "emoji": "🧩",
+     "title": "Who, which, that",
+     "body": "A relative clause adds extra info about a noun. Use WHO for people, WHICH or THAT for things."
+    },
+    {
+     "type": "picture",
+     "prompt": "Which word fits a PERSON?",
+     "choices": [
+      {
+       "label": "who",
+       "pic": "🧑"
+      },
+      {
+       "label": "which",
+       "pic": "📦"
+      },
+      {
+       "label": "where",
+       "pic": "📍"
+      }
+     ],
+     "answer": "who",
+     "hint": "People get \"who.\"",
+     "explanation": "Use who for people."
+    },
+    {
+     "type": "blank",
+     "prompt": "My friend, ___ loves pizza, ate three slices.",
+     "choices": [
+      "who",
+      "which",
+      "what"
+     ],
+     "answer": "who",
+     "hint": "Is a friend a person or a thing?",
+     "explanation": "A friend is a person, so it's who."
+    },
+    {
+     "type": "blank",
+     "prompt": "The ship, ___ was huge, sailed away.",
+     "choices": [
+      "which",
+      "who",
+      "when"
+     ],
+     "answer": "which",
+     "hint": "Is a ship a person or a thing?",
+     "explanation": "A ship is a thing, so it's which."
+    },
+    {
+     "type": "match",
+     "prompt": "Match each start to its ending!",
+     "pairs": [
+      [
+       "The pirate who",
+       "has a wooden leg"
+      ],
+      [
+       "The parrot that",
+       "flaps its green wings"
+      ],
+      [
+       "The chest, which",
+       "is full of gold,"
+      ]
+     ],
+     "hint": "Wooden leg? Green wings? Full of gold? Who has which?",
+     "explanation": "The pirate has a wooden leg, the parrot flaps green wings, the chest is full of gold!"
+    },
+    {
+     "type": "blank",
+     "prompt": "Finish it: The captain, ___ was brave, led us.",
+     "answer": "who",
+     "hint": "The captain is a person.",
+     "explanation": "Use who for people: the captain, who was brave.",
+     "choices": [
+      "who",
+      "which",
+      "where"
+     ]
+    }
+   ]
+  },
+  {
+   "topicId": "mt_ZhKuYCbXz1",
+   "stage": {
+    "name": "Starlight Lookout",
+    "emoji": "⭐"
+   },
+   "intro": {
+    "emoji": "🔭",
+    "title": "Starlight Lookout",
+    "story": "Captain Comet steers by the stars. Why do some look brighter?"
+   },
+   "questions": [
+    {
+     "type": "why",
+     "emoji": "🔦",
+     "title": "Closer looks brighter",
+     "body": "A flashlight looks brighter up close. The Sun is just a star that's REALLY close to you!",
+     "template": {
+      "type": "orbit",
+      "planets": [
+       [
+        "🌍",
+        "Earth"
+       ],
+       [
+        "⭐",
+        "Far star"
+       ]
+      ],
+      "highlight": "Earth",
+      "note": "The Sun is a star. Other stars are way farther."
+     }
+    },
+    {
+     "type": "truefalse",
+     "seconds": 30,
+     "prompt": "Speed round about stars!",
+     "statements": [
+      [
+       "The Sun is a star.",
+       true
+      ],
+      [
+       "Stars are tiny like sparks.",
+       false
+      ],
+      [
+       "Closer stars can look brighter.",
+       true
+      ],
+      [
+       "The Sun is the biggest star.",
+       false
+      ]
+     ],
+     "hint": "The Sun only looks big because it's close.",
+     "explanation": "The Sun is a medium star. Distance changes how bright stars look."
+    }
+   ]
+  },
+  {
+   "topicId": "mt_lvaSGHwvQ5",
+   "format": "boss",
+   "stage": {
+    "name": "BOSS: The Fraction Kraken",
+    "emoji": "🐙"
+   },
+   "intro": {
+    "emoji": "🐙",
+    "title": "The Fraction Kraken!",
+    "story": "The Kraken guards the treasure. Hit it with fraction power 3 times in a row!"
+   },
+   "questions": [
+    {
+     "type": "fracbar",
+     "prompt": "Shade 1/2 of 3/4 of the bar! (Hint: 8 parts)",
+     "parts": 8,
+     "answer": "3/8",
+     "hint": "3/4 is 6 parts. Half of 6 parts is…",
+     "explanation": "1/2 × 3/4 = 3/8, so shade 3 of 8 parts."
+    },
+    {
+     "type": "numeric",
+     "prompt": "You eat 2/3 of half a pizza. What fraction is that?",
+     "template": {
+      "type": "pizza",
+      "slices": 6,
+      "eaten": 3
+     },
+     "answer": "1/3",
+     "hint": "Multiply 2/3 × 1/2.",
+     "explanation": "2/3 × 1/2 = 2/6 = 1/3 of the pizza."
+    },
+    {
+     "type": "numeric",
+     "prompt": "The map says walk 3/4 mile, 4 times. How far?",
+     "answer": "3",
+     "hint": "3/4 × 4. How many quarters is that?",
+     "explanation": "4 × 3/4 = 12/4 = 3 miles."
+    },
+    {
+     "type": "mc",
+     "prompt": "Final hit! 1/2 of 1/4 is…",
+     "choices": [
+      "1/8",
+      "1/6",
+      "2/4"
+     ],
+     "answer": "1/8",
+     "hint": "Multiply the bottoms: 2 × 4.",
+     "explanation": "1/2 × 1/4 = 1/8. Treasure unlocked!"
+    }
+   ]
+  }
+ ],
+ "terms": {
+  "Kraken": {
+   "d": "A giant sea monster from old sailor stories.",
+   "e": "🐙"
+  },
+  "captain": {
+   "d": "The leader of a ship and its crew.",
+   "e": "🧑‍✈️"
+  },
+  "relative clause": {
+   "d": "Extra info about a noun, starting with who, which or that.",
+   "e": "🧩"
+  },
+  "troll": {
+   "d": "A grumpy creature from fairy tales who guards bridges.",
+   "e": "🧌"
+  }
+ }
+}

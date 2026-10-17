@@ -1,0 +1,206 @@
+# Lesson packs (Quests)
+
+A lesson pack is the day's hand-written (or nightly-generated) content for Landon. It lives in Workers KV
+(namespace `LANDON_KV`) under the key `lessons:YYYY-MM-DD`, where the date is the **Pacific Time** calendar day.
+
+## How the app uses it
+For every item, the engine picks a topic (spaced review ~15-20% → today's pack topics, interleaved with
+placement diagnostics → frontier topics), then chooses content in this order:
+
+1. **Today's pack**: the next unanswered question for that topic (the intro card is shown before the topic's first question).
+2. **Procedural math generators** (fractions, decimals/percents, ×/÷, +/−, place value...) for Mathematics topics.
+3. **Kid MCQ**: a precomputed 3-option question for the topic (`kq`/`ka`/`kw` in `public/tax.json`, sourced
+   from `data/kid-prompts/b*.txt`, one line per topic: `index|question|right|wrong1|wrong2`). All 1,344 non-generator topics have one.
+4. **Self-check** (last resort): the topic's short `self` prompt, answered "Got it! / Sort of / Not yet".
+   The raw Marble `assessmentPrompt` and `evidence` are never shown to Landon.
+
+Pack topics are served even if the map shows them as locked. Engine spaced reviews use generators or self-checks;
+a started quest replaces them with its own `review` stages. On the map, tapping a green (ready) or blue stone opens
+its card with **Explore now!** (a 2-3 question mini-session on that topic, then back to the map); orange (review due)
+stones get **Practice now**.
+
+## Every pack is a Quest
+A pack is one **quest**: a title, a short story hook, a path of **stages** (one per topic or activity, in order),
+a **boss finale** (the last stage, `"format":"boss"`) and a special **quest medal**. When Landon opens the app and
+today's quest hasn't been started, he gets the animated treasure-chest/scroll "New quest!" reveal with a Start button;
+the Quests tab (red dot = new quest) lists today's and past quests with progress. While a started quest is running,
+the app serves its stages in order (no placement diagnostics or engine reviews in between). Finishing every item of
+every stage awards the quest medal (shown in Trophies). Old packs without `quest` still work as plain adventures.
+
+## Quest cap: max 3 active quests
+A quest is **active** once started and until finished. At most **3** can be active.
+- The app shows `🗺️ x/3` on the quest strip and Quests tab. It plays the quest he picked ("Keep going" / "Play this
+  quest"), otherwise the **oldest** active one.
+- When 3 are active, today's new quest is **paused**: no "New quest!" reveal, it shows "🔒 Waiting" in the Quests
+  tab, and Jane says "Finish your quest to unlock the next one!" pointing at the oldest unfinished quest.
+- `export-progress.mjs` reports `quests` (active count, per-quest progress, remaining stages, `nextStep`).
+- `publish-lessons.mjs` **refuses** a new quest when 3 are active (exit code 3) unless `--force`.
+- **At the cap, the nightly job publishes a catch-up boost instead** of a new quest, for the OLDEST active quest:
+```json
+{"boostFor":"2026-10-17","emoji":"🚀","message":"You're SO close, captain! Two short stops, then the Kraken!",
+ "trim":{"mt_kLQOzZYrd5":3},                       // max graded questions in that stage (shorter remaining stages)
+ "hints":{"mt_lvaSGHwvQ5":"Multiply tops, multiply bottoms!"},  // extra hint put before each hint of that stage
+ "terms":{"kraken":{"d":"A giant sea monster from old sailor stories.","e":"🐙"}}}
+```
+  `node publish-lessons.mjs boost.json` validates it and writes `boost:<quest date>`; the app shows the message on the
+  quest strip and applies the trims/hints right away. Trim only stages with lots left (see `remainingStages`), never
+  the boss below 3.
+
+## How to plan tomorrow's quest (rules)
+0. Check `quests.nextStep` first: at the cap, write a boost (above), not a quest.
+Run `node export-progress.mjs` and read `weakSpots` first. Then:
+1. **Go deeper where he struggles.** Every topic in `weakSpots.goDeeper` (misses, hints, slow answers, failed
+   reviews, "not yet / sort of" self-checks) gets a **deep dive** stage (`"deepDive": true`): a "Why it works" card
+   first, then **4-5 graded questions** that start one notch easier and climb back to the level he missed, using at
+   least 3 different formats. Easier-to-target steps = smaller numbers, one idea per step, the same trick in a new
+   setting, then the original hard question last. Use `easierSteps` (hard prerequisites) for ideas.
+2. **Keep stretching strengths.** For each `weakSpots.strengths` domain, add a **new** topic from `stretchTo` (or the
+   frontier), short (2-3 questions), with a picture/template.
+3. **Never below the learner's level.** The app targets 5th grade (~age 10, `TARGET_AGE` in `src/engine.js`). No topics starting below age 8 (the publisher warns), no
+   baby wording. "Easier" means smaller steps, not younger content.
+4. **About 15-20% review.** Mark review stages `"review": true` (topics already mastered, especially `reviewDue` and
+   anything mastered yesterday). The publisher reports the review share of graded questions and warns outside 10-25%.
+   A first-try correct review answer moves the topic's memory box up; a miss brings the review back tomorrow.
+5. **Make it interactive and illustrated.** Mix formats (the publisher warns if fewer than 3 interactive ones), add a
+   `scene` or `template` to most stages, and drop in a **fun-fact** card or two.
+6. **Keep it short:** kid voice (below), boss last, **~8-9 stops and ~28 graded questions** (publisher warns above 30 graded or 9 stops). Spread them out: deep dives 4-5, stretch and review stages 1-3, boss 3-4.
+
+## Writing style (required for every pack)
+Jane talks **to** Landon, never about him. Every prompt must be:
+- **Second person**: "you / your" ("Your $40 game is 50% off…"), never "Can Landon…" or "he".
+- **Short**: 15 words or fewer, one idea per question. Intros and the quest hook: 1-2 sentences (≤ 25 / ≤ 30 words).
+  Cards: ≤ 30 words. Speed-round statements: ≤ 12 words.
+- **5th-grade words**; no jargon unless the question teaches it.
+- **Fun Jane voice**: "Hey Landon!", "Quick one!", pirates, dragons, treasure. Keep it inside the word limit.
+- **3 options** for multiple choice (1 right, 2 clearly wrong but plausible).
+- Hints nudge, don't give away; explanations are 1-2 short sentences.
+
+Good: `"Hey Landon! Can you name one way people guess risk wrong?"`
+Bad: `"Can Landon explain why taking a risk isn't always irrational — and describe one cognitive bias…"`
+
+## Fill-ins: never one right answer when many make sense
+- **Rule:** never use a one-right-answer fill-in (`text`, typed `blank`) when many answers make sense. Use 3-choice
+  `mc` (or `blank` with `choices`) with exactly one clearly correct option, or `creative`.
+- If you really need one specific word, add a clear clue that points to it ("starts with L", "the king of the jungle")
+  and list every sensible spelling in `acceptedAnswers`.
+- Creative prompts (similes, metaphors, describing words, "give an example", "name a…") are always `creative`. Any
+  sensible word counts: not empty, a real-looking word, not junk ("idk", "asdf"), and not the subject itself
+  (`notAnswers`). Then celebrate it: `"celebrate": "Nice! A lion is a classic, but \"{given}\" works too! 🦁"`.
+- Its `explanation` must say WHY the example works, kindly: "Lions are famous for being brave, so we say brave as a lion!"
+- `publish-lessons.mjs` warns on fill-ins that look open-ended and on one-answer fill-ins.
+- **After 2 misses** the app shows the answer as a **learning moment** with the explanation and +2 points. It is
+  logged (`learningMoment: true`) but doesn't count as a wrong answer on his record or step him down.
+
+## Key terms (glossary)
+Key terms in questions, intros, cards, hints and explanations get a playful dotted underline. Hover (desktop) or tap
+(phone, tap elsewhere to close) shows a short kid definition. Tapping a term never counts as an answer, and answer
+buttons and inputs are never underlined. Only the first time a term shows up in an item is marked (whole word, any
+case, plurals ok). The shared glossary is `data/glossary.txt` (`term/synonym|emoji|definition`, ~440 terms covering the
+taxonomy prompts and packs), built into `public/glossary.json` by `build.mjs`. A pack (or boost) can add its own words:
+```json
+"terms": { "Kraken": {"d": "A giant sea monster from old sailor stories.", "e": "🐙"}, "mph": "Miles per hour." }
+```
+Definitions: ≤ 15 words, 5th-grade words, "you" where natural (the publisher warns). **Define every new word a quest
+introduces.** Lookups are logged (`event: "term"`), and `export-progress.mjs` lists them in `termsLookedUp`. Reinforce
+those words in the next quest (use them in a question, or add a fun-fact card).
+
+## Formats
+| type | what Landon does | fields (besides `prompt`, `hint`, `explanation`) |
+|---|---|---|
+| `mc` | taps one of 3 buttons | `choices`, `answer` (exactly one choice) |
+| `numeric` | types a number (12, 0.75, 3/8, "$20", "6 weeks") | `answer`, `tolerance?` |
+| `text` | types a word (only when ONE word clearly fits) | `answer`, `acceptedAnswers?` (fuzzy: plural/singular, a/an/the, small typos) |
+| `creative` | types his own idea, graded generously: any sensible word/phrase counts, and Jane celebrates it | `answer` (your example), `acceptedAnswers?`, `notAnswers?` (e.g. the subject word), `block?`, `minLength?`(2), `maxWords?`(5), `celebrate?` ("{given}", "{answer}"), `placeholder?` |
+| `blank` | fill in the blank: prompt has `___`; tapped word flies into the gap (or typed if no choices; add `"creative": true` for any-sensible-answer) | `choices?`(2-4), `answer`, `acceptedAnswers?` |
+| `picture` | taps the right picture | `choices: [{label, pic}]` (2-4; `pic` = emoji or `<svg>`), `answer` = a label |
+| `order` | drags cards (or ▲▼) into order | `items` in the CORRECT order (3-6; the app shuffles); no `answer` |
+| `match` | taps left, then its partner on the right | `pairs: [[left,right]...]` (3-5, unique, no `=` or `\|`) |
+| `truefalse` | true/false speed round, one statement at a time, speed bonus | `statements: [[text,true/false]...]` (3-8, mix both), `seconds?` (default 30) |
+| `numberline` | drags a 🚩 to a value | `min`, `max`, `step?`(1), `answer` (on a step), `labels?` [[value,label]] |
+| `fracbar` | taps pieces of a bar to shade a fraction | `parts` (2-12), `answer` like "3/8" (equivalents accepted) |
+| `why` | "💡 Why it works" card, tap Got it | `title`, `body`, `emoji?` (no prompt/hint/answer) |
+| `fact` | "🤩 Fun fact!" card | `title`, `body`, `emoji?` |
+Cards earn 2 points and never count for or against mastery.
+
+**Illustrations** (optional on any question): `scene` = a few emoji (`"🚗💨 10 miles ⏱️ 2 hours"`) or an inline
+`<svg viewBox=...>` (no scripts, event handlers, external images; < 12k chars), and/or `template`:
+`{"type":"pizza","slices":8,"eaten":3}` · `{"type":"fracbar","parts":4,"shaded":1,"label":"..."}` ·
+`{"type":"numberline","min":0,"max":10,"marks":[[3,"you"]]}` · `{"type":"timeline","events":[["3100 BC","Egypt united","👑"],...]}` ·
+`{"type":"foodweb","chain":[["🌱","Grass"],["🐰","Rabbit"],["🦊","Fox"]],"note":"..."}` · `{"type":"orbit","planets":[["🌍","Earth"],["🔴","Mars"]],"highlight":"Earth"}`.
+
+## Schema
+```jsonc
+{
+  "date": "2026-10-17",                     // required, YYYY-MM-DD (PT). publish-lessons --date overrides it
+  "title": "Captain Comet's Lost Treasure",  // shown on the parent page
+  "quest": {                                 // makes the pack a Quest (strongly recommended)
+    "title": "Captain Comet's Lost Treasure", "emoji": "🏴‍☠️",
+    "hook": "Captain Comet hid her treasure across 10 islands. Solve each clue, then beat the Fraction Kraken!",
+    "medal": { "name": "Comet Treasure Medal", "emoji": "💎" }
+  },
+  "terms": { "Kraken": {"d": "A giant sea monster from old sailor stories.", "e": "🐙"} },  // optional extra glossary words
+  "topics": [                                // the quest path, in order; topicIds unique
+    {
+      "topicId": "mt_hJW7hVflm3",            // a Marble topic id (public/tax.json or the export's frontier)
+      "stage": { "name": "Simile Swamp", "emoji": "🐊" },   // required in quests: the stop on the path
+      "format": "story",                     // quest | story | mystery | minigame | timed | boss | explore
+      "deepDive": true,                      // weak area: why card + 4-5 graded steps, mastery needs 3 in a row
+      "review": false,                       // true = review stage for an already-mastered topic
+      "intro": { "emoji": "🐊", "title": "Simile Swamp", "story": "The swamp guard only talks in similes..." },
+      "questions": [ /* any of the formats above, asked in order */ ]
+    }
+    // ... last stage: "format": "boss" (HP hearts, 3 in a row to win)
+  ]
+}
+```
+A pack topic is mastered after 2 first-try correct answers in a row (3 for `boss` and `deepDive`), or after all its
+graded questions if fewer. In a quest the stage still plays to the end after mastery.
+
+## Example deep dive (Similes & Metaphors, for a topic that showed up in `weakSpots.goDeeper`)
+```json
+{"topicId":"mt_hJW7hVflm3","deepDive":true,"format":"story","stage":{"name":"Simile Swamp (deep dive)","emoji":"🐊"},
+ "intro":{"emoji":"🐊","title":"Simile Swamp","story":"The swamp guard only talks in similes and metaphors. Learn the trick to pass!"},
+ "questions":[
+  {"type":"why","emoji":"🔍","title":"The 'like or as' trick","body":"A simile compares with LIKE or AS. A metaphor says one thing IS another. Look for like or as!"},
+  {"type":"blank","prompt":"A simile uses the word like or ___.","choices":["as","is","and"],"answer":"as","hint":"\"As brave as a lion.\"","explanation":"Similes use like or as."},
+  {"type":"mc","prompt":"\"You run like a cheetah.\" Simile or metaphor?","choices":["Simile","Metaphor","Neither"],"answer":"Simile","hint":"Spot the word like.","explanation":"It uses like, so it's a simile."},
+  {"type":"mc","prompt":"\"The swamp is a giant soup.\" Simile or metaphor?","choices":["Metaphor","Simile","Neither"],"answer":"Metaphor","hint":"Is there a like or as?","explanation":"No like or as. It says the swamp IS soup: a metaphor."},
+  {"type":"match","prompt":"Match each sentence to its type!","pairs":[["Quiet as a mouse","Uses AS: simile"],["Sleeps like a log","Uses LIKE: simile"],["Time is money","Says IS: metaphor"]],"hint":"Look for like or as first.","explanation":"..."},
+  {"type":"truefalse","seconds":30,"prompt":"Speed round! Is it a SIMILE?","statements":[["Her eyes were stars.",false],["Cold as ice.",true],["He swims like a fish.",true],["My room is a pigsty.",false]],"hint":"Simile = like or as.","explanation":"..."},
+  {"type":"text","prompt":"Finish the simile: The pirate was as brave as a ___.","answer":"lion","accept":["tiger","bear","knight","hero","dragon"],"hint":"Pick a brave animal!","explanation":"Anything brave works, like a lion!"},
+  {"type":"fact","emoji":"🎵","title":"Songs love similes","body":"Tons of songs use similes, like \"shine bright like a diamond.\" Listen for them today!"}]}
+```
+Why it's a good deep dive: it names the trick first, starts with the easiest step (just the word "as"), repeats the
+idea in 5 different formats, and ends with him making his own simile.
+
+## Publishing
+```bash
+cd jane   # the repo checkout
+node publish-lessons.mjs packs/2026-10-17.json --dry-run      # validate only
+node publish-lessons.mjs packs/2026-10-17.json                # validate + write lessons:2026-10-17
+node publish-lessons.mjs my-pack.json --date 2026-10-18       # override the date
+node publish-lessons.mjs boost.json                           # catch-up boost (when 3 quests are active)
+node publish-lessons.mjs packs/x.json --force                 # publish a new quest even at the cap (avoid)
+```
+The script exits with code 1 and lists every problem if the pack is invalid, for example an unknown topic id, an
+mc answer that isn't one of the choices, or a missing hint or explanation. Nothing is written in that case.
+
+## Nightly loop
+```bash
+node export-progress.mjs                    # → exports/progress-<today PT>.json
+node export-progress.mjs --out /tmp/p.json --date 2026-10-16
+```
+The export contains `weakSpots` (per topic and per domain over the last 7 days, `--days N`: first-try misses that
+needed a `hints`, final `misses`, `slow` answers > 30 s, `failedReviews`, `unsure` self-checks, a `weakScore`, plus
+`goDeeper` suggestions with easier prerequisite steps and `strengths` with `stretchTo` topics), `summary` (counts per state and subject), `stats`, `todayLog` (every answer plus `mastered`,
+`inferred` and `demoted` events), `learnedToday`, `frontier` (ready and learning topics, closest to age 10.5 first,
+with full topic details, prerequisites and unlocks), `reviewDue`, and the raw `progress` record.
+Write tomorrow's quest from `weakSpots`, `frontier` and `reviewDue` using the rules above, dry-run, fix every warning, then publish it.
+
+Both scripts call the repo's `wrangler` (Node 22; a portable Node in `~/.local/node-v22.20.0-linux-x64` is used if present), read the account and KV ids from `wrangler.toml`, and need `CLOUDFLARE_API_TOKEN` set in the environment (never commit it).
+
+## Testing without touching Landon's progress
+Open `https://<your-worker>.<your-subdomain>.workers.dev/api/sandbox?on=1` (sets a 24 h cookie, redirects to the app), then
+`fetch('/api/sandbox/reset',{method:'POST',body:JSON.stringify({offsetDays:1})})` copies his real progress into
+`sandbox:*` keys and shifts the sandbox clock (1 = see tomorrow's quest). `/api/sandbox?on=0` returns to the real app.
+`/#quest-preview` replays the quest reveal without changing anything.
