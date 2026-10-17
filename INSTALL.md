@@ -2,7 +2,7 @@
 
 ## Prerequisites
 - **Node.js 22+** (`node -v`). Any install works. The scripts also pick up a portable Node at
-  `~/.local/node-v22.20.0-linux-x64` if it exists.
+  `~/.local/node-v22.20.0-linux-x64` if it exists (or wherever `NODE22_BIN` points).
 - **A Cloudflare account** (the free plan is fine) with Workers and Workers KV.
 - **wrangler** (the Cloudflare CLI). It's a dev dependency, so `npm install` installs the pinned version.
 

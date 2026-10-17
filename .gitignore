@@ -3,6 +3,14 @@ wrangler.toml
 .dev.vars
 .env
 .env.*
+.dev.vars*
+wrangler.*.toml
+.npmrc
+*.p12
+*.pfx
+*.crt
+id_rsa*
+id_ed25519*
 *.pem
 *.key
 # --- the learner's personal data ---

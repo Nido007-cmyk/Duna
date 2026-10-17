@@ -1,7 +1,8 @@
 // Shared helpers for the nightly CLI scripts: run wrangler (Node 22) against the JANE_KV namespace.
-import {execFileSync} from 'child_process';import fs from 'fs';import path from 'path';import {fileURLToPath} from 'url';
+import {execFileSync} from 'child_process';import fs from 'fs';import path from 'path';import os from 'os';import {fileURLToPath} from 'url';
 export const DIR=path.dirname(fileURLToPath(import.meta.url));
-const NODE22=path.join(process.env.HOME||'/home/box','.local/node-v22.20.0-linux-x64/bin');
+// Optional portable Node 22: set NODE22_BIN, or drop one in ~/.local/node-v22.20.0-linux-x64.
+const NODE22=process.env.NODE22_BIN||path.join(os.homedir(),'.local/node-v22.20.0-linux-x64/bin');
 // account_id and the KV namespace id come from wrangler.toml (copy wrangler.toml.example) or CLOUDFLARE_ACCOUNT_ID.
 const env={...process.env,PATH:fs.existsSync(NODE22)?`${NODE22}:${process.env.PATH}`:process.env.PATH};
 const wr=args=>execFileSync('npx',['--no-install','wrangler',...args],{cwd:DIR,env,encoding:'utf8',stdio:['ignore','pipe','pipe'],maxBuffer:64<<20});
