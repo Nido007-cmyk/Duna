@@ -20,6 +20,10 @@ flowchart LR
   I --> A
 ```
 
+> **Offline authoring, never live AI.** The nightly author (a person, Grok Bot or any assistant) works *ahead of
+> time*. What it writes is validated by `publish-lessons.mjs` before the app can show it, and the app itself never calls
+> a model while the kid plays. See [README → Philosophy](../README.md#philosophy).
+
 ## 1. Schedule (about 1:00 AM local time)
 The routine runs once a night, around **1:00 AM local time**, after the kid's day is over and before the next one starts.
 Dates are Pacific Time days (`ptDate` in the code). In this deployment a scheduled Grok Bot routine runs it. For your
@@ -125,3 +129,7 @@ Not built yet. The plan is a `scheduled()` handler in the Worker, run by a Cron 
 quest (or a catch-up boost) from the same data the export produces, using the kid prompts, generators and LESSONS.md
 rules, then validate it and write `lessons:YYYY-MM-DD` itself. That would make the nightly cycle work with zero setup.
 Hand-written or assistant-written packs would still take priority when one is published.
+
+If the generator ever uses an LLM, it would follow the same philosophy: it would **author packs offline, at night**, and
+each pack would go through the same validation before publishing. It would **never chat live** with the kid or generate
+anything during play.

@@ -9,6 +9,32 @@ linked by 3,221 prerequisite edges.
 > This repository is **private for now** (it's a child's learning app). It is set up so Kent can make it public later:
 > all personal data is excluded and every path has a clear license (see [LICENSING.md](LICENSING.md)).
 
+## Philosophy
+
+When I (Kent) thought about creating this with Landon, my thought was: here is an incredible taxonomy of knowledge as a
+knowledge graph (powah!), AND pretty much any LLM these days of any power knows all the stuff in the taxonomy cold, so
+let's lean on that. **Note that this system is NOT live AI. That is on purpose.**
+
+- **The knowledge graph is the backbone.** The [Marble Skill Taxonomy](https://github.com/withmarbleapp/os-taxonomy)
+  (1,590 topics, 3,221 prerequisites) decides *what* to learn, *in what order*, and *what mastery looks like*.
+  Placement, inference, spaced review and the island map all come from it.
+- **An LLM is an author, offline.** It writes things ahead of time: the kid-friendly questions, the glossary entries,
+  and each night's quest. Everything it writes is checked (`build.mjs` and `publish-lessons.mjs` validate it) before it
+  is published.
+- **The app your kid uses has no live AI.** There's no chatbot, no text generated while the kid plays, and nothing is
+  sent to a model during play. Jane's lines, the questions and the hints are all fixed content or simple procedural
+  generators.
+
+Why on purpose:
+- **Predictable and safe for a kid.** Jane can only say what's already been written and checked. There are no surprises
+  and no off-topic chats.
+- **Reviewable.** Every question and quest is a plain file you can read before (or after) it's shown.
+- **Private.** The kid's answers stay in your own storage, and no model sees them while they play.
+- **Cheap.** No per-question API calls. It runs on a free-tier Worker.
+- **Runs anywhere.** It needs no AI service and no API key, just a small web host. It keeps working if the nightly
+  author skips a night.
+- **Transparent for parents.** You can see exactly what gets shown, in the packs and on the parent report.
+
 ## Why "Jane"?
 
 The tutor is named after Jane, the AI who first appears in *Speaker for the Dead*, the second book of Orson Scott Card's

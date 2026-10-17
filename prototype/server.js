@@ -4,7 +4,7 @@ const http=require('http'),fs=require('fs'),path=require('path');
 const NAME=process.env.LEARNER_NAME||'Explorer';
 const PORT=process.env.PORT||8080, DATA=path.join(__dirname,'data'), TAX=path.join(__dirname,'..','data','marble');
 const STATE_F=path.join(DATA,'progress.json'), LOG_F=path.join(DATA,'answers.log.jsonl');
-const LLM_KEY=['XAI_API_KEY','OPENAI_API_KEY','ANTHROPIC_API_KEY'].find(k=>process.env[k]);
+// No live AI: questions come from procedural generators and pre-written content only (see README → Philosophy).
 // ---------- taxonomy ----------
 const topics=JSON.parse(fs.readFileSync(path.join(TAX,'topics.json'))).topics;
 const deps=JSON.parse(fs.readFileSync(path.join(TAX,'dependencies.json'))).dependencies;
@@ -104,7 +104,7 @@ function choose(c){let msg;if(c==='harder'){if(S.level<5)S.level++;else moveTopi
   else if(c==='fractions'){const c2=topics.filter(x=>usable(x.id)&&x.domain==='Fractions'&&x.ageRangeStart>=9);const n=pick(c2);S.topicId=n.id;S.level=3;msg=`Back to fractions: ${n.name}! 🍕`;}
   else msg='Keep going — you\'re doing great!';S.current=null;save();return{jane:msg};}
 const pub=()=>{const t=byId[S.topicId],c=S.current;return{name:S.name,points:S.points,stars:S.stars,streak:S.streak,bestStreak:S.bestStreak,solved:S.solved,level:S.level,badges:S.badges,
-  topic:{name:t.name,domain:t.domain,description:t.description},engine:LLM_KEY?'llm':'procedural',
+  topic:{name:t.name,domain:t.domain,description:t.description},engine:'procedural',
   problem:c&&{id:c.id,q:c.stage==='bonus'?c.bonus.q:c.q,vis:c.vis,stage:c.stage}};};
 // ---------- http ----------
 const MIME={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css'};
@@ -122,4 +122,4 @@ http.createServer((req,res)=>{const u=new URL(req.url,'http://x');const J=(o,s=2
   const f=path.join(__dirname,'public',u.pathname==='/'?'index.html':path.normalize(u.pathname).replace(/^(\.\.[\/\\])+/,''));
   if(f.startsWith(path.join(__dirname,'public'))&&fs.existsSync(f)&&fs.statSync(f).isFile()){res.writeHead(200,{'content-type':MIME[path.extname(f)]||'application/octet-stream'});return res.end(fs.readFileSync(f));}
   res.writeHead(404);res.end('not found');})().catch(e=>{console.error(e);J({error:String(e)},500)});
-}).listen(PORT,()=>console.log('Jane prototype on :'+PORT,'engine=',LLM_KEY?'llm':'procedural'));
+}).listen(PORT,()=>console.log('Jane prototype on :'+PORT,'engine= procedural'));
