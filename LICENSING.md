@@ -14,6 +14,21 @@ row wins.
 | `packs/examples/`, `LESSONS.md`, `docs/` (except where they quote code) | Original lesson packs, quests, planning rules and docs | **CC BY-SA 4.0** | © 2026 Kent Langley and Landon |
 | `README.md`, `INSTALL.md`, `CONTRIBUTING.md`, `LICENSING.md`, `NOTICE` | Project docs | **CC BY-SA 4.0** | © 2026 Kent Langley and Landon |
 
+## Third-party UI libraries
+
+`build.mjs` bundles these npm packages (exact versions pinned in `package.json`) into `public/vendor/ui.js`
+(generated, not committed) and writes their license texts to `public/vendor/THIRD-PARTY-LICENSES.txt`. All of them are
+permissive and compatible with the MIT license of the app code:
+
+| Library | Version | License | Used for |
+|---|---|---|---|
+| [Motion](https://motion.dev) (`motion`, `motion-dom`, `motion-utils`, `framer-motion`) | 14.3.0 | MIT | Spring micro-animations (the small "mini" `animate` + `spring`) |
+| [Floating UI](https://floating-ui.com) (`@floating-ui/dom`) | 1.8.0 | MIT | Glossary popover positioning (flip/shift/arrow) |
+| [canvas-confetti](https://github.com/catdad/canvas-confetti) | 1.9.4 | ISC | Celebrations (off with reduced motion) |
+| [AutoAnimate](https://auto-animate.formkit.com) (`@formkit/auto-animate`) | 0.10.0 | MIT | Smooth list updates (parent answer log) |
+
+`vendor/entry.mjs`, `public/fx.js` and the build glue are MIT (our code). esbuild (MIT) is a build-time dev dependency only.
+
 ## Required attribution
 
 Anything that uses or redistributes the taxonomy (including the derived data above) must show:

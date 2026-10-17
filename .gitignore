@@ -29,3 +29,4 @@ prototype/bin/
 prototype/node_modules/
 prototype/package-lock.json
 .DS_Store
+public/vendor/

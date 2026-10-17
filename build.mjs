@@ -41,3 +41,13 @@ console.log('topics',topics.length,'deps',deps.length,'mcq',Object.keys(kid).len
  const all=G.flatMap(g=>g.t).sort((a,b)=>b.length-a.length).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));const re=new RegExp(`\\b(${all.join('|')})(s|es)?\\b`,'i');
  const T=JSON.parse(fs.readFileSync('public/tax.json'));const hit=T.topics.filter(t=>re.test([t.kq,t.ka,...(t.kw||[]),t.self,t.sn].join(' '))).length;
  fs.writeFileSync('public/glossary.json',JSON.stringify({v:1,terms:G}));console.log(`glossary: ${G.length} terms; ${hit}/${T.topics.length} topics have at least one term in their prompt/choices`);}
+
+// UI vendor bundle (Motion mini + spring, Floating UI, canvas-confetti, auto-animate) → public/vendor/ui.js + licenses
+{const {build}=await import('esbuild');fs.mkdirSync('public/vendor',{recursive:true});
+ await build({entryPoints:['vendor/entry.mjs'],bundle:true,minify:true,format:'iife',target:['es2020','safari15'],outfile:'public/vendor/ui.js',legalComments:'none',
+   banner:{js:'/* Jane UI vendor bundle. Third-party licenses: /vendor/THIRD-PARTY-LICENSES.txt */'}});
+ const pk=['motion','motion-dom','motion-utils','framer-motion','@floating-ui/dom','@floating-ui/core','@floating-ui/utils','canvas-confetti','@formkit/auto-animate'];
+ let L='Third-party software bundled in /vendor/ui.js\n\n';for(const n of pk){const d='node_modules/'+n,j=JSON.parse(fs.readFileSync(d+'/package.json'));const lf=fs.readdirSync(d).find(f=>/^licen[cs]e/i.test(f));
+   L+=`==== ${n}@${j.version} (${j.license}) ====\n${lf?fs.readFileSync(d+'/'+lf,'utf8').trim():'License: '+j.license}\n\n`;}
+ fs.writeFileSync('public/vendor/THIRD-PARTY-LICENSES.txt',L);const sz=fs.statSync('public/vendor/ui.js').size;
+ const {gzipSync}=await import('zlib');console.log(`vendor: ui.js ${(sz/1024).toFixed(1)} KB (${(gzipSync(fs.readFileSync('public/vendor/ui.js')).length/1024).toFixed(1)} KB gzip)`);}

@@ -50,5 +50,5 @@ export function parentData({S,g,now,today,logs,packs,tomorrowPack,boosts}){
 export function parentShell(data){const json=E.withName(JSON.stringify(data),JSON.stringify(data.name).slice(1,-1)).replace(/</g,'\\u003c');
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Parent report: ${String(data.name).replace(/[&<>"]/g,'')}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/parent.css"></head><body><div id="app"><p class="loading">Loading report…</p></div>
-<script id="data" type="application/json">${json}</script><script src="/parent.js"></script></body></html>`;}
+<link rel="stylesheet" href="/parent.css"><script src="/vendor/ui.js" defer></script><script src="/fx.js" defer></script></head><body data-fx="calm"><div id="app"><div class="wrap skel" aria-busy="true" aria-label="Loading report"><div class="sk" style="height:64px;margin:16px 0"></div><div class="sk" style="height:220px"></div><div class="sk" style="height:180px;margin-top:16px"></div></div></div>
+<script id="data" type="application/json">${json}</script><script src="/parent.js" defer></script></body></html>`;}

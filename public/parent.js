@@ -89,3 +89,11 @@ addEventListener('beforeprint',()=>{openAll();shown=1e6;renderLog();});
 // active tab highlight
 const links=[...document.querySelectorAll('.tabs a')];const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id));}),{rootMargin:'-40% 0px -55% 0px'});document.querySelectorAll('section.sec').forEach(s=>io.observe(s));
 document.querySelectorAll('.tabs a').forEach(a=>a.addEventListener('click',()=>{const d=document.querySelector(a.getAttribute('href')+' > details');if(d)d.open=true;}));
+
+// ---------- polish (public/fx.js): gentle entrances, animated details, live list updates ----------
+(()=>{if(!window.FX)return;
+ FX.stagger(document.querySelectorAll('.stat,.ring,.hcard'),{y:10,step:.04});
+ document.querySelectorAll('details').forEach(d=>d.addEventListener('toggle',()=>{if(!d.open)return;const kids=[...d.children].filter(c=>c.tagName!=='SUMMARY');kids.forEach(k=>FX.enter(k,{y:6}));}));
+ FX.autoList(document.getElementById('logbody'));
+ document.querySelectorAll('.seg button,.chips .chip').forEach(b=>b.addEventListener('click',()=>FX.bump(b)));
+})();

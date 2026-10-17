@@ -5,7 +5,9 @@
   "description": "Jane: an adaptive learning app for kids on Cloudflare Workers, built on the Marble Skill Taxonomy.",
   "type": "module",
   "license": "SEE LICENSING.md",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "build": "node build.mjs",
     "dev": "node build.mjs && wrangler dev",
@@ -15,5 +17,12 @@
     "publish:dry": "node publish-lessons.mjs packs/examples/example-quest.json --dry-run",
     "backup": "node backup-progress.mjs"
   },
-  "devDependencies": { "wrangler": "4.149.0" }
+  "devDependencies": {
+    "@floating-ui/dom": "1.8.0",
+    "@formkit/auto-animate": "0.10.0",
+    "canvas-confetti": "1.9.4",
+    "esbuild": "0.28.2",
+    "motion": "14.3.0",
+    "wrangler": "4.149.0"
+  }
 }

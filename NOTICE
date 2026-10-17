@@ -8,6 +8,13 @@ This product includes the Marble Skill Taxonomy (v1):
   Included unchanged in data/marble/ with its LICENSE (ODbL 1.0), LICENSE-CONTENT (CC BY-SA 4.0),
   PROVENANCE.md and CITATION.cff.
 
+UI libraries bundled into public/vendor/ui.js by build.mjs (pinned in package.json; full texts are generated at
+public/vendor/THIRD-PARTY-LICENSES.txt and served at /vendor/THIRD-PARTY-LICENSES.txt):
+  - Motion 14.3.0 (motion, motion-dom, motion-utils, framer-motion): MIT License, © Motion Division Ltd. https://motion.dev
+  - Floating UI 1.8.0 (@floating-ui/dom, core, utils): MIT License, © Floating UI contributors. https://floating-ui.com
+  - canvas-confetti 1.9.4: ISC License, © Kiril Vatev. https://github.com/catdad/canvas-confetti
+  - AutoAnimate 0.10.0 (@formkit/auto-animate): MIT License, © FormKit, Inc. https://auto-animate.formkit.com
+
 Topics in topics.json link to curriculum standard codes. Their upstream notices (see data/marble/PROVENANCE.md):
   - Contains public sector information licensed under the Open Government Licence v3.0.
   - © Copyright 2010 National Governors Association Center for Best Practices and Council of Chief State

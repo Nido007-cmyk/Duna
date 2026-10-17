@@ -44,6 +44,15 @@ friendly tutor. The name is just a nod to the books: this project has no affilia
 - **Sandbox.** `/api/sandbox?on=1` switches your browser to a copy of the progress for testing, so the real record is
   never touched.
 
+## UI polish
+
+The kid app and parent report are plain HTML/CSS/JS (no framework). A small vendored bundle
+(`public/vendor/ui.js`, about 19 KB gzipped, built from `vendor/entry.mjs`) adds Motion springs, Floating UI popovers,
+canvas-confetti and AutoAnimate. `public/fx.js` wires them in: tactile press/hover states, spring entrances, View Transitions
+between tabs and map zooms, haptics (where supported), optional synthesized sound effects (off by default; 🔇/🔈/🔊 toggle in
+the header), skeleton loading states, keyboard support (tab arrows, Esc, focus rings, focusable islands) and
+`prefers-reduced-motion` support. Everything still works if the bundle doesn't load.
+
 ## Architecture
 
 ```

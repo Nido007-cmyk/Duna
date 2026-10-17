@@ -31,11 +31,11 @@ function render(s){st=s;if(s?.learner)setLearner(s.learner);chips(s);const p=s.i
  else{$('f').style.display='flex';$('a').value='';$('a').placeholder=p.creative?(p.placeholder||'Your idea!'):p.vis?.type==='pizza'||/fraction/i.test(p.topic.domain)?'Your answer (like 3/8)':'Your answer';setTimeout(()=>$('a').focus(),50);}
  if(p.timed){const end=Date.now()+p.timed*1000;$('timer').innerHTML='<div class="tbar"><i id="tb"></i></div><div class="small" id="tl"></div>';
   timerInt=setInterval(()=>{const left=Math.max(0,end-Date.now());$('tb').style.transform=`scaleX(${left/(p.timed*1000)})`;$('tl').textContent=left?`⚡ ${Math.ceil(left/1000)}s for a speed bonus!`:'Time\'s up for the bonus — but keep going, you can still get it!';if(!left)clearInterval(timerInt);},200);}}
-async function send(v){if(!v)return;const r=await api('/api/answer',{answer:v});say(r.jane);
+async function send(v){if(!v||$('pcard').classList.contains('busy'))return;$('pcard').classList.add('busy');let r;try{r=await api('/api/answer',{answer:v});}catch(e){$('pcard').classList.remove('busy');say('Oops, the internet hiccuped. Try again! 🔌');return;}$('pcard').classList.remove('busy');say(r.jane);
  if(r.questDone)setTimeout(()=>questMedal(r.questDone),r.medal?2600:300);
  if(r.miniDone&&!r.reveal){chips(r.state);return miniEnd(r);}
- if(r.correct){confetti(r.mastered||r.levelUp?80:30);if(r.medal)reveal(r.medal,r.inferred);else if(r.mastered)banner(`🏆 Mastered!<br><small>${esc(r.mastered)}</small>${r.inferred?`<br><small>+${r.inferred} skills lit up on your map!</small>`:''}`);else if(r.levelUp)banner('⬆ Level '+r.levelUp+'!');}
- else{$('pcard').classList.remove('shake');void $('pcard').offsetWidth;$('pcard').classList.add('shake');}
+ if(r.correct){const big=!!(r.mastered||r.levelUp||r.medal);if(!(window.FX&&FX.good($('pcard'),big)))confetti(big?80:30);if(r.medal)reveal(r.medal,r.inferred);else if(r.mastered)banner(`🏆 Mastered!<br><small>${esc(r.mastered)}</small>${r.inferred?`<br><small>+${r.inferred} skills lit up on your map!</small>`:''}`);else if(r.levelUp)banner('⬆ Level '+r.levelUp+'!');}
+ else if(window.FX&&!FX.reduced()){FX.bad($('pcard'));}else{$('pcard').classList.remove('shake');void $('pcard').offsetWidth;$('pcard').classList.add('shake');}
  if(r.boss){$('bossbar').querySelector('.boss')?.classList.add('shake');}
  if(r.askChoice){chips(r.state);return ask(r.jane);}
  if(r.reveal){$('f').style.display='none';$('mc').innerHTML='';$('extra').innerHTML=`<p style="font-size:1.3rem">✅ Answer: <b>${esc(String(r.reveal).replace(/\|/g,' → '))}</b></p><button onclick="next()">Next ➡</button>`;window._next=r.state;window._mini=r.miniDone?r:null;chips(r.state);return;}
@@ -142,7 +142,7 @@ function drawMap(){const{pos,doms,trails}=layout,codes=mapData.codes;const vb=zo
  const cur=mapData.current&&TAX.idx[mapData.current];if(cur!=null&&pos[cur]&&(!zoomed||TAX.topics[cur].subject===zoomed)){const[x,y]=pos[cur];s+=`<text pointer-events="none" class="boat" x="${x}" y="${y-rad*1.5}" font-size="${rad*6}" text-anchor="middle">⛵</text>`;}
  $('world').innerHTML=s+'</svg>';const svg=$('msvg');
  svg.querySelectorAll('.isl').forEach(g=>g.onclick=()=>{if(!zoomed){zoomed=g.dataset.s;drawMap();}});
- svg.addEventListener('pointermove',tip);svg.addEventListener('click',e=>{if(e.target.classList.contains('tp')){if(!zoomed){tip(e,true);zoomed=TAX.topics[e.target.dataset.i].subject;drawMap();}else{$('tip').hidden=true;stoneCard(+e.target.dataset.i);}}});
+ svg.addEventListener('pointermove',tip);svg.addEventListener('click',e=>{const isl=e.target.closest?.('.isl');if(!zoomed&&isl&&!e.target.classList.contains('tp')){zoomed=isl.dataset.s;window.FX?FX.view(drawMap):drawMap();return;}if(e.target.classList.contains('tp')){if(!zoomed){tip(e,true);zoomed=TAX.topics[e.target.dataset.i].subject;drawMap();}else{$('tip').hidden=true;stoneCard(+e.target.dataset.i);}}});
  $('zoomout').hidden=!zoomed;const pr=mapData.progress;$('msub').textContent=zoomed?`${zoomed}: tap a stone to see the skill. Flags = mastered, glowing green = ready!`:`${pr.done} of ${pr.total} skills · ${pr.tot.ready} ready to explore · tap an island to zoom in`;}
 function tip(e,force){const t=e.target;if(!t.classList?.contains('tp')){if(!force)$('tip').hidden=true;return;}const i=+t.dataset.i,tp=TAX.topics[i],c=mapData.codes[i];
  const box=$('world').getBoundingClientRect(),card=$('world').parentElement.getBoundingClientRect();const el=$('tip');el.hidden=false;
@@ -153,7 +153,7 @@ function drawBars(){const pr=mapData.progress;let s=`<div class="big">🌍 ${pr.
  $('bars').innerHTML=s;requestAnimationFrame(()=>$('bars').querySelectorAll('.track i').forEach(i=>i.style.width=i.dataset.w));}
 const seg=(b,t)=>[['mastered','m'],['review','v'],['learning','l'],['ready','r']].map(([k,c])=>`<i style="width:0;background:${COL[c]};opacity:${c==='r'?.45:1}" data-w="${(100*b[k]/t).toFixed(2)}%" title="${k}: ${b[k]}"></i>`).join('');
 $('zoomout').onclick=()=>{zoomed=null;drawMap();};
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));for(const v of['play','map','trophies','quests'])$(v).hidden=b.dataset.v!==v;if(b.dataset.v==='map')loadMap();if(b.dataset.v==='trophies')loadTrophies();if(b.dataset.v==='quests')loadQuests();});
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{const sw=()=>{document.querySelectorAll('.tab').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-selected',x===b);x.tabIndex=x===b?0:-1;});for(const v of['play','map','trophies','quests'])$(v).hidden=b.dataset.v!==v;};window.FX?FX.view(sw):sw();if(b.dataset.v==='map')loadMap();if(b.dataset.v==='trophies')loadTrophies();if(b.dataset.v==='quests')loadQuests();});
 loadGloss().finally(()=>api('/api/state').then(s=>{render(s);questDot(s);if(s.newQuest&&!location.hash&&!s.quests?.paused)questReveal(s.quest);else if(s.quests?.paused)say(`Finish your quest to unlock the next one! 🗝️ Keep going on "${s.quests.oldest?.title}" (${s.quests.oldest?.pct}% done).`);}));
 if(location.hash==='#quests')document.querySelector('.tab[data-v=quests]').click();
 if(location.hash==='#trophies')document.querySelector('.tab[data-v=trophies]').click();
@@ -215,10 +215,11 @@ const INTER={
  picture(p){$('mc').innerHTML=`<div class="pics">${p.choices.map((c,i)=>`<button class="pic" data-v="${esc(c)}"><span class="pe">${String(p.pics[i]||'').trim().startsWith('<svg')?cleanSVG(p.pics[i]):esc(p.pics[i]||'')}</span><span>${esc(c)}</span></button>`).join('')}</div>`;
   $('mc').querySelectorAll('.pic').forEach(b=>b.onclick=()=>{b.classList.add('picked');send(b.dataset.v);});},
  order(p){const L=document.createElement('ol');L.className='ord';L.innerHTML=p.items.map(x=>`<li><span class="grip">☰</span><span class="ot">${esc(x)}</span><span class="arr"><button class="up" aria-label="move up">▲</button><button class="dn" aria-label="move down">▼</button></span></li>`).join('');$('mc').innerHTML='<div class="small">Drag the cards (or tap ▲▼) into the right order!</div>';$('mc').appendChild(L);
-  L.querySelectorAll('.up').forEach(b=>b.onclick=()=>{const li=b.closest('li');li.previousElementSibling&&L.insertBefore(li,li.previousElementSibling);});
-  L.querySelectorAll('.dn').forEach(b=>b.onclick=()=>{const li=b.closest('li');li.nextElementSibling&&L.insertBefore(li.nextElementSibling,li);});
+  const mv=f=>window.FX?FX.flip(L,f):f();
+  L.querySelectorAll('.up').forEach(b=>b.onclick=()=>{const li=b.closest('li');li.previousElementSibling&&mv(()=>L.insertBefore(li,li.previousElementSibling));b.focus();});
+  L.querySelectorAll('.dn').forEach(b=>b.onclick=()=>{const li=b.closest('li');li.nextElementSibling&&mv(()=>L.insertBefore(li.nextElementSibling,li));b.focus();});
   let drag=null;L.addEventListener('pointerdown',e=>{const li=e.target.closest('li');if(!li||e.target.closest('button'))return;drag=li;li.classList.add('drag');li.setPointerCapture(e.pointerId);e.preventDefault();});
-  L.addEventListener('pointermove',e=>{if(!drag)return;const o=[...L.children].find(li=>li!==drag&&(()=>{const r=li.getBoundingClientRect();return e.clientY>r.top&&e.clientY<r.bottom;})());if(o){const r=o.getBoundingClientRect();L.insertBefore(drag,e.clientY<r.top+r.height/2?o:o.nextSibling);}});
+  L.addEventListener('pointermove',e=>{if(!drag)return;const o=[...L.children].find(li=>li!==drag&&(()=>{const r=li.getBoundingClientRect();return e.clientY>r.top&&e.clientY<r.bottom;})());if(o){const r=o.getBoundingClientRect(),ref=e.clientY<r.top+r.height/2?o:o.nextSibling;if(ref!==drag.nextSibling&&ref!==drag)mv(()=>L.insertBefore(drag,ref));}});
   const up=()=>{drag?.classList.remove('drag');drag=null;};L.addEventListener('pointerup',up);L.addEventListener('pointercancel',up);
   checkBtn(()=>send([...L.querySelectorAll('.ot')].map(x=>x.textContent).join('|')));},
  match(p){const C=['#7c4dff','#00b8d4','#ff6d00','#e91e63','#00c853','#ffab00'];const pair={};let selL=null;
@@ -227,7 +228,7 @@ const INTER={
    $('mc').querySelectorAll('.mr').forEach(b=>{const j=+b.dataset.i,k=Object.keys(pair).find(i=>pair[i]===j);b.style.background=k!=null?C[k%6]:'';b.classList.toggle('paired',k!=null);});
    $('chk').disabled=Object.keys(pair).length<p.left.length;};
   $('mc').querySelectorAll('.ml').forEach(b=>b.onclick=()=>{selL=+b.dataset.i;delete pair[selL];paint();});
-  $('mc').querySelectorAll('.mr').forEach(b=>b.onclick=()=>{if(selL==null)return;const j=+b.dataset.i;for(const i in pair)if(pair[i]===j)delete pair[i];pair[selL]=j;selL=null;paint();});
+  $('mc').querySelectorAll('.mr').forEach(b=>b.onclick=()=>{if(selL==null)return;const j=+b.dataset.i;for(const i in pair)if(pair[i]===j)delete pair[i];pair[selL]=j;selL=null;paint();window.FX&&(FX.bump(b),FX.sound('pop'));});
   checkBtn(()=>send(p.left.map((l,i)=>`${l}=${p.right[pair[i]]}`).join('|')));paint();},
  truefalse(p){let k=0;const ans=[];$('mc').innerHTML=`<div class="tf"><div class="tfn" id="tfn"></div><div class="tfs" id="tfs"></div><div class="tfb"><button class="tt">✅ True</button><button class="ff">❌ False</button></div></div>`;
   const show=()=>{$('tfn').textContent=`⚡ ${k+1} of ${p.statements.length}`;const e=$('tfs');e.textContent=p.statements[k];e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop');};
@@ -295,12 +296,32 @@ function gl(text,used=GUSED){text=String(text??'');const all=glEntries(),key=Obj
   out+=esc(text.slice(last,st))+`<span class="gt" tabindex="0" role="button" data-k="${esc(k)}">${esc(word)}</span>`;last=st+word.length;}
  return out+esc(text.slice(last));}
 function gpop(el){const all=glEntries(),en=all[el.dataset.k];if(!en)return;let p=$('gpop');if(!p){p=document.createElement('div');p.id='gpop';p.className='gpop';document.body.appendChild(p);}
- p.innerHTML=`<div class="gw">${esc(en.e||'📘')} <b>${esc(en.w)}</b></div><div>${esc(en.d)}</div>`;p.hidden=false;const r=el.getBoundingClientRect(),W=Math.min(300,innerWidth-20);p.style.width=W+'px';
- p.style.left=Math.max(10,Math.min(innerWidth-W-10,r.left+r.width/2-W/2))+'px';const top=r.bottom+8;p.style.top=(top+120>innerHeight?r.top-p.offsetHeight-8:top)+scrollY+'px';
- document.querySelectorAll('.gt.open').forEach(x=>x.classList.remove('open'));el.classList.add('open');
+ p.innerHTML=`<i class="garrow"></i><div class="gw">${esc(en.e||'📘')} <b>${esc(en.w)}</b></div><div>${esc(en.d)}</div>`;p.setAttribute('role','tooltip');p.hidden=false;const r=el.getBoundingClientRect(),W=Math.min(300,innerWidth-20);p.style.width=W+'px';
+ if(window.FX&&FX.place(el,p,p.querySelector('.garrow'))){document.querySelectorAll('.gt.open').forEach(x=>x.classList.remove('open'));el.classList.add('open');FX.sound('pop');}else{
+ p.style.position='';p.style.left=Math.max(10,Math.min(innerWidth-W-10,r.left+r.width/2-W/2))+'px';const top=r.bottom+8;p.style.top=(top+120>innerHeight?r.top-p.offsetHeight-8:top)+scrollY+'px';
+ document.querySelectorAll('.gt.open').forEach(x=>x.classList.remove('open'));el.classList.add('open');}
  if(el.dataset.k!==gpop.last||Date.now()-(gpop.at||0)>5000){gpop.last=el.dataset.k;gpop.at=Date.now();fetch('/api/term',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({term:en.w})}).catch(()=>{});}}
 function gclose(){const p=$('gpop');if(p)p.hidden=true;document.querySelectorAll('.gt.open').forEach(x=>x.classList.remove('open'));}
 document.addEventListener('click',e=>{const t=e.target.closest?.('.gt');if(t){e.preventDefault();e.stopPropagation();t.classList.contains('open')?gclose():gpop(t);return;}if(!e.target.closest?.('#gpop'))gclose();},true);
 document.addEventListener('keydown',e=>{const t=e.target.closest?.('.gt');if(t&&(e.key==='Enter'||e.key===' ')){e.preventDefault();gpop(t);}if(e.key==='Escape')gclose();});
 if(matchMedia('(hover:hover)').matches){document.addEventListener('mouseover',e=>{const t=e.target.closest?.('.gt');if(t)gpop(t);});document.addEventListener('mouseout',e=>{const t=e.target.closest?.('.gt');if(t&&!e.relatedTarget?.closest?.('.gt'))gclose();});}
 addEventListener('scroll',()=>gclose(),{passive:true});
+
+// ---------- polish hooks (public/fx.js): entrances, springs, a11y, skeletons. Behavior is unchanged without FX. ----------
+(()=>{if(!window.FX)return;let lastKey='';
+ const _render=render;render=function(s){_render(s);const p=s?.item;if(!p)return;$('pcard').classList.remove('loading');const key=(p.topicId||'')+'|'+(p.q||p.title||'');
+  if(key!==lastKey){lastKey=key;FX.enter($('pcard'));FX.stagger($('mc').querySelectorAll(':scope > button, .pics > button, .match button, .ord > li, .tfb > button, svg'),{delay:.08});if(p.intro)FX.enter($('intro'));}};
+ let lastPts=null;const _chips=chips;chips=function(s){_chips(s);if(lastPts!=null&&s.points>lastPts)FX.bump($('pts'));if(s.streak>=3&&lastPts!=null&&s.points>lastPts)FX.bump($('streak'));lastPts=s.points;};
+ const _draw=drawMap;drawMap=function(){_draw();FX.kbd($('world'),'.isl',el=>`${el.dataset.s} island: open it`);};
+ const _troph=loadTrophies;loadTrophies=async function(){if(!$('tgrid').children.length)$('tgrid').innerHTML='<div class="sk sk-cell"></div>'.repeat(8);await _troph();FX.stagger($('tgrid').querySelectorAll('.tcell'),{step:.03});};
+ const _quests=loadQuests;loadQuests=async function(){if(!$('qlist').children.length)$('qlist').innerHTML='<div class="card sk sk-quest"></div>'.repeat(2);await _quests();FX.stagger($('qlist').children,{step:.06});};
+ const _reveal=reveal;reveal=function(m,inf){_reveal(m,inf);FX.sound('win');FX.haptic('win');const b=document.querySelector('.reveal .rbox');FX.anim(b,{transform:['scale(.6) rotate(-6deg)','scale(1) rotate(0)'],opacity:[0,1]},{stiffness:260,damping:14});const btn=document.querySelector('.reveal button');btn?.focus();};
+ const _qr=questReveal;questReveal=function(Q){_qr(Q);FX.sound('open');const b=document.querySelector('.qreveal .qrbox');FX.anim(b,{transform:['translateY(40px) scale(.9)','none'],opacity:[0,1]},{stiffness:220,damping:16});setTimeout(()=>$('qstart')?.focus(),300);};
+ const _conf=confetti;confetti=function(n=40){if(!FX.burst(null,n>=60))_conf(n);};
+ addEventListener('scroll',()=>gclose(),{passive:true});
+ FX.soundButton($('snd'));
+ // tabs: arrow keys move between tabs
+ const tabs=[...document.querySelectorAll('.tab')];tabs.forEach((t,i)=>t.addEventListener('keydown',e=>{const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(!d)return;e.preventDefault();const n=tabs[(i+d+tabs.length)%tabs.length];n.focus();n.click();}));
+ // Escape closes medal / stone / quest overlays
+ document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;(document.querySelector('.scard .x')||document.querySelector('.reveal .rbox button'))?.click();});
+})();
