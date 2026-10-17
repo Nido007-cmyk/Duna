@@ -1,0 +1,31 @@
+# --- secrets & local config (never commit) ---
+wrangler.toml
+.dev.vars
+.env
+.env.*
+*.pem
+*.key
+# --- the learner's personal data ---
+backups/
+exports/
+packs/*.json
+!packs/examples/
+progress*.json
+answers*.jsonl
+*.log
+.kvput-*
+sandbox*/
+screens/
+shots/
+prototype/data/
+# --- build output & tooling ---
+node_modules/
+.wrangler/
+dist/
+public/tax.json
+public/glossary.json
+src/gen.js
+prototype/bin/
+prototype/node_modules/
+prototype/package-lock.json
+.DS_Store

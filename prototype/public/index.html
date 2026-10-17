@@ -1,0 +1,71 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Math Adventures with Jane</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:'Baloo 2','Comic Sans MS',system-ui,sans-serif;background:linear-gradient(135deg,#ffecd2,#fcb69f 40%,#a1c4fd);min-height:100vh;color:#2d2a4a}
+header{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:12px}
+.chip{background:#fff;border-radius:999px;padding:6px 14px;font-weight:800;font-size:1.1rem;box-shadow:0 3px 0 #0002}
+.chip.lvl{background:#7c4dff;color:#fff}.chip.streak{background:#ff6d00;color:#fff}
+main{max-width:760px;margin:0 auto;padding:0 12px 40px}
+.card{background:#fff;border-radius:28px;padding:20px;box-shadow:0 8px 0 #0001,0 10px 30px #0002;margin-top:12px}
+.topic{font-size:.95rem;color:#7c4dff;font-weight:700}
+.jane{display:flex;gap:12px;align-items:flex-start}
+.avatar{font-size:3rem;line-height:1;background:#ffe082;border-radius:50%;width:70px;height:70px;display:grid;place-items:center;flex:none}
+.bubble{background:#e3f2fd;border-radius:20px;padding:12px 16px;font-size:1.2rem;position:relative;flex:1}
+.q{font-size:1.6rem;font-weight:700;margin:16px 0;line-height:1.3}
+.vis{text-align:center}.vis svg{max-width:260px;width:70%}
+form{display:flex;gap:10px;flex-wrap:wrap}
+input{flex:1;min-width:160px;font:inherit;font-size:1.8rem;padding:10px 16px;border:4px solid #a1c4fd;border-radius:18px;outline:none}input:focus{border-color:#7c4dff}
+button{font:inherit;font-weight:800;font-size:1.4rem;border:none;border-radius:18px;padding:10px 22px;background:#00c853;color:#fff;box-shadow:0 5px 0 #009624;cursor:pointer}
+button:active{transform:translateY(3px);box-shadow:0 2px 0 #009624}
+.choices button{background:#7c4dff;box-shadow:0 5px 0 #4a148c;margin:6px}
+.ghost{background:#90a4ae;box-shadow:0 5px 0 #546e7a;font-size:1.1rem}
+.badges{margin-top:10px;font-size:.95rem}
+.shake{animation:shake .4s}@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.pop{animation:pop .5s}@keyframes pop{50%{transform:scale(1.08)}}
+.confetti{position:fixed;top:-20px;font-size:1.8rem;pointer-events:none;animation:fall linear forwards;z-index:9}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.banner{position:fixed;inset:0;display:grid;place-items:center;pointer-events:none;z-index:8}
+.banner div{background:#ffd600;font-size:2.4rem;font-weight:800;padding:20px 40px;border-radius:30px;animation:pop .6s;box-shadow:0 10px 0 #c7a500}
+a{color:#7c4dff}
+</style></head><body>
+<header><span class="chip" id="pts">⭐ 0</span><span class="chip" id="stars">🌟 0</span><span class="chip streak" id="streak">🔥 0</span><span class="chip lvl" id="lvl">Level 1</span></header>
+<main>
+<div class="card"><div class="jane"><div class="avatar">👩‍🏫</div><div class="bubble" id="jane">Hi Landon! I'm Jane, your math buddy. Let's have some fun! 🍕</div></div></div>
+<div class="card" id="pcard"><div class="topic" id="topic"></div><div class="q" id="q">Loading…</div><div class="vis" id="vis"></div>
+<form id="f"><input id="a" autocomplete="off" inputmode="text" placeholder="Your answer (like 3/8)"><button>Check ✔</button></form>
+<div id="extra" style="margin-top:10px"></div></div>
+<div class="badges" id="badges"></div>
+<p style="text-align:center;font-size:.9rem"><a href="/parent">Parent view</a></p>
+</main>
+<script>
+const $=id=>document.getElementById(id);let st;
+const api=(p,b)=>fetch(p,{method:b?'POST':'GET',headers:{'content-type':'application/json'},body:b&&JSON.stringify(b)}).then(r=>r.json());
+function pizza(n,eaten){const cx=100,cy=100,r=90;let s='<svg viewBox="0 0 200 200" role="img" aria-label="pizza with '+n+' slices, '+eaten+' eaten">';
+ for(let i=0;i<n;i++){const a1=2*Math.PI*i/n-Math.PI/2,a2=2*Math.PI*(i+1)/n-Math.PI/2,x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1),x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);const gone=i<eaten;
+  s+=`<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 0 1 ${x2},${y2} Z" fill="${gone?'#f5f5f5':'#ffca28'}" stroke="${gone?'#ccc':'#e65100'}" stroke-width="4" ${gone?'stroke-dasharray="6 5"':''}/>`;
+  if(!gone){const m=(a1+a2)/2;for(const k of[.45,.75]){s+=`<circle cx="${cx+r*k*Math.cos(m+(k>.6?.12:-.08))}" cy="${cy+r*k*Math.sin(m+(k>.6?.12:-.08))}" r="${Math.min(9,40/n+4)}" fill="#d32f2f"/>`}}}
+ return s+`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#bf6c00" stroke-width="8"/></svg>`;}
+function bar(n,sh){const w=190/n;let s='<svg viewBox="0 0 200 60">';for(let i=0;i<n;i++)s+=`<rect x="${5+i*w}" y="10" width="${w}" height="40" fill="${i<sh?'#8d6e63':'#ffccbc'}" stroke="#4e342e" stroke-width="2" rx="3"/>`;return s+'</svg>';}
+function render(s){st=s;$('pts').textContent='⭐ '+s.points+' pts';$('stars').textContent='🌟 '+s.stars;$('streak').textContent='🔥 '+s.streak;
+ $('lvl').textContent=['','🐣 Level 1','🐥 Level 2','🦊 Level 3','🦁 Level 4','🐉 Level 5'][s.level];
+ $('topic').textContent=`📚 ${s.topic.domain} › ${s.topic.name}`;const p=s.problem;if(!p)return;$('q').textContent=p.q;
+ $('vis').innerHTML=p.vis?(p.vis.type==='pizza'?pizza(p.vis.slices,p.vis.eaten):bar(p.vis.parts,p.vis.shaded)):'';
+ $('badges').innerHTML=s.badges.length?'🏆 Badges: '+s.badges.map(b=>`<span class="chip">${b}</span>`).join(' '):'';
+ $('a').value='';$('extra').innerHTML=p.stage==='bonus'?'<button class="ghost" onclick="skip()">Skip bonus ➡</button>':'';$('f').style.display='flex';$('a').focus();}
+function say(t){const b=$('jane');b.textContent=t;b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');}
+function confetti(n=40){for(let i=0;i<n;i++){const e=document.createElement('div');e.className='confetti';e.textContent=['🎉','⭐','🍕','✨','🎈','💜'][i%6];e.style.left=Math.random()*100+'vw';e.style.animationDuration=1.5+Math.random()*2+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),4000);}}
+function banner(t){const b=document.createElement('div');b.className='banner';b.innerHTML=`<div>${t}</div>`;document.body.appendChild(b);setTimeout(()=>b.remove(),1800);}
+function ask(){ $('f').style.display='none';$('extra').innerHTML='<div class="choices">'+[['harder','🚀 Harder!'],['same','👍 Keep going'],['easier','🐢 Easier'],['different','🎨 New topic'],['fractions','🍕 Fractions']].map(([c,l])=>`<button onclick="choose('${c}')">${l}</button>`).join('')+'</div>';
+ say(say.last+' Hey Landon, what would you like to do next?');}
+async function choose(c){const r=await api('/api/choice',{choice:c});say(r.jane);render(r.state);}
+async function skip(){render(await api('/api/skipbonus',{}));say('No problem! Here\'s a new one. 😊');}
+$('f').onsubmit=async e=>{e.preventDefault();const v=$('a').value.trim();if(!v)return;const r=await api('/api/answer',{answer:v});say.last=r.jane;say(r.jane);
+ if(r.correct){confetti(r.levelUp||r.mastered?80:35);if(r.mastered)banner('🏆 Mastered!');else if(r.levelUp)banner('⬆ Level '+r.levelUp+'!');}
+ else{$('pcard').classList.remove('shake');void $('pcard').offsetWidth;$('pcard').classList.add('shake');}
+ if(r.askChoice){st=r.state;$('pts').textContent='⭐ '+r.state.points+' pts';$('streak').textContent='🔥 '+r.state.streak;return ask();}
+ if(r.reveal){$('f').style.display='none';$('extra').innerHTML=`<p style="font-size:1.3rem">✅ Answer: <b>${r.reveal}</b></p><button onclick="next()">Next ➡</button>`;window._next=r.state;return;}
+ render(r.state);};
+async function next(){render(window._next||await api('/api/next',{}));}
+api('/api/state').then(render);
+</script></body></html>

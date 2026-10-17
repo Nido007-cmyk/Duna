@@ -1,0 +1,25 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Landon's Learning Adventure with Jane</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/app.css"></head><body>
+<header><span class="chip" id="pts">⭐ 0</span><span class="chip" id="stars">🌟 0</span><span class="chip streak" id="streak">🔥 0</span><span class="chip world" id="pct">🗺️ 0%</span>
+<nav><button class="tab on" data-v="play">🎮 Play</button><button class="tab" data-v="map">🏝️ My World</button><button class="tab" data-v="quests">🗺️ Quests<span class="dot" hidden></span></button><button class="tab" data-v="trophies">🏆 Trophies</button></nav></header>
+<main id="play">
+<div class="card"><div class="jane"><div class="avatar">👩‍🏫</div><div class="bubble" id="jane">Hi Landon! I'm Jane. Let's explore your learning world together! 🍕</div></div></div>
+<div class="card" id="intro" hidden></div>
+<div class="qstrip" id="qstrip" hidden></div>
+<div class="card" id="pcard"><div class="framebar" id="frame"></div><div class="topic" id="topic"></div><div id="bossbar"></div><div id="timer"></div>
+<div class="q" id="q">Loading…</div><ul class="evidence" id="ev"></ul><div class="vis" id="vis"></div>
+<form id="f"><input id="a" autocomplete="off" placeholder="Your answer"><button>Check ✔</button></form><div id="mc" class="mc"></div>
+<div id="extra"></div></div>
+<div class="badges" id="badges"></div><p class="foot"><a href="/parent">Parent view</a> · <a href="/about.html">About</a></p><p class="foot attr">Topics: Marble Skill Taxonomy (v1) · © Generative Spark, Inc. (Marble) · <a href="https://withmarble.com">withmarble.com</a> · licensed under ODbL 1.0 (database) and CC BY-SA 4.0 (content).</p>
+</main>
+<main id="map" hidden>
+<div class="card mapcard"><div class="maphead"><div><b id="mtitle">Landon's Learning World</b><div id="msub" class="small"></div></div><button class="ghost" id="zoomout" hidden>⬅ Whole world</button></div>
+<div id="world"></div><div id="tip" class="tip" hidden></div>
+<div class="legend"><span><i class="d m"></i>Mastered</span><span><i class="d v"></i>Review due</span><span><i class="d r"></i>Ready to explore</span><span><i class="d l"></i>Learning</span><span><i class="d x"></i>Still to go</span></div></div>
+<div class="card" id="bars"></div>
+</main>
+<main id="quests" hidden><div class="card"><h2 style="margin:.2em 0">🗺️ My Quests</h2><div class="small">Every day brings a new quest. Finish all stages and beat the boss to win its medal! You can have 3 quests going at once.</div><div id="qcapline" class="qcapline"></div></div><div id="qlist"></div></main>
+<main id="trophies" hidden><div class="card"><h2 style="margin:.2em 0">🏆 Landon's Trophy Case</h2><div id="tcount" class="tcount"></div><div id="tgrid" class="tgrid"></div></div><div id="tdetail" class="tdetail" hidden></div></main>
+<script src="/app.js"></script></body></html>

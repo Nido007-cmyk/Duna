@@ -1,0 +1,305 @@
+const $=id=>document.getElementById(id);let st,TAX,timerInt;
+const api=(p,b)=>fetch(p,{method:b?'POST':'GET',headers:{'content-type':'application/json'},body:b&&JSON.stringify(b)}).then(r=>r.json());
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// ---------- visuals ----------
+function pizza(n,eaten){const cx=100,cy=100,r=90;let s=`<svg viewBox="0 0 200 200" role="img" aria-label="pizza with ${n} slices, ${eaten} eaten">`;
+ for(let i=0;i<n;i++){const a1=2*Math.PI*i/n-Math.PI/2,a2=2*Math.PI*(i+1)/n-Math.PI/2,x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1),x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2),gone=i<eaten;
+  s+=`<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 0 1 ${x2},${y2} Z" fill="${gone?'#f5f5f5':'#ffca28'}" stroke="${gone?'#ccc':'#e65100'}" stroke-width="4" ${gone?'stroke-dasharray="6 5"':''}/>`;
+  if(!gone){const m=(a1+a2)/2;for(const k of[.45,.75])s+=`<circle cx="${cx+r*k*Math.cos(m+(k>.6?.12:-.08))}" cy="${cy+r*k*Math.sin(m+(k>.6?.12:-.08))}" r="${Math.min(9,40/n+4)}" fill="#d32f2f"/>`;}}
+ return s+`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#bf6c00" stroke-width="8"/></svg>`;}
+function bar(n,sh){const w=190/n;let s='<svg viewBox="0 0 200 60">';for(let i=0;i<n;i++)s+=`<rect x="${5+i*w}" y="10" width="${w}" height="40" fill="${i<sh?'#8d6e63':'#ffccbc'}" stroke="#4e342e" stroke-width="2" rx="3"/>`;return s+'</svg>';}
+const FRAMES={card:'💡 Cool Card',explore:'🔍 Explorer Check',review:'🧠 Memory Check-in',boss:'👾 BOSS BATTLE',timed:'⏱️ Speed Round',mystery:'🕵️ Mystery',story:'📖 Story Quest',minigame:'🎲 Mini-game',quest:'🗡️ Quest',bonus:'⭐ Bonus'};
+const BOSSES=['🐉','👾','🦖','🐙','🤖','🧌'];
+function say(t){const b=$('jane');b.innerHTML=gl(t);b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');}
+function confetti(n=40){for(let i=0;i<n;i++){const e=document.createElement('div');e.className='confetti';e.textContent=['🎉','⭐','🍕','✨','🎈','💜'][i%6];e.style.left=Math.random()*100+'vw';e.style.animationDuration=1.5+Math.random()*2+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),4000);}}
+function banner(t){const b=document.createElement('div');b.className='banner';b.innerHTML=`<div>${t}</div>`;document.body.appendChild(b);setTimeout(()=>b.remove(),2000);}
+function chips(s){$('pts').textContent='⭐ '+s.points+' pts';$('stars').textContent='🌟 '+s.stars;$('streak').textContent='🔥 '+s.streak;$('pct').textContent=`🗺️ ${s.progress.pct}%`;}
+function render(s){st=s;chips(s);const p=s.item;clearInterval(timerInt);$('timer').innerHTML='';if(!p)return;
+ const f=p.format||'quest';$('frame').className='framebar f-'+f;$('frame').textContent=FRAMES[f]||'🗡️ Quest';$('pcard').className='card '+f;
+ $('topic').textContent=`${ISL[p.topic.subject]?.e||'📚'} ${p.topic.name}${p.level?` · Lv ${p.level}`:''}`;
+ PACKT=s.terms||{};glReset();if(p.blank)$('q').innerHTML=gl(p.q).replace(/_{2,}/,'<span class="blank" id="blankslot">❓</span>');else $('q').innerHTML=p.type==='card'?'':gl(p.q);$('ev').innerHTML='';
+ $('vis').innerHTML=(p.vis?(p.vis.type==='pizza'?pizza(p.vis.slices,p.vis.eaten):bar(p.vis.parts,p.vis.shaded)):'')+(p.scene?sceneHTML(p.scene):'')+(p.tpl?tplHTML(p.tpl):'');
+ questStrip(s,p);
+ $('bossbar').innerHTML=p.boss?`<div class="hp"><span class="boss">${BOSSES[p.topicId.charCodeAt(4)%BOSSES.length]}</span>${'❤️'.repeat(p.boss.hp)}${'🖤'.repeat(p.boss.max-p.boss.hp)}<span class="small">Hit it ${p.boss.hp} more time${p.boss.hp>1?'s':''} in a row!</span></div>`:'';
+ if(p.intro){$('intro').hidden=false;$('intro').innerHTML=`<h3>${esc(p.intro.emoji||'✨')} ${gl(p.intro.title||'',new Set())}</h3><div>${gl(p.intro.story||'',new Set())}</div>`;}else $('intro').hidden=true;
+ medalRow(s);
+ $('extra').innerHTML=p.stage==='bonus'?'<button class="ghost" onclick="skip()">Skip bonus ➡</button>':'';$('mc').innerHTML='';
+ if(INTER[p.type]){$('f').style.display='none';INTER[p.type](p);}
+ else if(p.type==='mc'||p.type==='self'){$('f').style.display='none';const ch=p.type==='self'?[['yes',p.choices[0]],['kinda',p.choices[1]],['no',p.choices[2]]]:p.choices.map(c=>[c,c]);
+  $('mc').innerHTML=ch.map(([v,l])=>`<button data-v="${esc(v)}">${esc(l)}</button>`).join('');$('mc').querySelectorAll('button').forEach(b=>b.onclick=()=>{if(p.blank&&$('blankslot')){$('blankslot').textContent=b.dataset.v;$('blankslot').classList.add('filled');setTimeout(()=>send(b.dataset.v),450);}else send(b.dataset.v);});}
+ else{$('f').style.display='flex';$('a').value='';$('a').placeholder=p.creative?(p.placeholder||'Your idea!'):p.vis?.type==='pizza'||/fraction/i.test(p.topic.domain)?'Your answer (like 3/8)':'Your answer';setTimeout(()=>$('a').focus(),50);}
+ if(p.timed){const end=Date.now()+p.timed*1000;$('timer').innerHTML='<div class="tbar"><i id="tb"></i></div><div class="small" id="tl"></div>';
+  timerInt=setInterval(()=>{const left=Math.max(0,end-Date.now());$('tb').style.transform=`scaleX(${left/(p.timed*1000)})`;$('tl').textContent=left?`⚡ ${Math.ceil(left/1000)}s for a speed bonus!`:'Time\'s up for the bonus — but keep going, you can still get it!';if(!left)clearInterval(timerInt);},200);}}
+async function send(v){if(!v)return;const r=await api('/api/answer',{answer:v});say(r.jane);
+ if(r.questDone)setTimeout(()=>questMedal(r.questDone),r.medal?2600:300);
+ if(r.miniDone&&!r.reveal){chips(r.state);return miniEnd(r);}
+ if(r.correct){confetti(r.mastered||r.levelUp?80:30);if(r.medal)reveal(r.medal,r.inferred);else if(r.mastered)banner(`🏆 Mastered!<br><small>${esc(r.mastered)}</small>${r.inferred?`<br><small>+${r.inferred} skills lit up on your map!</small>`:''}`);else if(r.levelUp)banner('⬆ Level '+r.levelUp+'!');}
+ else{$('pcard').classList.remove('shake');void $('pcard').offsetWidth;$('pcard').classList.add('shake');}
+ if(r.boss){$('bossbar').querySelector('.boss')?.classList.add('shake');}
+ if(r.askChoice){chips(r.state);return ask(r.jane);}
+ if(r.reveal){$('f').style.display='none';$('mc').innerHTML='';$('extra').innerHTML=`<p style="font-size:1.3rem">✅ Answer: <b>${esc(String(r.reveal).replace(/\|/g,' → '))}</b></p><button onclick="next()">Next ➡</button>`;window._next=r.state;window._mini=r.miniDone?r:null;chips(r.state);return;}
+ if(r.retry){if(st.item.type==='input')$('a').select();else if(INTER[st.item.type])setTimeout(()=>render(st),900);return;}
+ render(r.state);}
+function ask(prev){$('f').style.display='none';$('mc').innerHTML='';$('extra').innerHTML='<div class="choices">'+[['harder','🚀 Harder!'],['same','👍 Keep going'],['easier','🐢 Easier'],['different','🎨 New subject'],['fractions','🍕 Fractions']].map(([c,l])=>`<button onclick="choose('${c}')">${l}</button>`).join('')+'</div>';
+ say(prev+' Hey Landon, what would you like to do next?');}
+async function choose(c){const r=await api('/api/choice',{choice:c});say(r.jane);render(r.state);}
+async function skip(){render(await api('/api/skipbonus',{}));say('No problem! Here\'s a new one. 😊');}
+async function next(){if(window._mini){const m=window._mini;window._mini=null;return miniEnd(m);}render(window._next||await api('/api/next',{}));window._next=null;}
+$('f').onsubmit=e=>{e.preventDefault();send($('a').value.trim());};
+// ---------- world map ----------
+const ISL={Science:{x:290,y:540,r:250,e:'🔬',c:'#66bb6a'},Mathematics:{x:950,y:340,r:240,e:'🔢',c:'#42a5f5'},English:{x:1280,y:740,r:180,e:'📚',c:'#ab47bc'},History:{x:680,y:860,r:105,e:'🏛️',c:'#8d6e63'},
+ 'Personal & Social Development':{x:690,y:625,r:100,e:'💛',c:'#ec407a',s:'Heart Isle'},'Life Skills':{x:1370,y:300,r:70,e:'💰',c:'#ffa726'},Computing:{x:1000,y:690,r:70,e:'🤖',c:'#26c6da'},'Learning to Learn':{x:1000,y:900,r:70,e:'🧠',c:'#7e57c2'}};
+const COL={m:'#ffc400',v:'#ff6d00',r:'#00e676',l:'#2979ff',x:'#b0bec5'},SN={m:'Mastered ⭐',v:'Review due 🧠',r:'Ready to explore 🟢',l:'Learning 🔵',x:'Still to go 🔒'};
+const hash=s=>{let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return(h>>>0)/4294967296;};
+let layout=null,mapData=null,zoomed=null;
+async function loadMap(){if(!TAX)TAX=await (await fetch('/tax.json')).json();if(!layout){layout=doLayout();TAX.idx=Object.fromEntries(TAX.topics.map((t,i)=>[t.id,i]));}
+ mapData=await api('/api/map');drawMap();drawBars();}
+function blob(cx,cy,r,seed,n=48,amp=1){let d='';const P=[];for(let i=0;i<n;i++){const a=i/n*2*Math.PI,k=1+amp*(.07*Math.sin(a*3+seed*9)+.05*Math.sin(a*5+seed*4)+.025*Math.sin(a*11+seed*17));P.push([cx+r*k*Math.cos(a),cy+r*k*Math.sin(a)]);}
+ // smooth closed curve through points (Catmull-Rom → cubic Bézier)
+ for(let i=0;i<n;i++){const p0=P[(i-1+n)%n],p1=P[i],p2=P[(i+1)%n],p3=P[(i+2)%n];if(!i)d+=`M${p1[0].toFixed(1)},${p1[1].toFixed(1)}`;
+  d+=`C${(p1[0]+(p2[0]-p0[0])/6).toFixed(1)},${(p1[1]+(p2[1]-p0[1])/6).toFixed(1)} ${(p2[0]-(p3[0]-p1[0])/6).toFixed(1)},${(p2[1]-(p3[1]-p1[1])/6).toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;}return d+'Z';}
+// nodes sit along winding trails: one trail per domain, from the island's heart outward (younger skills near the centre)
+function doLayout(){const pos={},doms={},trails={};const bySub={};TAX.topics.forEach((t,i)=>(bySub[t.subject]??=[]).push(i));
+ for(const [sub,idx] of Object.entries(bySub)){const I=ISL[sub];const dm=[...new Set(idx.map(i=>TAX.topics[i].domain))].sort();doms[sub]=[];trails[sub]=[];
+  dm.forEach((d,k)=>{const a0=k/dm.length*2*Math.PI,a1=(k+1)/dm.length*2*Math.PI,am=(a0+a1)/2,w=(a1-a0);doms[sub].push({d,a:am});
+   const ti=idx.filter(i=>TAX.topics[i].domain===d).sort((x,y)=>TAX.topics[x].ageRangeStart-TAX.topics[y].ageRangeStart||hash(TAX.topics[x].id)-hash(TAX.topics[y].id));
+   const n=ti.length,lanes=n>40?3:n>12?2:1,ph=hash(d)*6;
+   const at=(f,lane)=>{const rr=I.r*(.34+.6*f),a=am+Math.sin(f*7+ph)*w*.16+(lanes>1?(lane-(lanes-1)/2)*w*.26*(.4+f):0);return[I.x+rr*Math.cos(a),I.y+rr*Math.sin(a)];};
+   for(let l=0;l<lanes;l++){let p='';for(let s=0;s<=24;s++){const [x,y]=at(s/24,l);p+=(s?'L':'M')+x.toFixed(1)+','+y.toFixed(1);}trails[sub].push(p);}
+   ti.forEach((i,j)=>{const f=n>1?j/(n-1):.5;pos[i]=at(f,j%lanes);});});}
+ return{pos,doms,trails};}
+// ---------- landmarks (drawn at island heart, size s) ----------
+function landmark(sub,x,y,s){const g=(b)=>`<g transform="translate(${x},${y}) scale(${(s/100).toFixed(3)})" class="lm">${b}</g>`;
+ const sh='<ellipse cx="0" cy="44" rx="46" ry="10" fill="#0003"/>';
+ switch(sub){
+ case 'Mathematics':return g(sh+`<rect x="-40" y="0" width="80" height="44" fill="#90a4ae" stroke="#455a64" stroke-width="3"/><rect x="-22" y="-46" width="44" height="90" fill="#b0bec5" stroke="#455a64" stroke-width="3"/>
+  ${[-40,-26,-12,2,16,26].map(a=>`<rect x="${a}" y="-6" width="10" height="8" fill="#b0bec5" stroke="#455a64" stroke-width="2"/>`).join('')}${[-22,-8,6].map(a=>`<rect x="${a+2}" y="-56" width="10" height="10" fill="#b0bec5" stroke="#455a64" stroke-width="2"/>`).join('')}
+  <path d="M-10 44 v-20 a10 10 0 0 1 20 0 v20Z" fill="#5d4037"/><text x="0" y="-14" font-size="20" font-weight="800" text-anchor="middle" fill="#1565c0">123</text>
+  <line x1="0" y1="-56" x2="0" y2="-92" stroke="#455a64" stroke-width="3"/><path class="flag" d="M0 -92 L28 -84 L0 -76Z" fill="#ffca28"/><text x="11" y="-80" font-size="10" font-weight="800" fill="#1565c0">π</text>`);
+ case 'Science':return g(sh+`<path d="M-55 44 L-14 -30 Q0 -40 14 -30 L55 44Z" fill="#8d6e63" stroke="#4e342e" stroke-width="3"/><path d="M-14 -30 Q0 -40 14 -30 L8 -16 Q2 -8 -2 -18 Q-8 -8 -12 -20Z" fill="#ff7043"/>
+  <path d="M-6 -22 Q-20 10 -30 30 M6 -22 Q14 6 26 32" stroke="#ff5722" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <g class="smoke"><circle cx="0" cy="-50" r="11" fill="#eceff1cc"/><circle cx="12" cy="-66" r="14" fill="#eceff1aa"/><circle cx="-4" cy="-86" r="17" fill="#eceff188"/></g>
+  <g transform="translate(46,26)"><rect x="-14" y="0" width="28" height="18" fill="#eceff1" stroke="#455a64" stroke-width="2"/><path d="M-14 0 a14 14 0 0 1 28 0Z" fill="#cfd8dc" stroke="#455a64" stroke-width="2"/><line x1="0" y1="-6" x2="16" y2="-20" stroke="#455a64" stroke-width="5"/></g>`);
+ case 'English':return g(sh+[['#ef5350',-44,90],['#42a5f5',-38,78],['#66bb6a',-32,68],['#ffca28',-26,56],['#ab47bc',-20,44]].map(([c,x0,w],k)=>`<rect x="${-w/2}" y="${30-k*16}" width="${w}" height="15" rx="3" fill="${c}" stroke="#4a148c" stroke-width="2.5"/><line x1="${-w/2+6}" y1="${37-k*16}" x2="${w/2-6}" y2="${37-k*16}" stroke="#fff8" stroke-width="2"/>`).join('')+
+  `<path d="M-30 -50 Q-15 -62 0 -50 Q15 -62 30 -50 L30 -36 Q15 -48 0 -36 Q-15 -48 -30 -36Z" fill="#fff" stroke="#4a148c" stroke-width="2.5"/><line x1="0" y1="-50" x2="0" y2="-36" stroke="#4a148c" stroke-width="2"/>`);
+ case 'History':return g(sh+`<path d="M-58 44 L-10 -40 L38 44Z" fill="#ffcc80" stroke="#bf6c00" stroke-width="3"/><path d="M-10 -40 L38 44 L10 44Z" fill="#ffb74d"/>${[0,1,2].map(k=>`<line x1="${-44+k*8}" y1="${20-k*22}" x2="${24-k*8}" y2="${20-k*22}" stroke="#bf6c00" stroke-width="2"/>`).join('')}
+  <g transform="translate(44,8)"><rect x="-18" y="-6" width="36" height="6" fill="#eeeeee" stroke="#757575" stroke-width="2"/>${[-14,-4,6].map(a=>`<rect x="${a}" y="0" width="6" height="32" fill="#fafafa" stroke="#757575" stroke-width="1.5"/>`).join('')}<rect x="-20" y="32" width="40" height="5" fill="#e0e0e0" stroke="#757575" stroke-width="2"/></g>`);
+ case 'Personal & Social Development':return g(sh+[[-30,10,'#ef9a9a'],[22,16,'#90caf9'],[-4,-14,'#ffe082']].map(([hx,hy,c])=>`<g transform="translate(${hx},${hy})"><rect x="-15" y="0" width="30" height="24" fill="${c}" stroke="#6d4c41" stroke-width="2.5"/><path d="M-19 2 L0 -16 L19 2Z" fill="#d84315" stroke="#6d4c41" stroke-width="2.5"/><rect x="-4" y="10" width="8" height="14" fill="#6d4c41"/></g>`).join('')+
+  `<path class="beat" d="M0 -48 C-6 -60 -24 -56 -18 -40 L0 -26 L18 -40 C24 -56 6 -60 0 -48Z" fill="#ec407a" stroke="#fff" stroke-width="2.5"/>`);
+ case 'Life Skills':return g(sh+`<rect x="-40" y="0" width="80" height="40" fill="#ffe0b2" stroke="#6d4c41" stroke-width="3"/><path d="M-48 2 L-40 -26 L40 -26 L48 2Z" fill="#fff" stroke="#6d4c41" stroke-width="3"/>${[-40,-20,0,20].map(a=>`<path d="M${a} -26 L${a+20} -26 L${a+24} 2 L${a-4} 2Z" fill="#e53935" opacity="${a%40?0:1}"/>`).join('')}
+  <circle cx="-20" cy="18" r="7" fill="#ffca28" stroke="#f57f17" stroke-width="2"/><circle cx="0" cy="20" r="7" fill="#66bb6a"/><circle cx="20" cy="18" r="7" fill="#ef5350"/><text x="0" y="-36" font-size="22" text-anchor="middle">💰</text>`);
+ case 'Computing':return g(sh+`<rect x="-36" y="-8" width="72" height="52" rx="8" fill="#b2ebf2" stroke="#006064" stroke-width="3"/><rect x="-24" y="-40" width="48" height="34" rx="9" fill="#e0f7fa" stroke="#006064" stroke-width="3"/>
+  <circle class="blink" cx="-10" cy="-24" r="5" fill="#00bcd4"/><circle class="blink" cx="10" cy="-24" r="5" fill="#00bcd4"/><line x1="0" y1="-40" x2="0" y2="-54" stroke="#006064" stroke-width="3"/><circle cx="0" cy="-57" r="5" fill="#ff5252"/>
+  <rect x="-24" y="6" width="48" height="22" rx="3" fill="#263238"/><path d="M-18 20 l6 -6 l6 4 l8 -10 l10 8" stroke="#69f0ae" stroke-width="2.5" fill="none"/>`);
+ case 'Learning to Learn':return g(sh+`<path class="beam" d="M0 -46 L110 -76 L110 -16Z" fill="#fff59d" opacity=".5"/><path d="M-16 44 L-10 -36 L10 -36 L16 44Z" fill="#fff" stroke="#b71c1c" stroke-width="3"/>${[24,0,-24].map(y=>`<path d="M${-14.5+(44-y)/80*-0} ${y} h29 v9 h-29Z" fill="#e53935"/>`).join('')}
+  <rect x="-13" y="-52" width="26" height="16" fill="#fff59d" stroke="#b71c1c" stroke-width="3"/><path d="M-16 -52 L0 -66 L16 -52Z" fill="#b71c1c"/>`);}
+ return '';}
+function trees(I,seed,n){let s='';for(let k=0;k<n;k++){const a=hash(seed+'t'+k)*2*Math.PI,rr=I.r*(.25+.65*hash(seed+'r'+k)),x=I.x+rr*Math.cos(a),y=I.y+rr*Math.sin(a),z=I.r/160*(0.8+hash(seed+'z'+k)*.6);
+  s+=k%3?`<g transform="translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${z.toFixed(2)})"><rect x="-2.5" y="0" width="5" height="10" fill="#6d4c41"/><circle cx="0" cy="-4" r="10" fill="#2e7d32"/><circle cx="-3" cy="-7" r="4" fill="#66bb6a"/></g>`
+   :`<g transform="translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${z.toFixed(2)})"><path d="M0 -18 L10 6 L-10 6Z" fill="#1b5e20"/><path d="M0 -24 L7 -6 L-7 -6Z" fill="#388e3c"/><rect x="-2" y="6" width="4" height="5" fill="#5d4037"/></g>`;}return s;}
+function hills(I,seed){let s='';for(let k=0;k<3;k++){const a=hash(seed+'h'+k)*2*Math.PI,rr=I.r*(.45+.3*hash(seed+'hr'+k)),x=I.x+rr*Math.cos(a),y=I.y+rr*Math.sin(a),w=I.r*.32;
+  s+=`<path d="M${(x-w).toFixed(1)},${y.toFixed(1)} Q${x.toFixed(1)},${(y-w*1.1).toFixed(1)} ${(x+w).toFixed(1)},${y.toFixed(1)}Z" fill="#558b2f" opacity=".55"/><path d="M${(x-w*.5).toFixed(1)},${(y-w*.32).toFixed(1)} Q${(x-w*.1).toFixed(1)},${(y-w*.62).toFixed(1)} ${(x+w*.2).toFixed(1)},${(y-w*.45).toFixed(1)}" stroke="#aed581" stroke-width="${(w/9).toFixed(1)}" fill="none" stroke-linecap="round" opacity=".7"/>`;}return s;}
+function compass(x,y,r){return`<g transform="translate(${x},${y})" class="compass"><circle r="${r}" fill="#fff8e1" stroke="#8d6e63" stroke-width="${r/14}"/><circle r="${r*.8}" fill="none" stroke="#bcaaa4" stroke-width="${r/30}" stroke-dasharray="${r/10} ${r/14}"/>
+ <path d="M0 ${-r*.9} L${r*.16} 0 L0 ${r*.9} L${-r*.16} 0Z" fill="#5d4037"/><path d="M0 ${-r*.9} L${r*.16} 0 L${-r*.16} 0Z" fill="#e53935"/><path d="M${-r*.9} 0 L0 ${r*.16} L${r*.9} 0 L0 ${-r*.16}Z" fill="#8d6e63" opacity=".8"/>
+ <text y="${-r*1.08}" font-size="${r*.38}" text-anchor="middle" font-weight="800" fill="#5d4037">N</text></g>`;}
+function cloud(x,y,s,d){return`<g class="cloud" style="animation-duration:${d}s;animation-delay:${-d*hash(x+'c')}s"><g transform="translate(${x},${y}) scale(${s})" opacity=".85"><ellipse cx="0" cy="0" rx="60" ry="22" fill="#fff"/><circle cx="-22" cy="-12" r="22" fill="#fff"/><circle cx="12" cy="-20" r="28" fill="#fff"/><circle cx="38" cy="-6" r="18" fill="#fff"/></g></g>`;}
+function ship(x,y,s,c,d){return`<g class="ship" style="animation-duration:${d}s"><g transform="translate(${x},${y}) scale(${s})"><path d="M-30 0 L30 0 L20 14 L-20 14Z" fill="#8d6e63" stroke="#4e342e" stroke-width="2"/><line x1="0" y1="0" x2="0" y2="-44" stroke="#4e342e" stroke-width="3"/><path d="M2 -42 Q26 -24 2 -6Z" fill="#fff" stroke="#bdbdbd"/><path d="M-2 -38 Q-20 -24 -2 -10Z" fill="${c}"/><path d="M0 -44 l12 4 l-12 4Z" fill="#e53935"/><path d="M-36 16 q8 -5 16 0 t16 0 t16 0 t16 0" stroke="#fff" stroke-width="2" fill="none" opacity=".8"/></g></g>`;}
+function banner2(I,sub,p,fs){const w=fs*((I.s||sub).length*.56+6.5),x=I.x,y=I.y-I.r*1.2-fs*.2;
+ return`<g class="banner2" transform="translate(${x.toFixed(1)},${y.toFixed(1)})"><path d="M${-w/2-fs} ${-fs*.55} l${fs*.6} ${fs*.6} l${-fs*.6} ${fs*.6} h${fs*1.4} v${-fs*1.2}Z M${w/2+fs} ${-fs*.55} l${-fs*.6} ${fs*.6} l${fs*.6} ${fs*.6} h${-fs*1.4} v${-fs*1.2}Z" fill="#a1887f"/>
+ <rect x="${-w/2}" y="${-fs*.85}" width="${w}" height="${fs*1.7}" rx="${fs*.3}" fill="${I.c}" stroke="#fff" stroke-width="${fs/9}"/>
+ <text y="${fs*.12}" font-size="${fs}" text-anchor="middle" font-weight="800" fill="#fff" stroke="#0005" stroke-width="${fs/12}" paint-order="stroke">${I.e} ${esc(I.s||sub)} · ${p}%</text>
+ <rect x="${-w/2+fs*.4}" y="${fs*.38}" width="${w-fs*.8}" height="${fs*.22}" rx="${fs*.11}" fill="#0003"/><rect x="${-w/2+fs*.4}" y="${fs*.38}" width="${((w-fs*.8)*p/100).toFixed(1)}" height="${fs*.22}" rx="${fs*.11}" fill="#ffd54f"/></g>`;}
+function drawMap(){const{pos,doms,trails}=layout,codes=mapData.codes;const vb=zoomed?`${ISL[zoomed].x-ISL[zoomed].r*1.3} ${ISL[zoomed].y-ISL[zoomed].r*1.42} ${ISL[zoomed].r*2.6} ${ISL[zoomed].r*2.72}`:'0 0 1600 1050';
+ let s=`<svg viewBox="${vb}" id="msvg" class="${zoomed?'zoom':''}"><defs><radialGradient id="sea" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#4dd0e1"/><stop offset=".6" stop-color="#0288d1"/><stop offset="1" stop-color="#01579b"/></radialGradient>
+ <pattern id="ripple" width="90" height="60" patternUnits="userSpaceOnUse"><path d="M5 20 q10 -7 20 0 M50 48 q10 -7 20 0" stroke="#ffffff" stroke-opacity=".18" stroke-width="2.5" fill="none" stroke-linecap="round"/></pattern>
+ <radialGradient id="grass" cx="45%" cy="40%"><stop offset="0" stop-color="#9ccc65"/><stop offset="1" stop-color="#558b2f"/></radialGradient>
+ <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+ <rect x="-500" y="-500" width="2600" height="2100" fill="url(#sea)"/><rect class="ripple" x="-500" y="-500" width="2600" height="2100" fill="url(#ripple)"/>`;
+ for(let i=0;i<14;i++)s+=`<path class="wave" style="animation-delay:${-i*.7}s" d="M${(i*137)%1500} ${60+i*72} q15 -10 30 0 t30 0" stroke="#fff6" stroke-width="3" fill="none"/>`;
+ const by=mapData.progress.by;
+ for(const [sub,I] of Object.entries(ISL)){const b=by[sub],p=b?Math.round(100*(b.mastered+b.review)/b.total):0,h=hash(sub);
+  s+=`<g class="isl" data-s="${sub}"><path d="${blob(I.x,I.y,I.r*1.34,h,40,1.3)}" fill="#80deea" opacity=".45"/><path class="foam" d="${blob(I.x,I.y,I.r*1.2,h+.1,40)}" fill="#b2ebf2" opacity=".7" stroke="#fff" stroke-width="${I.r/40}" stroke-dasharray="${I.r/12} ${I.r/18}"/>
+  <path d="${blob(I.x,I.y,I.r*1.12,h)}" fill="#f6d58e" stroke="#e8b960" stroke-width="${I.r/60}"/><path d="${blob(I.x,I.y,I.r*1.02,h+.3)}" fill="url(#grass)"/>
+  <path d="${blob(I.x,I.y,I.r*.95,h+.6)}" fill="${I.c}" opacity=".22"/>${hills(I,sub)}
+  ${trails[sub].map(d=>`<path d="${d}" stroke="#e9d3a6" stroke-width="${(I.r/(zoomed?40:70)).toFixed(1)}" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/><path d="${d}" stroke="#fff3" stroke-width="${(I.r/110).toFixed(1)}" fill="none" stroke-dasharray="${I.r/40} ${I.r/40}"/>`).join('')}
+  ${trees(I,sub,Math.round(I.r/14))}${landmark(sub,I.x,I.y-I.r*.04,I.r*.55)}</g>`;}
+ if(zoomed){const ids=new Set();TAX.topics.forEach((t)=>{if(t.subject===zoomed)ids.add(t.id)});let ls='';for(const [a,b,h] of TAX.deps){if(!h||!ids.has(a)||!ids.has(b))continue;const ia=TAX.idx[a],ib=TAX.idx[b];const ca=codes[ia],cb=codes[ib];if(cb==='x')continue;
+   ls+=`<line x1="${pos[ib][0]}" y1="${pos[ib][1]}" x2="${pos[ia][0]}" y2="${pos[ia][1]}" stroke="${ca==='r'?'#00e676':ca==='m'||ca==='v'?'#fff8e1':'#ffffff55'}" stroke-width="${ca==='r'?1.4:.7}" opacity=".75"/>`;}s+=`<g pointer-events="none">${ls}</g>`;}
+ const rad=zoomed?ISL[zoomed].r/58:4.4;const G={m:'',v:'',r:'',l:'',x:''},fl=[];
+ TAX.topics.forEach((t,i)=>{if(zoomed&&t.subject!==zoomed)return;const c=codes[i],[x,y]=pos[i];const rr=c==='x'?rad*.8:rad;
+  G[c]+=`<circle class="tp ${c}" data-i="${i}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rr.toFixed(2)}"/>`;
+  if(zoomed&&(c==='m'||c==='v'))fl.push(`<path d="M${x.toFixed(1)} ${(y-rr).toFixed(1)} v${(-rad*2.6).toFixed(1)} l${(rad*1.6).toFixed(1)} ${(rad*.6).toFixed(1)} l${(-rad*1.6).toFixed(1)} ${(rad*.6).toFixed(1)}" fill="${c==='v'?'#ff6d00':'#ffc400'}" stroke="#5d4037" stroke-width="${(rad/6).toFixed(2)}"/>`);});
+ // one group per state: one filter / one animation per group keeps 1,590 nodes cheap on phones
+ s+=`<g class="nodes" stroke-width="${(rad/4).toFixed(2)}"><g class="g-x" fill="#cfd8dc" stroke="#eceff1">${G.x}</g><g class="g-l" fill="${COL.l}" stroke="#fff">${G.l}</g><g class="g-r" fill="${COL.r}" stroke="#fff">${G.r}</g>
+ <g class="g-m" fill="${COL.m}" stroke="#fff8e1" filter="url(#glow)">${G.m}</g><g class="g-v" fill="${COL.v}" stroke="#fff">${G.v}</g><g pointer-events="none">${fl.join('')}</g></g>`;
+ // fog over locked land (world view only)
+ if(!zoomed)for(const [sub,I] of Object.entries(ISL)){const b=by[sub];if(!b)continue;const f=b.locked/b.total;s+=`<path pointer-events="none" class="fog" d="${blob(I.x,I.y,I.r*1.05,hash(sub)+.9)}" fill="#fff" opacity="${(.03+.09*f).toFixed(2)}"/>`;}
+ for(const [sub,I] of Object.entries(ISL)){if(zoomed&&zoomed!==sub)continue;const b=by[sub],p=b?Math.round(100*(b.mastered+b.review)/b.total):0;const fs=zoomed?I.r/8:Math.max(20,I.r/7);s+=banner2(I,sub,p,fs);}
+ if(zoomed)for(const {d,a} of doms[zoomed]){const I=ISL[zoomed];const lb=d.length>16?d.split(/ & | and /)[0]:d;s+=`<text pointer-events="none" x="${I.x+I.r*1.0*Math.cos(a)}" y="${I.y+I.r*1.0*Math.sin(a)}" font-size="${I.r/(doms[zoomed].length>10?24:17)}" text-anchor="middle" fill="#3e2723" font-weight="800" stroke="#fff8e1" stroke-width="${I.r/80}" paint-order="stroke">${esc(lb)}</text>`;}
+ if(!zoomed){s+=ship(560,180,1.1,'#42a5f5',22)+ship(1180,960,.9,'#ec407a',28)+ship(1500,560,.8,'#ffca28',25)+compass(1500,110,55);
+  for(const [x,y,k,d] of [[200,120,1,70],[800,90,.8,90],[1300,480,.7,80],[400,980,.9,100],[1100,140,.6,75]])s+=cloud(x,y,k,d);}
+ const cur=mapData.current&&TAX.idx[mapData.current];if(cur!=null&&pos[cur]&&(!zoomed||TAX.topics[cur].subject===zoomed)){const[x,y]=pos[cur];s+=`<text pointer-events="none" class="boat" x="${x}" y="${y-rad*1.5}" font-size="${rad*6}" text-anchor="middle">⛵</text>`;}
+ $('world').innerHTML=s+'</svg>';const svg=$('msvg');
+ svg.querySelectorAll('.isl').forEach(g=>g.onclick=()=>{if(!zoomed){zoomed=g.dataset.s;drawMap();}});
+ svg.addEventListener('pointermove',tip);svg.addEventListener('click',e=>{if(e.target.classList.contains('tp')){if(!zoomed){tip(e,true);zoomed=TAX.topics[e.target.dataset.i].subject;drawMap();}else{$('tip').hidden=true;stoneCard(+e.target.dataset.i);}}});
+ $('zoomout').hidden=!zoomed;const pr=mapData.progress;$('msub').textContent=zoomed?`${zoomed}: tap a stone to see the skill. Flags = mastered, glowing green = ready!`:`${pr.done} of ${pr.total} skills · ${pr.tot.ready} ready to explore · tap an island to zoom in`;}
+function tip(e,force){const t=e.target;if(!t.classList?.contains('tp')){if(!force)$('tip').hidden=true;return;}const i=+t.dataset.i,tp=TAX.topics[i],c=mapData.codes[i];
+ const box=$('world').getBoundingClientRect(),card=$('world').parentElement.getBoundingClientRect();const el=$('tip');el.hidden=false;
+ el.innerHTML=`<b>${esc(tp.name)}</b><br><span class="small">${esc(tp.subject)} › ${esc(tp.domain)} · ages ${tp.ageRangeStart}+</span><br>${SN[c]}<br><span class="small">${esc(tp.description).slice(0,140)}…</span>`;
+ el.style.left=Math.min(e.clientX-card.left+12,card.width-290)+'px';el.style.top=(e.clientY-card.top+12)+'px';}
+function drawBars(){const pr=mapData.progress;let s=`<div class="big">🌍 ${pr.pct}% of ${pr.total} skills</div><div class="sbar"><div class="track">${seg(pr.tot,pr.total)}</div></div>`;
+ for(const [sub,I] of Object.entries(ISL)){const b=pr.by[sub];if(!b)continue;s+=`<div class="sbar"><div class="lbl"><span>${I.e} ${esc(sub)}</span><span>${b.mastered+b.review} / ${b.total}</span></div><div class="track">${seg(b,b.total)}</div></div>`;}
+ $('bars').innerHTML=s;requestAnimationFrame(()=>$('bars').querySelectorAll('.track i').forEach(i=>i.style.width=i.dataset.w));}
+const seg=(b,t)=>[['mastered','m'],['review','v'],['learning','l'],['ready','r']].map(([k,c])=>`<i style="width:0;background:${COL[c]};opacity:${c==='r'?.45:1}" data-w="${(100*b[k]/t).toFixed(2)}%" title="${k}: ${b[k]}"></i>`).join('');
+$('zoomout').onclick=()=>{zoomed=null;drawMap();};
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));for(const v of['play','map','trophies','quests'])$(v).hidden=b.dataset.v!==v;if(b.dataset.v==='map')loadMap();if(b.dataset.v==='trophies')loadTrophies();if(b.dataset.v==='quests')loadQuests();});
+loadGloss().finally(()=>api('/api/state').then(s=>{render(s);questDot(s);if(s.newQuest&&!location.hash&&!s.quests?.paused)questReveal(s.quest);else if(s.quests?.paused)say(`Finish your quest to unlock the next one! 🗝️ Keep going on "${s.quests.oldest?.title}" (${s.quests.oldest?.pct}% done).`);}));
+if(location.hash==='#quests')document.querySelector('.tab[data-v=quests]').click();
+if(location.hash==='#trophies')document.querySelector('.tab[data-v=trophies]').click();
+if(location.hash.startsWith('#map')){const z=decodeURIComponent(location.hash.slice(5));if(z)zoomed=z;document.querySelector('.tab[data-v=map]').click();}
+
+// ---------- medals ----------
+const TIER={quest:{n:'Quest',g:['#b9f6ca','#00c853','#1b5e20']},bronze:{n:'Bronze',g:['#ffd8a8','#c87533','#7a4317']},silver:{n:'Silver',g:['#ffffff','#c3ccd6','#7b8794']},gold:{n:'Gold',g:['#fff7b0','#ffc93c','#b8860b']},legendary:{n:'Legendary',g:['#ff8bd8','#8a5cff','#2de2ff']}};
+let MID=0;
+function medalSVG(m,size=64){const id='m'+(MID++),T=TIER[m.tier]||TIER.bronze,c=ISL[m.subject]?.c||'#42a5f5';
+ const shape={quest:'<path d="M50 12 L60 38 L88 40 L66 58 L74 86 L50 70 L26 86 L34 58 L12 40 L40 38Z"/>',bronze:'<circle cx="50" cy="52" r="34"/>',silver:'<path d="M50 14 L82 24 L80 58 Q76 80 50 92 Q24 80 20 58 L18 24 Z"/>',
+  gold:(()=>{let d='';for(let i=0;i<24;i++){const a=i/24*2*Math.PI-Math.PI/2,r=i%2?32:39;d+=(i?'L':'M')+(50+r*Math.cos(a)).toFixed(1)+' '+(52+r*Math.sin(a)).toFixed(1);}return`<path d="${d}Z"/>`;})(),
+  legendary:(()=>{let d='';for(let i=0;i<6;i++){const a=i/6*2*Math.PI-Math.PI/2;d+=(i?'L':'M')+(50+40*Math.cos(a)).toFixed(1)+' '+(52+40*Math.sin(a)).toFixed(1);}return`<path d="${d}Z"/>`;})()}[m.tier]||'<circle cx="50" cy="52" r="34"/>';
+ const sp=m.tier==='bronze'?'':[[18,20,0],[84,30,.6],[78,84,1.2],[14,74,1.8]].slice(0,m.tier==='silver'?2:4).map(([x,y,dl])=>`<path class="spk" style="animation-delay:${dl}s;transform-origin:${x}px ${y}px" d="M${x} ${y-6} L${x+1.6} ${y-1.6} L${x+6} ${y} L${x+1.6} ${y+1.6} L${x} ${y+6} L${x-1.6} ${y+1.6} L${x-6} ${y} L${x-1.6} ${y-1.6}Z" fill="#fff"/>`).join('');
+ return `<svg class="medal t-${m.tier}" viewBox="0 0 100 112" width="${size}" height="${size*1.12}" aria-label="${esc(T.n)} medal: ${esc(m.name)}"><defs>
+ <linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${T.g[0]}"/><stop offset=".5" stop-color="${T.g[1]}"/><stop offset="1" stop-color="${T.g[2]}"/></linearGradient>
+ <clipPath id="${id}c">${shape}</clipPath></defs>
+ <path d="M34 78 L26 108 L38 101 L44 112 L50 84Z" fill="${c}"/><path d="M66 78 L74 108 L62 101 L56 112 L50 84Z" fill="${c}" opacity=".85"/>
+ <g fill="url(#${id}g)" stroke="${T.g[2]}" stroke-width="2.5">${shape}</g>
+ <circle cx="50" cy="52" r="${m.tier==='gold'?24:22}" fill="${c}" stroke="#fff" stroke-width="2.5" opacity=".95"/>
+ <text x="50" y="61" font-size="26" text-anchor="middle">${m.ic||'⭐'}</text>
+ <g clip-path="url(#${id}c)"><rect class="shine" x="-60" y="0" width="22" height="112" fill="#fff" opacity=".55" transform="skewX(-20)"/></g>${sp}</svg>`;}
+function medalRow(s){const M=s.medals||[];$('badges').innerHTML=s.medalCount?`<button class="mrow" onclick="openTrophies()"><span class="mlbl">🏆 ${s.medalCount} medal${s.medalCount>1?'s':''}</span>${M.map(m=>medalSVG(m,40)).join('')}${s.medalCount>M.length?`<span class="more">+${s.medalCount-M.length}</span>`:''}<span class="go">See all ›</span></button>`:'<div class="small mhint">🏅 Master a skill to win your first medal!</div>';}
+function openTrophies(){document.querySelector('.tab[data-v=trophies]').click();}
+function reveal(m,inf){const o=document.createElement('div');o.className='reveal r-'+m.tier;const T=TIER[m.tier];
+ o.innerHTML=`<div class="rays"></div><div class="rbox"><div class="rtier">${m.tier==='legendary'?'🌈 LEGENDARY!':'✨ New '+T.n+' medal!'}</div><div class="rmedal">${medalSVG(m,170)}</div><div class="rname">${esc(m.name)}</div><div class="small">${esc(m.subject)}${inf?` · +${inf} skills lit up!`:''}</div><button>Collect it! 🏆</button></div>`;
+ document.body.appendChild(o);confetti(m.tier==='legendary'?140:90);const close=()=>{o.classList.add('out');setTimeout(()=>o.remove(),350);};o.querySelector('button').onclick=close;o.onclick=e=>{if(e.target===o)close();};}
+async function loadTrophies(){const d=await api('/api/trophies');const c=d.counts||{};
+ $('tcount').innerHTML=['quest','legendary','gold','silver','bronze'].filter(t=>t!=='quest'||c.quest).map(t=>`<span class="tc t-${t}">${{quest:'🗺️',legendary:'🌈',gold:'🥇',silver:'🥈',bronze:'🥉'}[t]} ${c[t]||0} ${TIER[t].n}</span>`).join('');
+ $('tgrid').innerHTML=d.medals.length?d.medals.map((m,i)=>`<button class="tcell" data-i="${i}">${medalSVG(m,72)}<span>${esc(m.name)}</span></button>`).join(''):'<p>No medals yet — go win one! 🏅</p>';
+ $('tgrid').querySelectorAll('.tcell').forEach(b=>b.onclick=()=>{const m=d.medals[+b.dataset.i];$('tdetail').hidden=false;
+  $('tdetail').innerHTML=`<div class="tdbox">${medalSVG(m,120)}<h3>${esc(m.name)}</h3><div class="tier-pill t-${m.tier}">${TIER[m.tier].n}${m.boss?' · Boss win!':''}</div><p class="small">${ISL[m.subject]?.e||''} ${esc(m.subject)} › ${esc(m.domain)}</p><p>You earned this for: <b>${esc(m.why)}</b></p><p class="small">Won ${new Date(m.at).toLocaleDateString('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric'})}</p><button onclick="$('tdetail').hidden=true">Close</button></div>`;});}
+// preview the unlock animation with the latest medal (no progress change): /#medal-preview
+if(location.hash==='#medal-preview')api('/api/state').then(s=>s.medals?.[0]&&reveal(s.medals[0],0));
+
+// ---------- illustrations: pack scenes (emoji or inline SVG) + app templates ----------
+function cleanSVG(x){return String(x).replace(/<script[\s\S]*?<\/script>/gi,'').replace(/<foreignObject[\s\S]*?<\/foreignObject>/gi,'').replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi,'').replace(/(href\s*=\s*["'])\s*javascript:[^"']*/gi,'$1#');}
+function sceneHTML(sc){sc=String(sc).trim();return sc.startsWith('<svg')?`<div class="scene">${cleanSVG(sc)}</div>`:`<div class="scene emo">${esc(sc)}</div>`;}
+function nline(min,max,marks=[],val=null){const W=300,x=v=>20+(v-min)/(max-min)*(W-40);let s=`<svg viewBox="0 0 ${W} 70" class="nl"><line x1="14" y1="40" x2="${W-14}" y2="40" stroke="#4a148c" stroke-width="4" stroke-linecap="round"/>`;
+ const n=Math.min(20,Math.round(max-min));for(let i=0;i<=n;i++){const v=min+(max-min)*i/n;s+=`<line x1="${x(v)}" y1="32" x2="${x(v)}" y2="48" stroke="#4a148c" stroke-width="2"/>`;}
+ s+=`<text x="${x(min)}" y="66" text-anchor="middle" font-size="13" font-weight="800">${min}</text><text x="${x(max)}" y="66" text-anchor="middle" font-size="13" font-weight="800">${max}</text>`;
+ for(const m of marks){const [v,l]=Array.isArray(m)?m:[m,m];s+=`<circle cx="${x(v)}" cy="40" r="6" fill="#ff6d00"/><text x="${x(v)}" y="22" text-anchor="middle" font-size="13" font-weight="800" fill="#e65100">${esc(l)}</text>`;}
+ return s+'</svg>';}
+function tplHTML(t){switch(t.type){
+ case 'pizza':return `<div class="tpl">${pizza(t.slices||8,t.eaten||0)}</div>`;
+ case 'fracbar':return `<div class="tpl">${bar(t.parts||4,t.shaded||0)}${t.label?`<div class="small">${esc(t.label)}</div>`:''}</div>`;
+ case 'numberline':return `<div class="tpl">${nline(t.min??0,t.max??10,t.marks||[])}</div>`;
+ case 'timeline':return `<div class="tpl tl">${(t.events||[]).map(([d,l,e])=>`<div class="tle"><div class="tld">${esc(d)}</div><div class="tldot">${esc(e||'📍')}</div><div class="tll">${esc(l)}</div></div>`).join('<div class="tlbar"></div>')}</div>`;
+ case 'foodweb':return `<div class="tpl fw">${(t.chain||[]).map(([e,l])=>`<div class="fwn"><span>${esc(e)}</span><small>${esc(l)}</small></div>`).join('<div class="fwa">➜</div>')}${t.note?`<div class="small" style="width:100%">${esc(t.note)}</div>`:''}</div>`;
+ case 'orbit':{const P=t.planets||[['🌍','Earth']];let s=`<svg viewBox="0 0 300 200" class="orb"><rect width="300" height="200" rx="18" fill="#0d1b4c"/>${[...Array(30)].map((_,i)=>`<circle cx="${(i*97)%300}" cy="${(i*53)%200}" r="1.2" fill="#fff" opacity=".7"/>`).join('')}<text x="150" y="112" font-size="34" text-anchor="middle">☀️</text>`;
+  P.forEach(([e,l],i)=>{const rx=50+i*28,ry=rx*.42,a=(t.angles?.[i]??(40+i*65))*Math.PI/180;s+=`<ellipse cx="150" cy="100" rx="${rx}" ry="${ry}" fill="none" stroke="#fff5" stroke-dasharray="3 4"/><g class="spin" style="animation-duration:${8+i*5}s;transform-origin:150px 100px"><text x="${150+rx*Math.cos(a)}" y="${106+ry*Math.sin(a)}" font-size="${t.highlight===l?24:18}" text-anchor="middle">${esc(e)}</text></g>`;});
+  return `<div class="tpl">${s}</svg>${t.note?`<div class="small">${esc(t.note)}</div>`:''}</div>`;}}
+ return '';}
+
+// ---------- interactive formats ----------
+const checkBtn=(f,label='Check ✔')=>{$('extra').innerHTML=`<button class="check" id="chk">${label}</button>`;$('chk').onclick=f;};
+const INTER={
+ card(p){$('pcard').classList.add('cardy');$('q').innerHTML=`<div class="kcard k-${p.card}"><div class="kemo">${esc(p.emoji||(p.card==='why'?'🧠':'🤩'))}</div><div class="klbl">${p.card==='why'?'💡 Why it works':'🤩 Fun fact!'}</div><h3>${gl(p.q)}</h3><p>${gl(p.body||'')}</p></div>`;
+  $('mc').innerHTML='';$('extra').innerHTML=`<button class="check" id="chk">${p.card==='why'?'Got it! 🧠':'Whoa, cool! ➡'}</button>`;$('chk').onclick=()=>send('ok');},
+ picture(p){$('mc').innerHTML=`<div class="pics">${p.choices.map((c,i)=>`<button class="pic" data-v="${esc(c)}"><span class="pe">${String(p.pics[i]||'').trim().startsWith('<svg')?cleanSVG(p.pics[i]):esc(p.pics[i]||'')}</span><span>${esc(c)}</span></button>`).join('')}</div>`;
+  $('mc').querySelectorAll('.pic').forEach(b=>b.onclick=()=>{b.classList.add('picked');send(b.dataset.v);});},
+ order(p){const L=document.createElement('ol');L.className='ord';L.innerHTML=p.items.map(x=>`<li><span class="grip">☰</span><span class="ot">${esc(x)}</span><span class="arr"><button class="up" aria-label="move up">▲</button><button class="dn" aria-label="move down">▼</button></span></li>`).join('');$('mc').innerHTML='<div class="small">Drag the cards (or tap ▲▼) into the right order!</div>';$('mc').appendChild(L);
+  L.querySelectorAll('.up').forEach(b=>b.onclick=()=>{const li=b.closest('li');li.previousElementSibling&&L.insertBefore(li,li.previousElementSibling);});
+  L.querySelectorAll('.dn').forEach(b=>b.onclick=()=>{const li=b.closest('li');li.nextElementSibling&&L.insertBefore(li.nextElementSibling,li);});
+  let drag=null;L.addEventListener('pointerdown',e=>{const li=e.target.closest('li');if(!li||e.target.closest('button'))return;drag=li;li.classList.add('drag');li.setPointerCapture(e.pointerId);e.preventDefault();});
+  L.addEventListener('pointermove',e=>{if(!drag)return;const o=[...L.children].find(li=>li!==drag&&(()=>{const r=li.getBoundingClientRect();return e.clientY>r.top&&e.clientY<r.bottom;})());if(o){const r=o.getBoundingClientRect();L.insertBefore(drag,e.clientY<r.top+r.height/2?o:o.nextSibling);}});
+  const up=()=>{drag?.classList.remove('drag');drag=null;};L.addEventListener('pointerup',up);L.addEventListener('pointercancel',up);
+  checkBtn(()=>send([...L.querySelectorAll('.ot')].map(x=>x.textContent).join('|')));},
+ match(p){const C=['#7c4dff','#00b8d4','#ff6d00','#e91e63','#00c853','#ffab00'];const pair={};let selL=null;
+  $('mc').innerHTML=`<div class="small">Tap one on the left, then its partner on the right!</div><div class="match"><div>${p.left.map((x,i)=>`<button class="ml" data-i="${i}">${esc(x)}</button>`).join('')}</div><div>${p.right.map((x,i)=>`<button class="mr" data-i="${i}">${esc(x)}</button>`).join('')}</div></div>`;
+  const paint=()=>{$('mc').querySelectorAll('.ml').forEach(b=>{const i=+b.dataset.i;b.style.background=pair[i]!=null?C[i%6]:selL===i?'#ffd54f':'';b.classList.toggle('paired',pair[i]!=null);b.classList.toggle('sel',selL===i);});
+   $('mc').querySelectorAll('.mr').forEach(b=>{const j=+b.dataset.i,k=Object.keys(pair).find(i=>pair[i]===j);b.style.background=k!=null?C[k%6]:'';b.classList.toggle('paired',k!=null);});
+   $('chk').disabled=Object.keys(pair).length<p.left.length;};
+  $('mc').querySelectorAll('.ml').forEach(b=>b.onclick=()=>{selL=+b.dataset.i;delete pair[selL];paint();});
+  $('mc').querySelectorAll('.mr').forEach(b=>b.onclick=()=>{if(selL==null)return;const j=+b.dataset.i;for(const i in pair)if(pair[i]===j)delete pair[i];pair[selL]=j;selL=null;paint();});
+  checkBtn(()=>send(p.left.map((l,i)=>`${l}=${p.right[pair[i]]}`).join('|')));paint();},
+ truefalse(p){let k=0;const ans=[];$('mc').innerHTML=`<div class="tf"><div class="tfn" id="tfn"></div><div class="tfs" id="tfs"></div><div class="tfb"><button class="tt">✅ True</button><button class="ff">❌ False</button></div></div>`;
+  const show=()=>{$('tfn').textContent=`⚡ ${k+1} of ${p.statements.length}`;const e=$('tfs');e.textContent=p.statements[k];e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop');};
+  const pick=v=>{ans.push(v);k++;if(k<p.statements.length)show();else{$('mc').querySelector('.tfb').remove();$('tfs').textContent='Checking your speed round… ⚡';send(ans.join(''));}};
+  $('mc').querySelector('.tt').onclick=()=>pick('T');$('mc').querySelector('.ff').onclick=()=>pick('F');show();},
+ numberline(p){const {min,max,step}=p.line,W=300,x=v=>20+(v-min)/(max-min)*(W-40);let val=null;
+  const snap=v=>Math.min(max,Math.max(min,Math.round((v-min)/step)*step+min));const fmt=v=>+v.toFixed(4)+'';
+  $('mc').innerHTML=`<div class="small">Drag the 🚩 to the right spot on the number line!</div><div class="nlw">${nline(min,max,p.line.labels||[])}<div class="nlv" id="nlv">Tap or drag</div></div>`;
+  const svg=$('mc').querySelector('svg');svg.insertAdjacentHTML('beforeend',`<g id="flag" style="display:none"><line x1="0" y1="10" x2="0" y2="40" stroke="#c62828" stroke-width="3"/><text x="0" y="14" font-size="22" text-anchor="start">🚩</text></g>`);
+  const set=e=>{const r=svg.getBoundingClientRect(),vx=(e.clientX-r.left)/r.width*W;val=snap(min+(vx-20)/(W-40)*(max-min));const f=$('flag');f.style.display='';f.setAttribute('transform',`translate(${x(val)},0)`);$('nlv').textContent='🚩 '+fmt(val);$('chk').disabled=false;};
+  let down=false;svg.style.touchAction='none';svg.addEventListener('pointerdown',e=>{down=true;svg.setPointerCapture(e.pointerId);set(e);});svg.addEventListener('pointermove',e=>down&&set(e));svg.addEventListener('pointerup',()=>down=false);
+  checkBtn(()=>val!=null&&send(fmt(val)));$('chk').disabled=true;},
+ fracbar(p){const n=p.parts,on=new Set();const W=300,w=(W-10)/n;
+  $('mc').innerHTML=`<div class="small">Tap the pieces to color them in!</div><svg viewBox="0 0 ${W} 80" class="fb">${[...Array(n)].map((_,i)=>`<rect data-i="${i}" x="${5+i*w}" y="10" width="${w}" height="60" rx="5"/>`).join('')}</svg><div class="nlv" id="fbv">0/${n}</div>`;
+  $('mc').querySelectorAll('rect').forEach(r=>r.onclick=()=>{const i=+r.dataset.i;on.has(i)?on.delete(i):on.add(i);r.classList.toggle('on');$('fbv').textContent=`${on.size}/${n}`;});
+  checkBtn(()=>send(`${on.size}/${n}`));}};
+
+// ---------- quest strip, mini-sessions ----------
+function questStrip(s,p){const el=$('qstrip');if(!el)return;const Q=s.quest;
+ if(p.mini){el.hidden=false;el.className='qstrip mini';el.innerHTML=`<span>🔍 Exploring: <b>${esc(p.topic.name)}</b> · ${p.mini.n} of ${p.mini.of}</span><button class="ghost sm" onclick="miniQuit()">🗺️ Back to map</button>`;return;}
+ if(!Q||!Q.started||Q.completed||!String(p.ptype||'')){el.hidden=true;return;}
+ el.hidden=false;el.className='qstrip';el.innerHTML=`<div class="qsh">${esc(Q.emoji)} <b>${esc(Q.title)}</b> <span class="small">Stage ${Math.min(Q.stages.length,Q.current+1)} of ${Q.stages.length}</span> <span class="qcap" title="active quests">🗺️ ${s.quests?.active||0}/${s.quests?.cap||3}</span></div>${s.quests?.boost?`<div class="boost">${esc(s.quests.boost.emoji)} ${gl(s.quests.boost.message||'')}</div>`:''}${s.quests?.paused?`<div class="boost lock">🗝️ Finish your quest to unlock the next one!</div>`:''}<div class="qpath">${Q.stages.map((x,i)=>`<span class="qs ${x.complete?'done':i===Q.current?'cur':''} ${x.boss?'boss':''}" title="${esc(x.name)}">${x.complete?'✅':esc(x.emoji)}</span>`).join('<i></i>')}</div>`;}
+async function miniQuit(){const s=await api('/api/mini/quit',{});render(s);goMap(s.mini?.subject);}
+function goMap(sub){if(window._afterMini){render(window._afterMini);window._afterMini=null;}if(sub)zoomed=sub;document.querySelector('.tab[data-v=map]').click();}
+function miniEnd(r){const m=r.miniDone;$('f').style.display='none';$('mc').innerHTML='';
+ $('extra').innerHTML=`<div class="miniend"><div class="big">${m.mastered?'🏆':'🌟'}</div><b>${m.mastered?`You conquered "${esc(m.name)}"!`:`Nice exploring, "${esc(m.name)}" is on your map!`}</b><br><button onclick="goMap('${esc(m.subject)}')">🗺️ Back to my map</button></div>`;
+ confetti(m.mastered?70:30);window._afterMini=r.state;setTimeout(()=>{if(!$('play').hidden&&$('extra').querySelector('.miniend'))goMap(m.subject);},4500);}
+function stoneCard(i){const t=TAX.topics[i],c=mapData.codes[i];const o=document.createElement('div');o.className='scard';
+ const act=c==='r'||c==='l'?['🚀 Explore now!','explore']:c==='v'?['🧠 Practice now','practice']:null;
+ o.innerHTML=`<div class="scbox s-${c}"><button class="x" aria-label="close">✕</button><div class="scemo">${esc(t.ic||'⭐')}</div><h3>${esc(t.sn||t.name)}</h3><div class="pill p-${c}">${SN[c]}</div><p class="small">${esc(t.domain)} · ages ${t.ageRangeStart}+</p>
+ ${act?`<button class="bigbtn ${act[1]}" id="scgo">${act[0]}</button><div class="small">${act[1]==='explore'?'A quick mini-adventure, then back to your map!':'A quick memory check to keep it shiny!'}</div>`:c==='m'?'<p>⭐ You already mastered this one!</p>':'<p>🔒 Unlock the stones before it first!</p>'}</div>`;
+ document.body.appendChild(o);const close=()=>o.remove();o.querySelector('.x').onclick=close;o.onclick=e=>{if(e.target===o)close();};
+ if(act)$('scgo').onclick=async()=>{const s=await api('/api/explore',{topicId:t.id});close();if(s.error){say(s.error);return;}document.querySelector('.tab[data-v=play]').click();render(s);say(act[1]==='explore'?`Let's explore "${t.sn||t.name}"! 🚀`:`Memory check: "${t.sn||t.name}"! 🧠`);};}
+
+// ---------- quests: reveal, tab, medal ----------
+function questDot(s){const d=document.querySelector('.tab[data-v=quests] .dot');if(d)d.hidden=!s.newQuest;}
+function questReveal(Q){const o=document.createElement('div');o.className='qreveal';
+ o.innerHTML=`<div class="rays"></div><div class="qrbox"><div class="qrnew">✨ NEW QUEST! ✨</div><div class="chest"><div class="lid"></div><div class="base"><span class="lock">🔒</span></div><div class="glow"></div></div>
+ <div class="scroll"><div class="rod"></div><div class="paper"><div class="qemo">${esc(Q.emoji)}</div><h2>${esc(Q.title)}</h2><p>${esc(Q.hook)}</p>
+ <div class="qpath big">${Q.stages.map(x=>`<span class="qs ${x.boss?'boss':''}" title="${esc(x.name)}">${esc(x.emoji)}</span>`).join('<i></i>')}</div>
+ <div class="small">${Q.stages.length} stages · boss finale · win the <b>${esc(Q.medal.emoji)} ${esc(Q.medal.name)}</b></div><button class="bigbtn" id="qstart">⚔️ Start the quest!</button></div><div class="rod"></div></div></div>`;
+ document.body.appendChild(o);confetti(50);
+ $('qstart').onclick=async()=>{const s=await api('/api/quest/start',{date:Q.date});if(s.error){o.remove();say(s.error);return;}o.classList.add('out');setTimeout(()=>o.remove(),400);document.querySelector('.tab[data-v=play]').click();render(s);questDot(s);say(`Let's go! Stage 1: ${Q.stages[0].name}! ${Q.stages[0].emoji}`);};}
+async function loadQuests(){const d=await api('/api/quests');const el=$('qlist');
+ $('qcapline').innerHTML=`<b>🗺️ ${d.active}/${d.cap} active quests</b>${d.paused?' · 🗝️ Finish your quest to unlock the next one!':d.active>=d.cap?' · Finish one to unlock a new one!':''}`;
+ el.innerHTML=d.quests.length?d.quests.map((q,i)=>`<div class="qcard ${q.today?'now':''} ${q.completed?'won':''}"><div class="qch"><span class="qemo">${esc(q.emoji)}</span><div><b>${esc(q.title)}</b>${q.today&&!q.started&&q.isQuest?'<span class="newtag">NEW!</span>':''}<div class="small">${q.waiting?'<span class="newtag" style="background:#78909c">🔒 Waiting</span> ':''}${q.today?'Today’s quest':new Date(q.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})} · ${q.completed?'🏅 Won!':q.started?'In progress':q.isQuest?'Not started':'Adventure'}</div></div></div>
+  ${q.hook?`<p>${esc(q.hook)}</p>`:''}<div class="qpath">${q.stages.map(x=>`<span class="qs ${x.complete?'done':''} ${x.boss?'boss':''}" title="${esc(x.name)}">${x.complete?'✅':esc(x.emoji)}</span>`).join('<i></i>')}</div>
+  <div class="track"><i style="width:${q.pct}%;background:linear-gradient(90deg,#00e676,#ffd54f)"></i></div><div class="small">${q.done} / ${q.total} steps · ${q.pct}% ${q.completed?`· ${esc(q.medal.emoji)} ${esc(q.medal.name)}`:''}</div>
+  ${q.boost?`<div class="boost">${esc(q.boost.emoji)} ${esc(q.boost.message||'')}</div>`:''}${q.waiting?'<div class="small">🗝️ Finish your quest to unlock this one!</div>':q.isQuest&&!q.completed&&(q.active||q.canStart)?`<button class="qgo" data-i="${i}">${q.started?(q.focus?'▶ Keep going':'▶ Play this quest'):'⚔️ Start'}</button>`:''}</div>`).join(''):'<p>No quests yet. Check back tomorrow! 🗺️</p>';
+ el.querySelectorAll('.qgo').forEach(b=>b.onclick=async()=>{const q=d.quests[+b.dataset.i];if(!q.started)return questReveal(q);const s=await api('/api/quest/start',{date:q.date});document.querySelector('.tab[data-v=play]').click();if(s.error)return say(s.error);render(s);say(`Back to "${q.title}"! You've got this! 💪`);});}
+function questMedal(m){reveal({tier:'quest',name:m.name,ic:m.emoji,subject:'Quest: '+m.title},0);}
+if(location.hash==='#quest-preview')api('/api/state').then(s=>s.quest&&questReveal(s.quest));
+
+// ---------- glossary: dotted key terms with kid definitions (hover on desktop, tap on phones) ----------
+let GLOSS={},GRE=null,PACKT={},GUSED=new Set();
+async function loadGloss(){try{const d=await (await fetch('/glossary.json')).json();for(const x of d.terms)for(const f of x.t)GLOSS[f.toLowerCase()]={w:x.t[0],e:x.e,d:x.d};}catch(e){}GRE=null;}
+function glReset(){GUSED=new Set();}
+function glEntries(){const all={...GLOSS};for(const [k,v] of Object.entries(PACKT||{}))all[k.toLowerCase()]=typeof v==='string'?{w:k,d:v,e:''}:{w:k,d:v.d||v.def||'',e:v.e||v.emoji||''};return all;}
+let GKEY='';
+function gl(text,used=GUSED){text=String(text??'');const all=glEntries(),key=Object.keys(PACKT||{}).join('|');
+ if(!GRE||GKEY!==key){const ks=Object.keys(all).sort((a,b)=>b.length-a.length).map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));GRE=ks.length?new RegExp(`(^|[^A-Za-z0-9'’-])(${ks.join('|')})(s|es)?(?![A-Za-z0-9-])`,'gi'):null;GKEY=key;}
+ if(!GRE)return esc(text);let out='',last=0;GRE.lastIndex=0;let m;
+ while((m=GRE.exec(text))){const k=m[2].toLowerCase(),en=all[k];const st=m.index+m[1].length,word=m[2]+(m[3]||'');
+  if(!en||used.has(en.w.toLowerCase())||/\d[\/.]?$/.test(text.slice(0,st))){continue;}used.add(en.w.toLowerCase());
+  out+=esc(text.slice(last,st))+`<span class="gt" tabindex="0" role="button" data-k="${esc(k)}">${esc(word)}</span>`;last=st+word.length;}
+ return out+esc(text.slice(last));}
+function gpop(el){const all=glEntries(),en=all[el.dataset.k];if(!en)return;let p=$('gpop');if(!p){p=document.createElement('div');p.id='gpop';p.className='gpop';document.body.appendChild(p);}
+ p.innerHTML=`<div class="gw">${esc(en.e||'📘')} <b>${esc(en.w)}</b></div><div>${esc(en.d)}</div>`;p.hidden=false;const r=el.getBoundingClientRect(),W=Math.min(300,innerWidth-20);p.style.width=W+'px';
+ p.style.left=Math.max(10,Math.min(innerWidth-W-10,r.left+r.width/2-W/2))+'px';const top=r.bottom+8;p.style.top=(top+120>innerHeight?r.top-p.offsetHeight-8:top)+scrollY+'px';
+ document.querySelectorAll('.gt.open').forEach(x=>x.classList.remove('open'));el.classList.add('open');
+ if(el.dataset.k!==gpop.last||Date.now()-(gpop.at||0)>5000){gpop.last=el.dataset.k;gpop.at=Date.now();fetch('/api/term',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({term:en.w})}).catch(()=>{});}}
+function gclose(){const p=$('gpop');if(p)p.hidden=true;document.querySelectorAll('.gt.open').forEach(x=>x.classList.remove('open'));}
+document.addEventListener('click',e=>{const t=e.target.closest?.('.gt');if(t){e.preventDefault();e.stopPropagation();t.classList.contains('open')?gclose():gpop(t);return;}if(!e.target.closest?.('#gpop'))gclose();},true);
+document.addEventListener('keydown',e=>{const t=e.target.closest?.('.gt');if(t&&(e.key==='Enter'||e.key===' ')){e.preventDefault();gpop(t);}if(e.key==='Escape')gclose();});
+if(matchMedia('(hover:hover)').matches){document.addEventListener('mouseover',e=>{const t=e.target.closest?.('.gt');if(t)gpop(t);});document.addEventListener('mouseout',e=>{const t=e.target.closest?.('.gt');if(t&&!e.relatedTarget?.closest?.('.gt'))gclose();});}
+addEventListener('scroll',()=>gclose(),{passive:true});

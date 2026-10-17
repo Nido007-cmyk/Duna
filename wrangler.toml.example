@@ -1,0 +1,15 @@
+# Copy to wrangler.toml (gitignored) and fill in your own ids. See INSTALL.md.
+name = "jane-learning"                      # Worker name → https://<name>.<your-subdomain>.workers.dev
+main = "src/worker.js"
+compatibility_date = "2025-09-01"
+account_id = "<YOUR_CLOUDFLARE_ACCOUNT_ID>" # or delete this line and set CLOUDFLARE_ACCOUNT_ID
+workers_dev = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "none"
+
+[[kv_namespaces]]
+binding = "LANDON_KV"                       # the code expects this binding name
+id = "<YOUR_KV_NAMESPACE_ID>"               # from: npx wrangler kv namespace create LANDON_KV
