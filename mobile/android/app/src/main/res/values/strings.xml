@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Duna</string>
+    <string name="title_activity_main">Duna</string>
+    <string name="package_name">com.nido007.duna</string>
+    <string name="custom_url_scheme">com.nido007.duna</string>
+</resources>
