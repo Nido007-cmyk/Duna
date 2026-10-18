@@ -1,0 +1,1107 @@
+{
+  "locale": "es-419",
+  "version": "v1",
+  "source": "clusters.json",
+  "attribution": "Marble Skill Taxonomy (v1) © Generative Spark, Inc. (Marble) · https://withmarble.com · database under ODbL 1.0 and content under CC BY-SA 4.0. This es-419 Latin American Spanish text is a derivative translation, published in the Tropicalrambler fork, and is distributed under the same licenses.",
+  "clusterCount": 183,
+  "clusters": [
+    {
+      "subject": "English",
+      "domain": "Grammar & Punctuation",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo las bases de la escritura: cómo formar oraciones completas, usar correctamente las letras mayúsculas y los signos de puntuación, y comprender tipos básicos de palabras como el sustantivo y el verbo."
+    },
+    {
+      "subject": "English",
+      "domain": "Grammar & Punctuation",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está aprendiendo habilidades importantes de gramática: cómo construir oraciones más complejas, usar la puntuación correctamente y elegir las palabras adecuadas para que su escritura sea más clara y más interesante."
+    },
+    {
+      "subject": "English",
+      "domain": "Grammar & Punctuation",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo una gramática más sofisticada: usar correctamente los verbos irregulares y los plurales, puntuar el diálogo, elegir los pronombres adecuados y las conjunciones adecuadas, y comprender cuándo usar distintos tiempos verbales."
+    },
+    {
+      "subject": "English",
+      "domain": "Grammar & Punctuation",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está dominando una gramática más sofisticada: aprendiendo a usar correctamente distintos tiempos verbales, comprendiendo cómo funcionan los adjetivos y los adverbios, y usando la puntuación para que su escritura sea más clara y más variada."
+    },
+    {
+      "subject": "English",
+      "domain": "Grammar & Punctuation",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está dominando la gramática y la puntuación avanzadas: usando estructuras de oraciones complejas con cláusulas relativas, comprendiendo cómo cambiar el significado de las palabras con prefijos y sufijos, y creando una escritura cohesiva y bien conectada."
+    },
+    {
+      "subject": "English",
+      "domain": "Grammar & Punctuation",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está aprendiendo habilidades avanzadas de gramática y puntuación: dominando estructuras de oraciones complejas, puntuación sofisticada como los dos puntos y el punto y coma, y técnicas de escritura formal que le prepararán para la secundaria y más adelante."
+    },
+    {
+      "subject": "English",
+      "domain": "Handwriting & Transcription",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está dominando las habilidades físicas de la escritura: aprendiendo a formar las letras y los números correctamente, tomar el lápiz de manera adecuada y desarrollar una escritura a mano ordenada y legible."
+    },
+    {
+      "subject": "English",
+      "domain": "Handwriting & Transcription",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está aprendiendo a unir las letras al escribir, y desarrollando una escritura a mano fluida al conectar las letras con trazos diagonales y horizontales, mientras mantiene las letras del tamaño correcto."
+    },
+    {
+      "subject": "English",
+      "domain": "Phonics & Word Reading",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está construyendo la base de la lectura: aprendiendo cómo las letras y los sonidos funcionan juntos, reconociendo palabras comunes de un vistazo y desarrollando la habilidad de unir los sonidos para leer palabras nuevas por su cuenta."
+    },
+    {
+      "subject": "English",
+      "domain": "Phonics & Word Reading",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está aprendiendo a leer palabras más complejas al reconocer distintos patrones de letras para los mismos sonidos y al dividir las palabras más largas en sílabas, y también desarrollando fluidez y expresión al leer en voz alta."
+    },
+    {
+      "subject": "English",
+      "domain": "Phonics & Word Reading",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo a leer palabras más complejas al comprender cómo los prefijos, los sufijos y las palabras raíz funcionan juntos, lo que le ayuda a abordar palabras desconocidas con confianza."
+    },
+    {
+      "subject": "English",
+      "domain": "Reading Comprehension",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está construyendo habilidades de lectura: comprendiendo las historias al identificar personajes y sucesos, haciendo preguntas sobre lo que lee y conectando los libros con sus propias experiencias."
+    },
+    {
+      "subject": "English",
+      "domain": "Reading Comprehension",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está desarrollando habilidades de lectura más profundas: comprendiendo cómo se estructuran las historias, identificando las ideas principales en textos informativos, comparando las perspectivas de los personajes y reconociendo cómo distintas características del texto ayudan a organizar la información."
+    },
+    {
+      "subject": "English",
+      "domain": "Reading Comprehension",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está desarrollando habilidades de lectura más profundas: identificando ideas principales a lo largo de varios párrafos, haciendo inferencias sobre los personajes y los temas, y comprendiendo cómo los autores usan el lenguaje y las características del texto para crear significado y efecto."
+    },
+    {
+      "subject": "English",
+      "domain": "Reading Comprehension",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está aprendiendo a pensar a fondo sobre los textos: estableciendo conexiones entre ideas, analizando las motivaciones de los personajes, identificando los mensajes centrales de las historias y distinguiendo entre su propio punto de vista y el de los autores o el de los personajes."
+    },
+    {
+      "subject": "English",
+      "domain": "Reading Comprehension",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está desarrollando habilidades de lectura sofisticadas: analizando cómo los autores estructuran los textos, comparando distintas perspectivas, comprendiendo los temas y los recursos literarios, e integrando información de varias fuentes."
+    },
+    {
+      "subject": "English",
+      "domain": "Reading Comprehension",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está desarrollando habilidades de lectura sofisticadas: comparando textos, analizando cómo los autores usan la evidencia y la perspectiva, integrando información de varias fuentes y respaldando sus interpretaciones con citas y razonamiento."
+    },
+    {
+      "subject": "English",
+      "domain": "Speaking & Listening",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está desarrollando habilidades esenciales de comunicación: aprendiendo a escuchar con atención, hablar con claridad, participar en conversaciones y expresar sus pensamientos e ideas con confianza junto a otras personas."
+    },
+    {
+      "subject": "English",
+      "domain": "Speaking & Listening",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está construyendo confianza para hablar en voz alta: memorizando y recitando poemas con expresión, y aprendiendo a hablar con claridad en oraciones completas al presentar ante otras personas."
+    },
+    {
+      "subject": "English",
+      "domain": "Speaking & Listening",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está desarrollando confianza como hablante y como oyente: aprendiendo a captar a su audiencia, considerar distintos puntos de vista y elegir un lenguaje adecuado para distintas situaciones."
+    },
+    {
+      "subject": "English",
+      "domain": "Speaking & Listening",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está desarrollando habilidades más sólidas para conversar y presentar: aprendiendo a prepararse para las conversaciones, compartir ideas con claridad y presentar la información de manera organizada."
+    },
+    {
+      "subject": "English",
+      "domain": "Speaking & Listening",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está desarrollando habilidades de escucha crítica, y aprendiendo a identificar las ideas clave de lo que escucha y a evaluar si quienes hablan ofrecen buenas razones y evidencia para sus ideas."
+    },
+    {
+      "subject": "English",
+      "domain": "Speaking & Listening",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está desarrollando habilidades de comunicación sofisticadas: aprendiendo a adaptar su manera de hablar a distintas audiencias, participar de forma reflexiva en las discusiones y crear presentaciones que combinan de manera efectiva las palabras habladas con elementos visuales."
+    },
+    {
+      "subject": "English",
+      "domain": "Spelling & Word Study",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo a escribir palabras conectando los sonidos con las letras: formando palabras simples, agregando terminaciones comunes como «-ing» y «-ed», y memorizando palabras importantes que no siguen los patrones regulares de ortografía."
+    },
+    {
+      "subject": "English",
+      "domain": "Spelling & Word Study",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está aprendiendo reglas de ortografía más avanzadas, como agregar sufijos que cambian la palabra raíz, usar el apóstrofo correctamente en las contracciones y en la posesión, y escribir palabras con patrones de letras alternativos para sonidos conocidos."
+    },
+    {
+      "subject": "English",
+      "domain": "Spelling & Word Study",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo reglas importantes de ortografía: usando el apóstrofo correctamente para la posesión, distinguiendo palabras que suenan igual y comprendiendo cómo funcionan los prefijos y los sufijos."
+    },
+    {
+      "subject": "English",
+      "domain": "Spelling & Word Study",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está aprendiendo a escribir con la ortografía correcta palabras que vienen de otros idiomas, y comprendiendo cómo los orígenes griego, francés y latino influyen en la forma en que se escriben las palabras del inglés."
+    },
+    {
+      "subject": "English",
+      "domain": "Spelling & Word Study",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está abordando patrones de ortografía difíciles: distinguiendo pares de palabras que se confunden, comprendiendo terminaciones de origen latino y francés, y dominando las letras mudas y los sufijos complejos."
+    },
+    {
+      "subject": "English",
+      "domain": "Vocabulary",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está construyendo su conocimiento de las palabras: preguntando por palabras desconocidas, comprendiendo los opuestos, reconociendo cómo las partes de las palabras dan pistas sobre el significado y usando el vocabulario nuevo en su habla y en su escritura."
+    },
+    {
+      "subject": "English",
+      "domain": "Vocabulary",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está aprendiendo cómo se forman y se conectan las palabras: descubriendo cómo las palabras raíz cambian con distintas terminaciones (como «look», «looks» y «looked») y aprendiendo a definir palabras al describir a qué categoría pertenecen y cuáles son sus características clave."
+    },
+    {
+      "subject": "English",
+      "domain": "Vocabulary",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo cómo el lenguaje cambia según con quién habla y según la situación, mientras explora cómo las palabras se conectan por raíces y partes que comparten."
+    },
+    {
+      "subject": "English",
+      "domain": "Vocabulary",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está aprendiendo a comprender el lenguaje figurado: reconociendo cuándo las palabras no significan exactamente lo que dicen e interpretando frases comunes y modismos en las historias y en la conversación."
+    },
+    {
+      "subject": "English",
+      "domain": "Vocabulary",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está desarrollando habilidades de lenguaje sofisticadas: comprendiendo el lenguaje figurado, como las metáforas y los símiles, aprendiendo relaciones entre palabras por medio de sinónimos y antónimos, y usando partes de palabras griegas y latinas para descifrar palabras desconocidas."
+    },
+    {
+      "subject": "English",
+      "domain": "Vocabulary",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está ampliando sus habilidades de vocabulario al aprender a elegir las palabras adecuadas para distintas situaciones y a comprender cómo cambia el lenguaje según hable de manera formal o informal."
+    },
+    {
+      "subject": "English",
+      "domain": "Writing Composition",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo a escribir sus propias historias y explicaciones: planeando lo que va a decir, poniendo los sucesos en orden y compartiendo su escritura con otras personas para recibir retroalimentación."
+    },
+    {
+      "subject": "English",
+      "domain": "Writing Composition",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está aprendiendo a escribir con distintos propósitos, más allá de las historias, incluidas las opiniones, las explicaciones y la poesía, mientras desarrolla habilidades de planificación, construye resistencia al escribir y aprende a revisar y corregir su trabajo."
+    },
+    {
+      "subject": "English",
+      "domain": "Writing Composition",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está desarrollándose como escritor o escritora: aprendiendo a organizar sus ideas en párrafos, escribir historias atractivas con personajes desarrollados y editar su trabajo para que quede más claro y más efectivo."
+    },
+    {
+      "subject": "English",
+      "domain": "Writing Composition",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está desarrollando habilidades de escritura más sofisticadas: eligiendo palabras precisas y vívidas para crear efectos específicos, y aprendiendo a investigar temas y a organizar información de distintas fuentes."
+    },
+    {
+      "subject": "English",
+      "domain": "Writing Composition",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está desarrollando habilidades de escritura sofisticadas: elaborando textos claros y bien organizados para distintos destinatarios y propósitos, y respaldando sus ideas con evidencia de textos que ha leído."
+    },
+    {
+      "subject": "English",
+      "domain": "Writing Composition",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está desarrollando habilidades avanzadas de escritura: planeando historias con personajes bien desarrollados, organizando la información con claridad mediante encabezados y diseños, y aprendiendo a investigar y resumir información de distintas fuentes."
+    },
+    {
+      "subject": "History",
+      "domain": "Ancient Egypt",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está explorando el fascinante mundo del antiguo Egipto: descubriendo las pirámides y los faraones, aprendiendo sobre los jeroglíficos y el río Nilo, y comprendiendo cómo los arqueólogos nos ayudan a conocer el pasado."
+    },
+    {
+      "subject": "History",
+      "domain": "Ancient Egypt",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está descubriendo el fascinante mundo del antiguo Egipto: aprendiendo sobre los faraones y las pirámides, los dioses y la momificación, los jeroglíficos y la vida diaria a lo largo del río Nilo durante más de 3,000 años de historia."
+    },
+    {
+      "subject": "History",
+      "domain": "Ancient Egypt",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está aprendiendo en profundidad sobre la civilización del antiguo Egipto: explorando cómo los faraones gobernaban como reyes-dioses, cómo funcionaban la economía y la sociedad, y examinando los logros notables de Egipto en el arte, la arquitectura y la ciencia, que influyeron en el mundo durante miles de años."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Addition & Subtraction",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está construyendo una base sólida en la suma y la resta, y aprendiendo a combinar y separar números hasta 20 con objetos, dibujos y estrategias mentales."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Addition & Subtraction",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está construyendo bases sólidas en la suma y la resta: aprendiendo a sumar y restar con fluidez dentro del 20, comprendiendo la relación entre estas operaciones y aplicando distintas estrategias mentales para resolver problemas."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Addition & Subtraction",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está avanzando en sus habilidades de cálculo: aprendiendo a sumar y restar números más grandes hasta 1000, dominando estrategias de cálculo mental y resolviendo problemas verbales más complejos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Addition & Subtraction",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está dominando la suma y la resta más complejas: trabajando con números más grandes de hasta cuatro dígitos, resolviendo problemas verbales de varios pasos y usando métodos escritos formales junto con estrategias mentales."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Addition & Subtraction",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está dominando el cálculo mental con números grandes y usando métodos escritos formales para cálculos complejos, mientras aprende a elegir el método más eficiente para distintos tipos de problemas."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Addition & Subtraction",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está dominando la suma y la resta complejas: resolviendo problemas de varios pasos con números grandes y decimales, y eligiendo las mejores estrategias para resolver cálculos difíciles."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Algebra",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está comenzando a trabajar con el álgebra: usando letras para representar incógnitas, creando y siguiendo reglas para patrones numéricos, y traduciendo problemas verbales a ecuaciones matemáticas."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Counting & Cardinality",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está construyendo habilidades esenciales de conteo: aprendiendo que los números tienen significado, que cada número representa una cantidad específica, y comenzando a comparar grupos para ver cuál tiene más objetos o menos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Counting & Cardinality",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está construyendo confianza para contar: aprendiendo a contar de 3 en 3 y a contar hacia adelante y hacia atrás de 10 en 10 desde cualquier número."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Counting & Cardinality",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está desarrollando confianza para contar con números más grandes, practicando patrones de contar de N en N y contando hasta 1000 con saltos de distintas cantidades."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Counting & Cardinality",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está practicando contar de N en N en patrones numéricos más grandes, y construyendo fluidez con los múltiplos de 6, 7, 9, 25 y 1000."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo a organizar y contar información al agrupar objetos y comparar qué grupos tienen más elementos o menos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está aprendiendo a trabajar con datos: creando y leyendo cuadros simples, gráficas simples y tablas simples para organizar la información y responder preguntas sobre lo que muestran los datos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo a crear y leer gráficas simples: elaborando pictogramas y gráficas de barras para mostrar información, y luego usando estas gráficas para resolver problemas matemáticos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está aprendiendo a reunir información y presentarla de manera visual con cuadros y gráficas, y luego a usar estas representaciones para resolver problemas y responder preguntas sobre los datos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está aprendiendo a trabajar con datos: leyendo horarios y gráficas, y resolviendo problemas al interpretar la información que presentan los cuadros y las gráficas de líneas."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Data & Statistics",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está aprendiendo a interpretar y crear distintos tipos de gráficas y cuadros, y comenzando a calcular promedios para comprender lo que los datos nos dicen sobre situaciones de la vida real."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Fractions",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está descubriendo sus primeras fracciones: aprendiendo a reconocer y nombrar mitades y cuartos como partes iguales de figuras, objetos y grupos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Fractions",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está comenzando a comprender las fracciones al dividir figuras y objetos en partes iguales, y aprendiendo a reconocer y escribir fracciones simples como mitades, cuartos y tercios."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Fractions",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está descubriendo las fracciones como partes de un entero: comprendiendo mitades, tercios y cuartos, ubicando fracciones en la recta numérica y comenzando a sumar y restar fracciones simples."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Fractions",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está desarrollando una comprensión más profunda de las fracciones y los decimales: aprendiendo a sumar y restar fracciones, convertir entre fracciones y decimales, y usarlos para resolver problemas prácticos de medidas y de dinero."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Fractions",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está explorando las fracciones, los decimales y los porcentajes: comprendiendo cómo se relacionan entre sí, sumando y restando fracciones, y resolviendo problemas de la vida real con estos conceptos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Fractions",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está dominando operaciones avanzadas con fracciones: sumando, restando y multiplicando fracciones con distintos denominadores, dividiendo con fracciones y resolviendo problemas de la vida real con modelos visuales y razonamiento matemático."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Geometry",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está explorando las figuras y el espacio: reconociendo círculos, triángulos y cuadrados, construyendo con cuerpos geométricos 3D como cubos y esferas, y describiendo dónde están las cosas con palabras como encima, debajo y al lado."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Geometry",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está descubriendo el mundo de las figuras: identificando propiedades de las figuras planas 2D y de los cuerpos geométricos 3D, aprendiendo a combinar figuras para formar otras nuevas, y describiendo posiciones y movimientos con lenguaje matemático."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Geometry",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo sobre figuras, ángulos y líneas: identificando distintos tipos de ángulos y de líneas, dibujando figuras planas 2D y construyendo modelos 3D, y comprendiendo cómo los ángulos funcionan como giros y cuáles son las propiedades de las figuras."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Geometry",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está avanzando en su comprensión de las figuras y el espacio: trabajando con coordenadas en cuadrículas, identificando distintos tipos de ángulos, explorando la simetría y clasificando las figuras según sus propiedades."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Geometry",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está aprendiendo a medir y trabajar con ángulos usando transportadores, a clasificar las figuras según sus propiedades y a comprender transformaciones como las reflexiones y las traslaciones, mientras explora cómo se relacionan los ángulos entre sí."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Geometry",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está desarrollando habilidades espaciales avanzadas: trabajando con cuerpos geométricos 3D y sus desarrollos planos, usando cuadrículas de coordenadas con números negativos, calculando ángulos y comprendiendo transformaciones geométricas como la reflexión y la traslación."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está comenzando a pensar como un matemático o una matemática: usando objetos y dibujos para resolver problemas, explicando su razonamiento, notando patrones y conectando las matemáticas con situaciones de la vida real."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está desarrollando habilidades de razonamiento matemático: aprendiendo a planear cómo abordar los problemas, explicar su pensamiento con claridad, detectar patrones y conectar situaciones de la vida real con soluciones matemáticas."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo a pensar como un matemático o una matemática: resolviendo problemas de varios pasos, explicando su razonamiento, reconociendo patrones en los números y eligiendo las mejores herramientas y estrategias para distintos retos matemáticos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está desarrollando habilidades sólidas de razonamiento matemático: aprendiendo a explicar su pensamiento con claridad, detectar patrones y conexiones, y elegir las mejores estrategias para resolver problemas complejos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está desarrollando habilidades avanzadas para resolver problemas, aprendiendo a elegir las mejores herramientas y métodos matemáticos para problemas complejos, y comunicando con claridad su razonamiento matemático."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Mathematical Thinking",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está desarrollando habilidades avanzadas de razonamiento matemático: aprendiendo a construir argumentos lógicos, establecer conexiones entre distintos conceptos matemáticos y resolver problemas complejos de la vida real que involucran fracciones, álgebra y razón."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo sobre la medición en la vida diaria: decir la hora en punto y a y media, comparar longitudes y pesos de los objetos, comprender el dinero y usar palabras de tiempo como ayer y mañana."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está aprendiendo habilidades prácticas de medición: leer el reloj en intervalos de cinco minutos, medir la longitud y la capacidad con unidades estándar, y trabajar con dinero, incluido calcular el vuelto."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo habilidades prácticas de medición: usar reglas y otras herramientas para medir con exactitud la longitud, el peso y el volumen, trabajar con dinero y decir la hora al minuto más cercano."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está aprendiendo a medir el mundo a su alrededor: calculando áreas y perímetros, convirtiendo entre distintas unidades como metros y kilómetros, y resolviendo problemas de tiempo con relojes analógicos y digitales."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está dominando habilidades avanzadas de medición: calculando el área y el perímetro de figuras, trabajando con fracciones en las medidas, convirtiendo entre distintas unidades y resolviendo problemas de la vida real que involucran distancia, tiempo y volumen."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Measurement",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está dominando habilidades avanzadas de medición: calculando el volumen y el área con fórmulas, convirtiendo entre distintas unidades de medida y resolviendo problemas de la vida real que involucran longitud, masa y capacidad."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Multiplication & Division",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está conociendo la multiplicación y la división como formas de trabajar con grupos iguales: comprendiendo la multiplicación como una suma repetida y la división como un reparto en partes iguales."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Multiplication & Division",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está construyendo las bases de la multiplicación y la división: aprendiendo las tablas del 2, del 5 y del 10, comprendiendo qué significan estas operaciones y resolviendo problemas con arreglos y suma repetida."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Multiplication & Division",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está dominando la multiplicación y la división: aprendiendo las tablas de multiplicar (en especial las del 3, del 4 y del 8), comprendiendo cómo la multiplicación se conecta con los arreglos y la suma repetida, y resolviendo problemas verbales de estas operaciones."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Multiplication & Division",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está construyendo fluidez con la multiplicación y la división: memorizando las tablas de multiplicar hasta 12×12, comprendiendo la relación entre la multiplicación y la división, y resolviendo problemas verbales de grupos iguales y arreglos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Multiplication & Division",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está dominando la multiplicación y la división más complejas: trabajando con números más grandes, comprendiendo factores y múltiplos, resolviendo problemas de varios pasos y comenzando a usar métodos escritos formales."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Multiplication & Division",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está avanzando hacia una multiplicación y una división más sofisticadas: usando métodos escritos formales para cálculos complejos, trabajando con decimales y aplicando el orden de las operaciones para resolver problemas de varios pasos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Number Representation & Place Value",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está construyendo las bases de los números: aprendiendo a leer y escribir números hasta 100, comprendiendo los nombres de los números y comenzando a ver cómo los números se forman con decenas y unidades."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Number Representation & Place Value",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está aprendiendo cómo funcionan los números al comprender el valor posicional: descubriendo que, en los números de dos dígitos, cada dígito tiene un valor distinto según represente decenas o unidades."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Number Representation & Place Value",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está dominando los números más grandes: aprendiendo a leer, escribir y trabajar con números hasta 1000 al comprender cómo las centenas, las decenas y las unidades funcionan juntas."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Number Representation & Place Value",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está trabajando con números más grandes hasta 10,000: comprendiendo el valor posicional en números de cuatro dígitos, aprendiendo a redondear números y explorando los números negativos y los números romanos."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Number Representation & Place Value",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está trabajando con números más grandes hasta 1 millón: comprendiendo el valor posicional, redondeando a distintos niveles de exactitud y comenzando a trabajar con números negativos en contextos de la vida diaria."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Number Representation & Place Value",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está dominando los números grandes y los decimales: leyendo, escribiendo y comparando números hasta 10 millones, comprendiendo cómo funcionan las posiciones decimales y usando números negativos en contextos de la vida real como la temperatura y el dinero."
+    },
+    {
+      "subject": "Mathematics",
+      "domain": "Ratio & Proportion",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está aprendiendo a comparar cantidades y a resolver problemas de razones, proporciones, porcentajes y escala: habilidades esenciales para comprender las relaciones entre los números en contextos de la vida real."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Emotional Literacy",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo sobre las emociones: nombrar distintos sentimientos, comprender que todas las personas tienen emociones, expresar los sentimientos con palabras en lugar de con acciones y reconocer qué provoca sus emociones."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Emotional Literacy",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está desarrollando una comprensión más profunda de las emociones: aprendiendo palabras más específicas para las emociones, reconociendo cómo los sentimientos varían en intensidad y comprendiendo la conexión entre las emociones y las sensaciones físicas de su cuerpo."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Emotional Literacy",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está desarrollando una comprensión emocional más profunda: reconociendo sentimientos complejos y mezclados, comprendiendo cómo las emociones influyen en las decisiones y reflexionando sobre sus propios patrones emocionales y su crecimiento a lo largo del tiempo."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Empathy & Social Awareness",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está desarrollando inteligencia emocional y habilidades sociales: aprendiendo a mostrar amabilidad hacia los demás, valorando la diversidad en su comunidad y comprendiendo que las personas tienen pensamientos y sentimientos distintos."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Empathy & Social Awareness",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está desarrollando empatía y comprensión de la equidad: aprendiendo a ver las situaciones desde la perspectiva de los demás, reconociendo que cada persona tiene experiencias y retos distintos, y comprendiendo que ser justo a veces significa dar a las personas lo que necesitan en lugar de que todo el mundo reciba lo mismo."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Empathy & Social Awareness",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está desarrollando una comprensión más profunda de la equidad y la diversidad: aprendiendo a reconocer estereotipos y sesgos, comprendiendo cómo el prejuicio afecta a las personas y valorando las distintas culturas y perspectivas."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Friendship & Cooperation",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está desarrollando habilidades esenciales de amistad: aprendiendo a pedir ayuda cuando la necesita, comprendiendo qué hace a un buen amigo o a una buena amiga, escuchando con atención a los demás, y compartiendo y turnándose en actividades de grupo."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Friendship & Cooperation",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo que las amistades cambian de manera natural con el tiempo, y desarrollando habilidades para trabajar bien en grupo, resolver los desacuerdos de manera pacífica y comprender los distintos papeles que las personas tienen en el trabajo en equipo."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Friendship & Cooperation",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está desarrollando habilidades sociales avanzadas: aprendiendo a comunicarse con asertividad, ayudar a resolver conflictos entre amigos y amigas, reflexionar sobre su propio comportamiento en las relaciones, y dar y recibir retroalimentación útil."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Responsible Decision-Making",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo a tomar buenas decisiones: comprender lo correcto y lo incorrecto, mantenerse a salvo, pensar en las consecuencias y seguir las reglas porque entiende por qué importan."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Responsible Decision-Making",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo a tomar decisiones reflexivas y a defender lo que es correcto: comprendiendo el acoso escolar y la ciudadanía digital, desarrollando el valor de intervenir para defender a los demás y usando un proceso de pensamiento antes de tomar decisiones."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Responsible Decision-Making",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está aprendiendo a manejar la presión de grupo y a comprender sus derechos y responsabilidades en las comunidades, mientras desarrolla habilidades para pensar con detenimiento los dilemas éticos desde varias perspectivas."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Self-Regulation & Resilience",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo habilidades importantes para la vida, para manejar las emociones y los retos: usando estrategias para calmarse cuando se altera, practicando la paciencia, adaptándose a los cambios y comprendiendo que los errores son una parte normal del aprendizaje."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Self-Regulation & Resilience",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo que puede mejorar en lo que hace con la práctica y el esfuerzo, mientras desarrolla estrategias para mantener una actitud positiva y dividir los retos grandes en pasos más pequeños y manejables."
+    },
+    {
+      "subject": "Personal & Social Development",
+      "domain": "Self-Regulation & Resilience",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está desarrollando habilidades importantes para la vida: aprendiendo a manejar sus emociones y su comportamiento, establecer metas y trabajar para alcanzarlas, y construir resiliencia para sobreponerse a los retos y los contratiempos."
+    },
+    {
+      "subject": "Science",
+      "domain": "Animals of the World",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está descubriendo la asombrosa diversidad de animales del mundo: aprendiendo cómo tienen crías, encuentran refugio, usan el camuflaje y se adaptan a distintos ambientes, desde los desiertos hasta las regiones polares."
+    },
+    {
+      "subject": "Science",
+      "domain": "Animals of the World",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está explorando la asombrosa diversidad de animales del mundo, y aprendiendo cómo distintas criaturas se comunican, migran, cazan y sobreviven en varios hábitats, desde las selvas tropicales hasta los desiertos y las regiones polares."
+    },
+    {
+      "subject": "Science",
+      "domain": "Animals of the World",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está descubriendo cómo los animales han evolucionado adaptaciones asombrosas para sobrevivir en sus ambientes, explorando comportamientos animales complejos y su inteligencia, y aprendiendo sobre los esfuerzos de conservación para proteger las especies en peligro de extinción y la biodiversidad."
+    },
+    {
+      "subject": "Science",
+      "domain": "Dinosaurs & Paleontology",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está explorando el fascinante mundo de los dinosaurios: aprendiendo sobre distintas especies, comprendiendo lo que los fósiles nos cuentan de estas criaturas antiguas y descubriendo cómo los científicos estudian la vida de hace mucho tiempo."
+    },
+    {
+      "subject": "Science",
+      "domain": "Dinosaurs & Paleontology",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está convirtiéndose en un joven paleontólogo o una joven paleontóloga: aprendiendo cómo se forman los fósiles, qué nos cuentan de la vida antigua y descubriendo datos fascinantes sobre los dinosaurios y los científicos que los estudian."
+    },
+    {
+      "subject": "Science",
+      "domain": "Dinosaurs & Paleontology",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está explorando cómo los científicos estudian los dinosaurios por medio de los fósiles: aprendiendo sobre la clasificación de los dinosaurios, su evolución en aves, los eventos de extinción y cómo los paleontólogos descubren e interpretan evidencia de hace millones de años."
+    },
+    {
+      "subject": "Science",
+      "domain": "Earth & Human Activity",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está explorando cómo los seres humanos interactúan con el ambiente: aprendiendo sobre los patrones del tiempo atmosférico, cómo los animales y las plantas dependen de sus hábitats y de qué maneras podemos proteger nuestro ambiente local."
+    },
+    {
+      "subject": "Science",
+      "domain": "Earth & Human Activity",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está aprendiendo a resolver problemas de la vida real: diseñando soluciones para proteger a las personas y los bienes de peligros del tiempo atmosférico, como inundaciones, tormentas y temperaturas extremas."
+    },
+    {
+      "subject": "Science",
+      "domain": "Earth & Human Activity",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está aprendiendo sobre los desastres naturales y el impacto ambiental: explorando cómo podemos protegernos de los terremotos y las inundaciones, y comprendiendo cómo el uso de la energía afecta al planeta."
+    },
+    {
+      "subject": "Science",
+      "domain": "Earth & Human Activity",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está aprendiendo cómo la ciencia ayuda a las comunidades a proteger nuestro planeta, al explorar distintas maneras en que las personas usan el conocimiento científico para conservar los recursos de la Tierra y proteger el ambiente."
+    },
+    {
+      "subject": "Science",
+      "domain": "Earth's Systems",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo a observar y describir los patrones del tiempo atmosférico y las estaciones, mientras explora cómo las plantas y los animales cambian su ambiente para cubrir sus necesidades."
+    },
+    {
+      "subject": "Science",
+      "domain": "Earth's Systems",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo sobre la estructura de la Tierra: explorando distintos tipos de rocas y de suelo, comprendiendo dónde hay agua en nuestro planeta y descubriendo cómo cambian las formas del terreno con el tiempo."
+    },
+    {
+      "subject": "Science",
+      "domain": "Earth's Systems",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está explorando el tiempo atmosférico y el clima al reunir y mostrar datos del tiempo atmosférico, y aprendiendo a distinguir entre los patrones diarios del tiempo atmosférico y las condiciones climáticas a largo plazo en distintas regiones del mundo."
+    },
+    {
+      "subject": "Science",
+      "domain": "Earth's Systems",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está aprendiendo cómo cambia con el tiempo la superficie de la Tierra: estudiando cómo el viento, el agua y el hielo dan forma al paisaje mediante la meteorización y la erosión, e interpretando mapas para comprender patrones geológicos."
+    },
+    {
+      "subject": "Science",
+      "domain": "Earth's Systems",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está aprendiendo sobre la Tierra como un sistema conectado, explorando cómo se distribuye el agua en nuestro planeta y cómo la tierra, el agua, el aire y los seres vivos interactúan entre sí."
+    },
+    {
+      "subject": "Science",
+      "domain": "Ecosystems & Habitats",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está explorando cómo los seres vivos interactúan con su ambiente: aprendiendo sobre distintos hábitats, cadenas alimentarias simples y la diferencia entre lo vivo, lo muerto y lo que nunca estuvo vivo."
+    },
+    {
+      "subject": "Science",
+      "domain": "Ecosystems & Habitats",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está explorando cómo los seres vivos interactúan entre sí y con sus ambientes: comprendiendo las cadenas alimentarias, los grupos de animales y cómo los científicos clasifican e identifican distintas especies en la naturaleza."
+    },
+    {
+      "subject": "Science",
+      "domain": "Ecosystems & Habitats",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está aprendiendo cómo los seres vivos se reproducen y crecen: comparando distintos ciclos de vida, desde los mamíferos hasta los insectos, y comprendiendo las diversas maneras en que las plantas y los animales crean nuevas generaciones."
+    },
+    {
+      "subject": "Science",
+      "domain": "Ecosystems & Habitats",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está aprendiendo cómo los científicos clasifican a los seres vivos en grupos según sus características, y comprendiendo cómo la materia se mueve por los ecosistemas cuando las plantas, los animales y los descomponedores interactúan con su ambiente."
+    },
+    {
+      "subject": "Science",
+      "domain": "Energy",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está comenzando a comprender la energía: observando cómo la luz del Sol calienta objetos y superficies, y diseñando estructuras simples para crear sombra y reducir el calentamiento."
+    },
+    {
+      "subject": "Science",
+      "domain": "Energy",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está descubriendo cómo funciona la electricidad: construyendo circuitos simples con pilas y focos, comprendiendo cómo los interruptores controlan el flujo de la electricidad y aprendiendo qué materiales conducen la electricidad y cuáles no."
+    },
+    {
+      "subject": "Science",
+      "domain": "Energy",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está explorando cómo funciona la energía: comprendiendo cómo pasa de un objeto a otro, cómo cambia de una forma a otra y cómo se puede transferir por medio del sonido, la luz, el calor y la electricidad."
+    },
+    {
+      "subject": "Science",
+      "domain": "Energy",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está aprendiendo cómo funciona la electricidad en los circuitos: comprendiendo cómo las pilas hacen funcionar componentes como los focos y los zumbadores, y cómo dibujar diagramas de circuitos con los símbolos adecuados."
+    },
+    {
+      "subject": "Science",
+      "domain": "Forces & Motion",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo sobre las fuerzas: comprendiendo cómo empujar y jalar puede hacer que los objetos se muevan más rápido, más lento o cambien de dirección, y probando distintas maneras de afectar el movimiento."
+    },
+    {
+      "subject": "Science",
+      "domain": "Forces & Motion",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está explorando las fuerzas a su alrededor: descubriendo cómo funcionan los imanes, comprendiendo que algunas fuerzas necesitan contacto y otras actúan a distancia, e investigando cómo las distintas superficies afectan la manera en que se mueven las cosas."
+    },
+    {
+      "subject": "Science",
+      "domain": "Forces & Motion",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está investigando cómo las fuerzas afectan el movimiento: observando patrones en cómo se mueven los objetos y haciendo experimentos para comprender cómo las fuerzas equilibradas y las desequilibradas cambian el movimiento de un objeto."
+    },
+    {
+      "subject": "Science",
+      "domain": "Forces & Motion",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está aprendiendo sobre la gravedad y las fuerzas que resisten el movimiento, como la fricción y la resistencia del aire, mientras descubre cómo las máquinas simples, como las palancas y las poleas, pueden hacer más fáciles las tareas."
+    },
+    {
+      "subject": "Science",
+      "domain": "Heredity & Evolution",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está observando cómo los animales bebés y las plantas jóvenes se parecen a sus progenitores, pero también son únicos: comenzando a comprender el concepto básico de los rasgos heredados y las diferencias individuales."
+    },
+    {
+      "subject": "Science",
+      "domain": "Heredity & Evolution",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está aprendiendo cómo los rasgos pasan de los progenitores a la descendencia, cómo los factores del ambiente pueden influir en las características y cómo las variaciones de los rasgos ayudan a las especies a sobrevivir y a evolucionar con el tiempo, usando evidencia fósil para comprender la vida del pasado."
+    },
+    {
+      "subject": "Science",
+      "domain": "Heredity & Evolution",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está aprendiendo sobre la vida en la Tierra a lo largo del tiempo: comprendiendo cómo los seres vivos han cambiado a lo largo de la historia y cómo los fósiles nos ayudan a conocer organismos antiguos."
+    },
+    {
+      "subject": "Science",
+      "domain": "Matter & Materials",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está explorando los materiales a su alrededor: identificando distintas sustancias, como la madera, el plástico y el metal, y descubriendo sus propiedades, por ejemplo si son duros o blandos, ásperos o lisos."
+    },
+    {
+      "subject": "Science",
+      "domain": "Matter & Materials",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está explorando cómo se comportan los materiales: investigando cómo los objetos sólidos pueden cambiar al doblarlos, torcerlos o estirarlos, y aprendiendo por qué se eligen distintos materiales para distintos trabajos."
+    },
+    {
+      "subject": "Science",
+      "domain": "Matter & Materials",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está investigando cómo se comportan los materiales: clasificando las sustancias según sus propiedades, comprendiendo por qué se usan distintos materiales para propósitos específicos y explorando cómo calentar y enfriar puede cambiar los materiales."
+    },
+    {
+      "subject": "Science",
+      "domain": "Matter & Materials",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está explorando los estados de la materia: aprendiendo a identificar sólidos, líquidos y gases, y descubriendo cómo el agua cambia de forma por la evaporación y la condensación."
+    },
+    {
+      "subject": "Science",
+      "domain": "Matter & Materials",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está explorando cómo los materiales se comportan y cambian: investigando qué sustancias se disuelven en el agua, aprendiendo a separar mezclas y distinguiendo entre los cambios reversibles y los que crean materiales completamente nuevos."
+    },
+    {
+      "subject": "Science",
+      "domain": "Matter & Materials",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está explorando la naturaleza fundamental de la materia: aprendiendo que todo está hecho de partículas diminutas que no puede ver, y descubriendo que la materia se conserva aunque cambie de forma al calentarse, enfriarse o mezclarse."
+    },
+    {
+      "subject": "Science",
+      "domain": "Ocean Life",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está descubriendo la vida del océano: aprendiendo sobre la asombrosa variedad de criaturas marinas, cómo dependen unas de otras para alimentarse, y explorando hábitats especiales del océano como las pozas entre las rocas y los arrecifes de coral."
+    },
+    {
+      "subject": "Science",
+      "domain": "Ocean Life",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está profundizando en las ciencias del océano: aprendiendo cómo se clasifican las criaturas marinas, comprendiendo las redes alimentarias complejas del océano y explorando las distintas zonas y características de nuestros vastos océanos."
+    },
+    {
+      "subject": "Science",
+      "domain": "Ocean Life",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está adentrándose en las ciencias del océano: aprendiendo sobre los ecosistemas marinos, las migraciones de los animales, cómo las actividades humanas afectan al océano y el papel vital de los océanos en el clima de la Tierra."
+    },
+    {
+      "subject": "Science",
+      "domain": "Organisms & Life Processes",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo sobre la asombrosa diversidad de la vida: identificando distintos animales y plantas, comprendiendo cómo las partes del cuerpo ayudan a los animales a sobrevivir y descubriendo lo que todos los seres vivos necesitan para mantenerse con vida."
+    },
+    {
+      "subject": "Science",
+      "domain": "Organisms & Life Processes",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está descubriendo cómo crecen los seres vivos: observando cómo las semillas se convierten en plantas, comprendiendo lo que las plantas necesitan para prosperar y explorando cómo los animales pasan de bebés a adultos."
+    },
+    {
+      "subject": "Science",
+      "domain": "Organisms & Life Processes",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está profundizando en cómo funcionan los seres vivos: comprendiendo los ciclos de vida de las plantas desde la flor hasta la semilla, descubriendo cómo las plantas transportan el agua y aprendiendo el papel importante de los esqueletos, los músculos y una nutrición adecuada."
+    },
+    {
+      "subject": "Science",
+      "domain": "Organisms & Life Processes",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está descubriendo cómo funciona el cuerpo humano: aprendiendo sobre el sistema digestivo y cómo los distintos tipos de dientes nos ayudan a comer y a descomponer la comida."
+    },
+    {
+      "subject": "Science",
+      "domain": "Organisms & Life Processes",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está aprendiendo cómo las partes del cuerpo de las plantas y de los animales les ayudan a sobrevivir y a crecer, mientras explora el ciclo de vida humano y cómo los sentidos nos ayudan a comprender el mundo y a responder a él."
+    },
+    {
+      "subject": "Science",
+      "domain": "Organisms & Life Processes",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está explorando cómo los seres vivos obtienen y usan la energía: desde comprender cómo las plantas fabrican alimento con la luz del Sol y el aire, hasta aprender sobre el sistema circulatorio humano y cómo las decisiones de estilo de vida afectan a nuestro cuerpo."
+    },
+    {
+      "subject": "Science",
+      "domain": "Scientific Inquiry",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo a ser un joven científico o una joven científica: haciendo preguntas, observando con cuidado, registrando lo que ve en cuadros simples y dibujos, y probando ideas para encontrar respuestas."
+    },
+    {
+      "subject": "Science",
+      "domain": "Scientific Inquiry",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo a pensar y a trabajar como un científico o una científica al preparar pruebas justas, hacer observaciones y mediciones cuidadosas, registrar los datos en cuadros y tablas, y sacar conclusiones de sus investigaciones."
+    },
+    {
+      "subject": "Science",
+      "domain": "Scientific Inquiry",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está aprendiendo a pensar como un ingeniero o una ingeniera: diseñando soluciones a los problemas, planificando pruebas justas y mejorando sus ideas según lo que funciona mejor."
+    },
+    {
+      "subject": "Science",
+      "domain": "Scientific Inquiry",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está desarrollando habilidades avanzadas de investigación científica: planificando pruebas justas, tomando mediciones precisas, registrando datos complejos y evaluando la evidencia para llegar a conclusiones confiables."
+    },
+    {
+      "subject": "Science",
+      "domain": "Space Exploration",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está comenzando su recorrido por las ciencias del espacio: aprendiendo sobre los astronautas y las fases de la Luna, identificando objetos en el cielo y descubriendo que vivimos en un sistema solar con otros planetas."
+    },
+    {
+      "subject": "Science",
+      "domain": "Space Exploration",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está descubriendo cómo funciona nuestro sistema solar: aprendiendo sobre los movimientos de la Tierra que crean el día y la noche, explorando los ocho planetas y sus características, y comprendiendo cómo usamos robots y telescopios para estudiar el espacio."
+    },
+    {
+      "subject": "Science",
+      "domain": "Space Exploration",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está descubriendo las maravillas del espacio: aprendiendo sobre las estrellas, los planetas y las galaxias, comprendiendo cómo han cambiado con el tiempo nuestras ideas sobre el sistema solar y explorando el viaje de la humanidad al espacio."
+    },
+    {
+      "subject": "Science",
+      "domain": "Space Systems & Earth's History",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está descubriendo cómo cambia la luz del día a lo largo del año, al observar que los días son más largos en verano y más cortos en invierno."
+    },
+    {
+      "subject": "Science",
+      "domain": "Space Systems & Earth's History",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está aprendiendo sobre patrones predecibles en el cielo: observando cómo el Sol sale y se pone cada día, cómo la Luna cambia de forma y cómo las estrellas aparecen de noche."
+    },
+    {
+      "subject": "Science",
+      "domain": "Space Systems & Earth's History",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo que la Tierra cambia con el tiempo: algunos cambios ocurren rápido, como los terremotos y los volcanes, mientras que otros, como la erosión y la formación de montañas, tardan millones de años."
+    },
+    {
+      "subject": "Science",
+      "domain": "Space Systems & Earth's History",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está explorando nuestro sistema solar y el lugar de la Tierra en él: comprendiendo cómo la rotación de la Tierra crea el día y la noche, cómo los planetas orbitan el Sol y cómo podemos leer la historia de la Tierra en las rocas y los fósiles."
+    },
+    {
+      "subject": "Science",
+      "domain": "Space Systems & Earth's History",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está explorando cómo encaja la Tierra en el sistema solar: comprendiendo por qué el Sol se ve más brillante que las estrellas lejanas y observando patrones en las sombras, los ciclos del día y la noche, y los cambios de las estaciones en el cielo."
+    },
+    {
+      "subject": "Science",
+      "domain": "The Human Body",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está descubriendo cómo funciona su asombroso cuerpo: aprendiendo sobre el corazón, los pulmones, el cerebro, el esqueleto y los cinco sentidos, y comprendiendo lo que su cuerpo necesita para mantenerse saludable y fuerte."
+    },
+    {
+      "subject": "Science",
+      "domain": "The Human Body",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está descubriendo cómo funciona su cuerpo: aprendiendo sobre los distintos tipos de dientes, cómo la comida viaja por el sistema digestivo, cómo los huesos y los músculos trabajan juntos, y comprendiendo la importancia de una dieta balanceada."
+    },
+    {
+      "subject": "Science",
+      "domain": "The Human Body",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está descubriendo cómo funciona su cuerpo: explorando con detalle los sistemas respiratorio, circulatorio y nervioso, y comprendiendo cómo las decisiones de estilo de vida afectan a su salud y a su desarrollo."
+    },
+    {
+      "subject": "Science",
+      "domain": "Volcanoes & Earthquakes",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está aprendiendo sobre las fuerzas poderosas que dan forma a nuestra Tierra: comprendiendo qué son los volcanes y los terremotos, cómo cambian el paisaje y qué reglas de seguridad importantes hay que seguir durante los terremotos."
+    },
+    {
+      "subject": "Science",
+      "domain": "Volcanoes & Earthquakes",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo qué hay dentro de los volcanes y de los terremotos, cómo la Tierra tiene distintas capas, y explorando eventos geológicos dramáticos como la historia de Pompeya y los tsunamis."
+    },
+    {
+      "subject": "Science",
+      "domain": "Volcanoes & Earthquakes",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está explorando cómo funcionan las fuerzas poderosas de la Tierra: comprendiendo qué causa los volcanes y los terremotos, cómo los científicos los monitorean y cómo las comunidades se preparan para estos eventos naturales."
+    },
+    {
+      "subject": "Science",
+      "domain": "Waves, Light & Sound",
+      "ageRangeStart": 6,
+      "summary": "Su hijo o hija está investigando la luz y el sonido: descubriendo cómo vemos los objetos, experimentando con materiales transparentes y opacos, y aprendiendo cómo las vibraciones crean el sonido."
+    },
+    {
+      "subject": "Science",
+      "domain": "Waves, Light & Sound",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está descubriendo cómo se comporta la luz: aprendiendo que la luz del Sol puede ser peligrosa para los ojos, comprendiendo cómo se forman las sombras cuando la luz queda bloqueada y observando cómo las distintas superficies reflejan la luz."
+    },
+    {
+      "subject": "Science",
+      "domain": "Waves, Light & Sound",
+      "ageRangeStart": 8,
+      "summary": "Su hijo o hija está descubriendo cómo funciona el sonido: comprendiendo que los sonidos son vibraciones que viajan por el aire, el agua y los sólidos, y explorando cómo el tono y el volumen se relacionan con la fuerza de estas vibraciones."
+    },
+    {
+      "subject": "Science",
+      "domain": "Waves, Light & Sound",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está aprendiendo cómo la luz nos permite ver los objetos y cómo funcionan las ondas, y también explorando distintas maneras de enviar información con patrones y códigos."
+    },
+    {
+      "subject": "Science",
+      "domain": "Waves, Light & Sound",
+      "ageRangeStart": 10,
+      "summary": "Su hijo o hija está aprendiendo cómo la luz viaja en líneas rectas y usando esa comprensión para explicar fenómenos de todos los días, como el modo en que vemos las cosas y por qué las sombras coinciden con la forma de los objetos que las proyectan."
+    },
+    {
+      "subject": "Science",
+      "domain": "Weather & Climate",
+      "ageRangeStart": 5,
+      "summary": "Su hijo o hija está descubriendo cómo funciona el tiempo atmosférico: aprendiendo sobre distintos tipos de tiempo atmosférico, cómo mantenerse a salvo durante las tormentas y cómo los patrones del tiempo atmosférico cambian con las estaciones."
+    },
+    {
+      "subject": "Science",
+      "domain": "Weather & Climate",
+      "ageRangeStart": 7,
+      "summary": "Su hijo o hija está aprendiendo sobre la ciencia del tiempo atmosférico: cómo los meteorólogos pronostican el tiempo atmosférico, qué causa distintos patrones del tiempo atmosférico, como el viento y las tormentas, y cómo funciona el ciclo del agua que nos trae la lluvia y la nieve."
+    },
+    {
+      "subject": "Science",
+      "domain": "Weather & Climate",
+      "ageRangeStart": 9,
+      "summary": "Su hijo o hija está explorando cómo el Sol impulsa los patrones del tiempo atmosférico y crea distintas zonas climáticas alrededor de la Tierra, aprendiendo sobre eventos de tiempo atmosférico extremo, el cambio climático y cómo las personas diseñan soluciones para proteger a las comunidades de los peligros del tiempo atmosférico."
+    }
+  ]
+}

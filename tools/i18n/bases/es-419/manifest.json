@@ -1,0 +1,23 @@
+{
+  "locale": "es-419",
+  "method": "Base candidata adoptada: traducción derivada es-419 de Tropicalrambler/os-taxonomy (head e510d9bd7ae64ae148fa0a418c15e13ba24d5c60), bajo ODbL 1.0 / CC BY-SA 4.0 con atribución a Marble. Evaluación estructural de la casa aprobada (ver EVALUACION.md); revisión bilingüe completa pendiente.",
+  "review": {
+    "status": "draft",
+    "by": null
+  },
+  "importable": false,
+  "source": {
+    "topicsSha256": "2d99fc3b5e57d9ddb86b6c179b58a1b0390f048d9798585fe03b13cbc183719b",
+    "dependenciesSha256": "86a24efb44b480e5be23082b4bdea653f69f6d6fd54c5409a2f33c185be1d87f"
+  },
+  "files": {
+    "topics.json": {
+      "sha256": "d01ac36faa0b71103ac3a031cd09216cc97d9779edf0cce49c5709d1cb693d6d",
+      "entries": 1590
+    },
+    "dependencies.json": {
+      "sha256": "14b4318c335c3786408187265f63cb506186951599012e4b3b31f1423258a3aa",
+      "entries": 3221
+    }
+  }
+}

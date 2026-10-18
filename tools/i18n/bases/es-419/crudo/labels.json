@@ -1,0 +1,94 @@
+{
+  "locale": "es-419",
+  "version": "v1",
+  "attribution": "Marble Skill Taxonomy (v1) © Generative Spark, Inc. (Marble) · https://withmarble.com · database under ODbL 1.0 and content under CC BY-SA 4.0. This es-419 Latin American Spanish text is a derivative translation, published in the Tropicalrambler fork, and is distributed under the same licenses.",
+  "subjects": {
+    "Computing": "Computación",
+    "English": "Inglés",
+    "History": "Historia",
+    "Learning to Learn": "Aprender a aprender",
+    "Life Skills": "Habilidades para la vida",
+    "Mathematics": "Matemáticas",
+    "Personal & Social Development": "Desarrollo personal y social",
+    "Science": "Ciencias Naturales"
+  },
+  "domains": {
+    "Computing": {
+      "Artificial Intelligence": "Inteligencia artificial"
+    },
+    "English": {
+      "English Thinking": "Pensamiento sobre el inglés",
+      "Grammar & Punctuation": "Gramática y puntuación",
+      "Handwriting & Transcription": "Escritura a mano y transcripción",
+      "Phonics & Word Reading": "Fonética y lectura de palabras",
+      "Reading Comprehension": "Comprensión lectora",
+      "Speaking & Listening": "Expresión oral y escucha",
+      "Spelling & Word Study": "Ortografía y estudio de palabras",
+      "Vocabulary": "Vocabulario",
+      "Writing Composition": "Redacción"
+    },
+    "History": {
+      "Ancient Egypt": "Antiguo Egipto",
+      "Ancient Greece & Rome": "Antigua Grecia y Roma",
+      "Historical Thinking": "Pensamiento histórico",
+      "Medieval Times": "Edad Media"
+    },
+    "Learning to Learn": {
+      "Learning to Learn": "Aprender a aprender"
+    },
+    "Life Skills": {
+      "Entrepreneurship": "Emprendimiento",
+      "Money & Finance": "Dinero y finanzas"
+    },
+    "Mathematics": {
+      "Addition & Subtraction": "Suma y resta",
+      "Algebra": "Álgebra",
+      "Counting & Cardinality": "Conteo y cardinalidad",
+      "Data & Statistics": "Datos y estadística",
+      "Fractions": "Fracciones",
+      "Geometry": "Geometría",
+      "Mathematical Thinking": "Pensamiento matemático",
+      "Measurement": "Medición",
+      "Multiplication & Division": "Multiplicación y división",
+      "Number Representation & Place Value": "Representación de números y valor posicional",
+      "Probability": "Probabilidad",
+      "Ratio & Proportion": "Razón y proporción"
+    },
+    "Personal & Social Development": {
+      "Emotional Literacy": "Alfabetización emocional",
+      "Empathy & Social Awareness": "Empatía y conciencia social",
+      "Friendship & Cooperation": "Amistad y cooperación",
+      "Responsible Decision-Making": "Toma de decisiones responsable",
+      "Self-Awareness": "Autoconocimiento",
+      "Self-Regulation & Resilience": "Autorregulación y resiliencia"
+    },
+    "Science": {
+      "Animals of the World": "Animales del mundo",
+      "Dinosaurs & Paleontology": "Dinosaurios y paleontología",
+      "Earth's Systems": "Sistemas de la Tierra",
+      "Ecosystems & Habitats": "Ecosistemas y hábitats",
+      "Energy": "Energía",
+      "Forces & Motion": "Fuerzas y movimiento",
+      "Insects & Minibeasts": "Insectos y animalitos pequeños",
+      "Matter & Materials": "Materia y materiales",
+      "Ocean Life": "Vida en el océano",
+      "Organisms & Life Processes": "Organismos y procesos vitales",
+      "Polar Regions": "Regiones polares",
+      "Rainforests": "Selvas tropicales",
+      "Scientific Inquiry": "Indagación científica",
+      "Space Exploration": "Exploración espacial",
+      "Space Systems & Earth's History": "Sistemas del espacio e historia de la Tierra",
+      "The Human Body": "El cuerpo humano",
+      "Volcanoes & Earthquakes": "Volcanes y terremotos",
+      "Waves, Light & Sound": "Ondas, luz y sonido",
+      "Weather & Climate": "Tiempo atmosférico y clima"
+    }
+  },
+  "types": {
+    "CONCEPTUAL": "Conceptual",
+    "PROCEDURAL": "Procedimental",
+    "REPRESENTATIONAL": "Representacional",
+    "LANGUAGE": "Lenguaje",
+    "META": "Metacognición"
+  }
+}
