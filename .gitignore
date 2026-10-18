@@ -39,3 +39,7 @@ prototype/node_modules/
 prototype/package-lock.json
 .DS_Store
 public/vendor/
+# --- Duna mobile (rama android) ---
+mobile/www/
+mobile/node_modules/
+tools/marble/.cache/
