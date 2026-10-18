@@ -15,9 +15,16 @@ that live on the device, in the same spirit as our NIDO project.
 1. **On the device.** The learning engine, the content and the learner's
    progress live on the phone or tablet. No cloud account holds a child's
    progress.
-2. **Depending on no one.** The app the child uses needs no server, no
-   account and no outside service. Authoring tools may run on our own
-   machines during development; the shipped app stands on its own.
+2. **Local first, internet optional.** The app starts and its complete
+   learning experience (engine, map, available lessons, progress) works
+   with no connection, always. Only features that genuinely need the
+   network may use it (downloading new content packages is the natural
+   example). Those are optional improvements: offline they wait quietly
+   or say so honestly when tapped, they never block the app, and anything
+   downloaded is stored on the device and works offline afterwards. No
+   accounts and no collection of children's personal data over the
+   network; any future feature that needed either is a pending owner
+   decision (COPPA), not something we build on our own.
 3. **Legal, with attributions intact.** Code under MIT with its notice
    kept. The Marble Skill Taxonomy data stays under ODbL 1.0 and its text
    under CC BY-SA 4.0, with the required attribution line shown wherever
@@ -31,10 +38,119 @@ that live on the device, in the same spirit as our NIDO project.
    lessons are written and reviewed ahead of time, and the app serves
    fixed, readable content.
 
+## Doctrine: inherited principles, our own creation
+
+The original's principles are the floor and they stay: no live AI in the
+app, content validated before it is served, an honest adaptive engine
+(mastery is never faked), the placement question never shown raw to the
+child, and the quality bar of its test suite. Beyond that floor,
+everything new is our own creation, built from zero by us: code, texts,
+screens, tools and art. What cannot be copied as-is is created from zero
+or documented here as our pending piece, with its reason (the standing
+example: `curriculum-standards.json`, whose sources keep their own
+licensing; Common Core is not packaged into a commercial app without
+review).
+
+Licensing follows authorship, and the line is sharp:
+
+- What derives from Marble (the taxonomy and its text) keeps ODbL 1.0 /
+  CC BY-SA 4.0 and its attribution. That is law and does not change.
+- The code inherited from Jane is MIT, copyright Kent Langley and Landon.
+- Code we create is ours: MIT, copyright Nido007-cmyk.
+
+## Charging principle (decided; implementation pending its phase)
+
+The learning core is and stays free and complete: no paywall, no
+subscription, no lock on learning, ever. The app is fully usable without
+paying. Money, when its phase comes, will come only from optional extras
+(new content packages, tutor cosmetics, deeper parent reports) bought by
+parents from the parents' surface, never from a charge prompt inside a
+child's lesson. Nothing in the architecture may tie progress or base
+content to an account or a license server.
+
+## Never (permanent design restrictions)
+
+No advertising. No gambling mechanics (loot boxes, purchasable coins,
+paying to skip or to answer). No fabricated time pressure. No emotional
+blackmail by the tutor: she celebrates and encourages, she never
+pressures. No rankings or social comparison between children. No live AI
+chat. No notifications that chase the child outside the app.
+
+## Phase 1 status (Android, branch `android`) — real state
+
+Built and verified in this repository:
+
+- **Capacitor shell** (`mobile/`): appId `com.nido007.duna`
+  (provisional). The original worker runs inside the app
+  (`mobile/runtime/boot.mjs`) with the engine untouched; `/api/*` and
+  `/parent` are answered on the device. The packaged web bundle
+  (~2.2 MB) references no network resource at all.
+- **Local storage with the original KV interface** (get/put/list),
+  serialized, one JSON file per key on the device. It is born
+  partitioned per learner profile (`perfil/<id>/` prefix, invisible to
+  the engine); the profile picker screen arrives in a later phase.
+- **Marble quality gate in the build**: the official os-taxonomy
+  validator (vendored unmodified in `tools/marble/`) must pass over the
+  packaged taxonomy or the build fails. Factory content (the example
+  quest) is validated with the original package validator before it is
+  seeded, once.
+- **Interface**: the adopted design system (scaling unit from the short
+  side with a tablet cap, reading floors that never shrink, touch
+  targets 48/56 px, own palette, bundled OFL font, fully offline). On
+  top of it: the motion token system (durations 90 to 640 ms, three
+  springs, transform/opacity only), the living tutor (our layered SVG
+  with a WAAPI state machine: blink, breathing, gaze, six expressions),
+  our own icon set, a listen button that reads the question aloud with
+  the system TTS, and an honest offline notice that never blocks.
+- **Tests**: the upstream smoke suite passes (4/4) and the mobile
+  runtime suite passes (4/4), including profile isolation.
+
+Not done, stated plainly:
+
+- **Debug APK: not built in our build sandbox.** The Gradle
+  client-daemon protocol uses TCP sockets on 127.0.0.1, and in that
+  sandbox the JVM's localhost connections are intercepted by a third
+  party (minimal Java repro: the intended server never accepts; the
+  client first receives byte 109, "m"; Gradle dies with "Unexpected
+  type tag 109"). The project is synced and ready; on any normal
+  machine the build is:
+  `cd mobile && npm ci && npm run build && npx cap sync android &&
+  cd android && ./gradlew assembleDebug` with `ANDROID_HOME` set,
+  producing `app/build/outputs/apk/debug/app-debug.apk`.
+- **Physical test on the owner's tablet** (including airplane mode:
+  start and main flow with the network off) is the owner's gate, as
+  with NIDO. Headless captures are mockups, not device proof.
+- Release signing, the formal trademark review and any store decision
+  are pending their own steps.
+
+## Data QA notes (recorded, not fixed in this phase)
+
+Upstream data warnings stay on our QA list: os-taxonomy issues #5 (a few
+edges possibly inverted or age-inconsistent), #11 (some topic names at
+odds with their descriptions or standards) and #25 (Science cluster
+entries without topics in `clusters.json`). We do not edit the taxonomy
+in this phase. `curriculum-standards.json` is NOT packaged in the app
+(per-source licensing; see Doctrine). The cluster summaries, the
+`reason` of each edge and per-topic standard codes are raw material for
+a future parent report, not app data today. No Spanish translation of
+Marble exists anywhere: the bilingual phase will be our own translation
+(CC BY-SA 4.0, as Phase 3 notes).
+
+## Interface debt (recorded, not hidden)
+
+The parent report keeps its inherited stylesheet (the app strips its
+remote fonts when opening it); dynamic header chips are still drawn by
+the original code with emoji; the island map and the medals keep the
+inherited art (solid, pending a redraw in the adopted visual language);
+the full Settings surface of the adopted spec is not built yet (we do
+not fake controls that do not work); the Android splash is the
+Capacitor template. The original's vendored effects bundle stays in use
+through `fx.js` for now; retiring it and replacing it with our own code
+is decided for the next phase.
+
 ## Phases
 
-- **Phase 1: Android first.** Port the engine and content to an Android
-  app with on-device storage replacing the Cloudflare KV and file stores.
+- **Phase 1: Android first.** (In progress, see status above.)
   Distribution by direct APK, as NIDO ships, with the Play Store as a
   documented option under its families policies.
 - **Phase 2: Apple, path ready.** The iOS route (toolchain, developer
@@ -80,10 +196,16 @@ nuestro proyecto NIDO.
 1. **En el dispositivo.** El motor de aprendizaje, el contenido y el
    progreso del alumno viven en el teléfono o la tableta. Ninguna cuenta
    en la nube guarda el progreso de un niño.
-2. **Sin depender de nadie.** La app que usa el niño no necesita servidor,
-   ni cuenta, ni servicio externo. Las herramientas de autoría pueden
-   correr en nuestras propias máquinas durante el desarrollo; la app
-   publicada se sostiene sola.
+2. **Local primero, internet opcional.** La app arranca y su experiencia
+   completa de aprendizaje (motor, mapa, lecciones disponibles, progreso)
+   funciona sin conexión, siempre. Solo las funciones que de verdad lo
+   necesiten pueden usar internet (descargar paquetes de contenido nuevo
+   es el ejemplo natural). Son mejoras opcionales: sin conexión esperan en
+   silencio o lo dicen con honestidad si se tocan, jamás bloquean la app,
+   y lo descargado queda guardado en el dispositivo y funciona sin red.
+   Nada de cuentas ni recogida de datos personales de niños por la red:
+   cualquier función futura que los necesitara es una decisión pendiente
+   del dueño (COPPA), no algo que construyamos por nuestra cuenta.
 3. **Legal, con las atribuciones intactas.** Código bajo MIT con su aviso
    conservado. Los datos de la taxonomía Marble se quedan bajo ODbL 1.0 y
    su texto bajo CC BY-SA 4.0, con la línea de atribución obligatoria en
@@ -98,13 +220,127 @@ nuestro proyecto NIDO.
    las lecciones se escriben y se revisan antes, y la app muestra contenido
    fijo y legible.
 
+## Doctrina: principios heredados, creación propia
+
+Los principios del original son el suelo y se quedan: sin IA en vivo en
+la app, contenido validado antes de servirse, motor adaptativo honesto
+(el dominio nunca se finge), la pregunta de colocación nunca se enseña
+cruda al niño, y la vara de calidad de su suite de pruebas. A partir de
+ese suelo, todo lo nuevo es creación nuestra, construida desde cero:
+código, textos, pantallas, herramientas y arte. Lo que no se puede
+copiar tal cual se crea desde cero o se documenta aquí como pieza
+nuestra pendiente, con su porqué (el ejemplo permanente:
+`curriculum-standards.json`, cuyas fuentes conservan sus propias
+licencias; Common Core no se empaqueta en una app comercial sin
+revisión).
+
+Las licencias siguen a la autoría, y la línea es nítida:
+
+- Lo que deriva de Marble (la taxonomía y su texto) conserva ODbL 1.0 /
+  CC BY-SA 4.0 y su atribución. Eso es ley y no cambia.
+- El código heredado de Jane es MIT, copyright de Kent Langley y Landon.
+- El código que creamos es nuestro: MIT, copyright Nido007-cmyk.
+
+## Principio de cobro (decidido; implementación pendiente de su fase)
+
+El núcleo de aprendizaje es y será gratis y completo: ningún paywall,
+ninguna suscripción, ningún candado sobre aprender, nunca. La app se usa
+entera sin pagar. El dinero, cuando llegue su fase, vendrá solo de
+extras opcionales (paquetes de contenido nuevo, cosméticos de la tutora,
+informes de padres con más profundidad) comprados por los padres desde
+su superficie, jamás con un aviso de cobro en mitad de la lección del
+niño. Nada en la arquitectura puede atar el progreso ni el contenido
+base a una cuenta ni a un servidor de licencias.
+
+## Jamás (restricciones permanentes de diseño)
+
+Nada de publicidad. Nada de mecánicas de azar (cajas sorpresa, monedas
+comprables, pagar por saltar o por responder). Nada de presión de tiempo
+fabricada. Nada de chantaje emocional de la tutora: ella celebra y
+anima, jamás presiona. Nada de rankings ni comparación social entre
+niños. Nada de chat con IA en vivo. Nada de notificaciones que persigan
+al niño fuera de la app.
+
+## Estado de la Fase 1 (Android, rama `android`) — estado real
+
+Construido y verificado en este repositorio:
+
+- **Cáscara Capacitor** (`mobile/`): appId `com.nido007.duna`
+  (provisional). El worker original corre dentro de la app
+  (`mobile/runtime/boot.mjs`) con el motor intacto; `/api/*` y `/parent`
+  se responden en el dispositivo. El paquete web empaquetado (~2,2 MB)
+  no referencia ningún recurso de red.
+- **Almacenamiento local con la interfaz KV original** (get/put/list),
+  serializado, un archivo JSON por clave en el dispositivo. Nace
+  particionado por perfil de alumno (prefijo `perfil/<id>/`, invisible
+  para el motor); la pantalla de perfiles llega en una fase posterior.
+- **Puerta de calidad Marble en la build**: el validador oficial de
+  os-taxonomy (vendido sin modificar en `tools/marble/`) debe pasar
+  sobre la taxonomía empaquetada o la build se cae. El contenido de
+  fábrica (la misión de ejemplo) se valida con el validador original de
+  paquetes antes de sembrarse, una sola vez.
+- **Interfaz**: el sistema de diseño adoptado (unidad de escalado desde
+  el lado corto con tope en tabletas, suelos de lectura que nunca bajan,
+  objetivos táctiles de 48/56 px, paleta propia, fuente OFL empaquetada,
+  todo sin red). Encima: el sistema de tokens de movimiento (duraciones
+  de 90 a 640 ms, tres resortes, solo transform/opacity), la tutora viva
+  (nuestro SVG por capas con máquina de estados WAAPI: parpadeo,
+  respiración, mirada, seis expresiones), nuestro set de iconos, un
+  botón de escuchar que lee la pregunta en voz alta con el TTS del
+  sistema, y un aviso sin conexión honesto que nunca bloquea.
+- **Pruebas**: la suite de humo original pasa (4/4) y la suite del
+  runtime móvil pasa (4/4), incluido el aislamiento entre perfiles.
+
+Lo que NO está hecho, dicho sin rodeos:
+
+- **APK debug: no construido en nuestro sandbox de build.** El protocolo
+  cliente-daemon de Gradle usa sockets TCP en 127.0.0.1, y en ese
+  sandbox las conexiones localhost de la JVM las intercepta un tercero
+  (repro mínimo en Java: el servidor previsto nunca acepta; el cliente
+  recibe primero el byte 109, «m»; Gradle muere con «Unexpected type
+  tag 109»). El proyecto está sincronizado y listo; en cualquier
+  máquina normal la build es:
+  `cd mobile && npm ci && npm run build && npx cap sync android &&
+  cd android && ./gradlew assembleDebug` con `ANDROID_HOME` definido,
+  y produce `app/build/outputs/apk/debug/app-debug.apk`.
+- **La prueba física en la tablet del dueño** (incluido el modo avión:
+  arranque y flujo principal sin red) es la puerta del dueño, como con
+  NIDO. Las capturas headless son maquetas, no prueba de dispositivo.
+- La firma de release, la revisión formal de marca y cualquier decisión
+  de tienda quedan pendientes de sus propios pasos.
+
+## Notas de QA de datos (registradas, no corregidas en esta fase)
+
+Los avisos de datos de upstream quedan en nuestra lista de QA: issues
+#5 de os-taxonomy (algunas aristas posiblemente invertidas o con edades
+incoherentes), #11 (algunos nombres de temas contradicen su descripción
+o sus estándares) y #25 (entradas de clusters de Science sin temas en
+`clusters.json`). En esta fase no editamos la taxonomía.
+`curriculum-standards.json` NO se empaqueta en la app (licencias por
+fuente; ver Doctrina). Los resúmenes de clusters, el `reason` de cada
+arista y los códigos de estándares por tema son materia prima de un
+futuro informe de padres, no datos de la app hoy. No existe traducción
+al español de Marble en ningún sitio: la fase bilingüe será traducción
+propia (CC BY-SA 4.0, como dice la Fase 3).
+
+## Deuda de interfaz (registrada, no escondida)
+
+El informe de padres conserva su hoja de estilos heredada (la app retira
+sus fuentes remotas al abrirlo); los chips dinámicos de la cabecera los
+sigue pintando el código original con emoji; el mapa de islas y las
+medallas conservan el arte heredado (sólido, pendiente de redibujo en el
+lenguaje visual adoptado); la superficie completa de Ajustes de la
+especificación adoptada aún no está construida (no fingimos controles
+que no funcionan); el splash de Android es la plantilla de Capacitor.
+El bundle de efectos vendored del original sigue en uso vía `fx.js` por
+ahora; retirarlo y sustituirlo por código propio está decidido para la
+fase siguiente.
+
 ## Fases
 
-- **Fase 1: Android primero.** Llevar el motor y el contenido a una app de
-  Android, con almacenamiento en el dispositivo en lugar de Cloudflare KV
-  y los archivos del servidor. Distribución por APK directo, como publica
-  NIDO, con Play Store como opción documentada bajo sus políticas para
-  familias.
+- **Fase 1: Android primero.** (En curso, ver el estado de arriba.)
+  Distribución por APK directo, como publica NIDO, con Play Store como
+  opción documentada bajo sus políticas para familias.
 - **Fase 2: Apple, con el camino listo.** La ruta de iOS (herramientas,
   cuenta de desarrollador, reglas de la categoría infantil, límites de la
   revisión) queda documentada antes de construir nada para iOS, y las
