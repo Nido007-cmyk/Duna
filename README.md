@@ -1,4 +1,4 @@
-# Jane
+# Duna (fork of Jane)
 
 A friendly, adaptive learning app for kids, designed around ages 8 to 12
 (upper elementary). Placement walks a knowledge graph of 1,590 micro-topics
@@ -31,6 +31,14 @@ Every path in this repository has a clear license. The full map is in
   layer derived from it): database under **ODbL 1.0**, text under
   **CC BY-SA 4.0**, copyright Generative Spark, Inc. (Marble).
 - **Lesson packs, quests and project docs: CC BY-SA 4.0.**
+- **Code and art created by this fork** (`mobile/`, `tools/`, the Duna
+  skin, icons and tutor art): **MIT**, copyright 2026 Nido007-cmyk.
+- **The bundled Fredoka font** (`public/fonts/`): SIL Open Font License
+  1.1 (see `public/fonts/OFL.txt`).
+- **The adopted es-419 base** (`tools/i18n/bases/es-419/`): a derivative
+  Spanish translation of the taxonomy, ODbL 1.0 / CC BY-SA 4.0 like its
+  source, kept under review and not shipped in the app (see
+  `tools/i18n/README.md`).
 
 Required attribution, shown by the app and kept here as upstream wrote it:
 
@@ -44,15 +52,19 @@ Using the taxonomy inside an app does not put the app code under ODbL.
 
 **Our product name is Duna.** We are developing this fork under that
 name; "Jane" is the name of the upstream project, and it stays in place
-wherever it refers to the original work and its authors. We are taking
-Duna where our other project, NIDO, already lives: onto the device,
-depending on no one.
+wherever it refers to the original work and its authors. The direction,
+in one line: the app lives on the device, **local first, internet
+optional**.
 
-- **Native apps, Android first.** The learning engine and the content move
-  onto the phone or tablet itself. Progress is stored on the device, not
+- **Native apps, Android first.** The learning engine and the content run
+  on the phone or tablet itself. Progress is stored on the device, not
   in a cloud account.
-- **No servers, no accounts, no outside services** in the app the child
-  uses. If a network or a provider disappears, the app keeps working.
+- **Local first, internet optional.** The app starts and its complete
+  learning experience works with no connection, always. Only features
+  that genuinely need the network may use it (downloading new content is
+  the natural example); they are optional, they never block the app, and
+  downloads stay on the device. No accounts and no collection of
+  children's personal data over the network.
 - **iOS later, with the path ready.** The route for Apple is documented
   before we build it, and the Android work is done so it does not have to
   be redone for iOS. See [docs/DESARROLLO.md](docs/DESARROLLO.md).
@@ -61,19 +73,47 @@ depending on no one.
 
 ## Status
 
-Honest status, October 2026: the fork was just created. What is in the tree
-today is upstream v0.2.0, a web app that runs on Cloudflare Workers or as a
-standalone Node server (see INSTALL.md). The native, on-device work has not
-started yet; this README and docs/DESARROLLO.md record the direction it
-will take, and this repository will reflect the real state of the work as
-it moves.
+Real state of this branch (`android`), October 18, 2026. `main` still
+holds the upstream web app exactly as forked; the native work lives here.
+
+Built and verified:
+
+- **Android conversion (Phase 1)** in `mobile/`: a Capacitor shell that
+  runs the original engine inside the app, with local storage keeping
+  the original KV interface, partitioned per learner profile from the
+  start. The packaged bundle requests no network resource at all.
+- **A Marble quality gate in the build**: the official os-taxonomy
+  validator must pass over the packaged taxonomy or the build fails
+  (`tools/marble/`).
+- **The adopted interface system**: scaling from the short side with a
+  tablet cap, reading floors, our palette and bundled font, a living
+  tutor (our own layered SVG with a WAAPI state machine), our icon set,
+  a listen button using the system TTS, and the motion token system.
+  Tests: upstream suite 4/4, mobile runtime suite 4/4.
+- **Spanish groundwork**: our i18n scaffolding (`tools/i18n/`: overlay
+  by id, hashed manifest, QA contract) and the community es-419 base,
+  evaluated with our protocol and **adopted as the base** of the Spanish
+  phase. It is under review and **not importable**: no line of it ships
+  until our complete bilingual review signs it.
+
+Not built yet, stated plainly:
+
+- **The debug APK.** Gradle cannot build in our build sandbox (its
+  client-daemon protocol uses localhost sockets that the sandbox
+  intercepts; root cause documented in docs/DESARROLLO.md). The project
+  is synced and ready; the documented command builds it on a normal
+  machine.
+- **Physical testing on a real tablet** (including airplane mode) is the
+  owner's gate and has not happened yet.
+- Release signing, a formal trademark review and any store decision are
+  pending their own steps.
 
 Modifications in this fork are maintained by Nido007-cmyk from 2026, under
 the same per-piece terms described above (see NOTICE).
 
 ---
 
-# Jane (español)
+# Duna (fork de Jane, en español)
 
 Una app de aprendizaje adaptativo y amable para niños, pensada para edades
 de 8 a 12 años. La ubicación del alumno recorre un grafo de conocimiento de
@@ -107,6 +147,14 @@ está en [LICENSING.md](LICENSING.md); el resumen:
   **CC BY-SA 4.0**, copyright de Generative Spark, Inc. (Marble).
 - **Paquetes de lecciones, misiones y documentos del proyecto:
   CC BY-SA 4.0.**
+- **Código y arte creados por este fork** (`mobile/`, `tools/`, la piel
+  de Duna, iconos y arte de la tutora): **MIT**, copyright 2026
+  Nido007-cmyk.
+- **La fuente Fredoka empaquetada** (`public/fonts/`): SIL Open Font
+  License 1.1 (ver `public/fonts/OFL.txt`).
+- **La base es-419 adoptada** (`tools/i18n/bases/es-419/`): traducción
+  derivada de la taxonomía, ODbL 1.0 / CC BY-SA 4.0 como su fuente,
+  guardada en revisión y fuera de la app (ver `tools/i18n/README.md`).
 
 Atribución obligatoria, tal como la escribió el proyecto original:
 
@@ -121,16 +169,19 @@ la app bajo ODbL.
 
 **Nuestro nombre de producto es Duna.** Desarrollamos este fork con ese
 nombre; «Jane» es el nombre del proyecto original, y se queda en su sitio
-donde se refiere a la obra original y a sus autores. Llevamos Duna a
-donde ya vive nuestro otro proyecto, NIDO: al dispositivo, sin depender
-de nadie.
+donde se refiere a la obra original y a sus autores. La dirección, en una
+línea: la app vive en el dispositivo, **local primero, internet
+opcional**.
 
 - **Apps nativas, Android primero.** El motor de aprendizaje y el
-  contenido pasan al teléfono o la tableta. El progreso se guarda en el
-  dispositivo, no en una cuenta en la nube.
-- **Sin servidores, sin cuentas, sin servicios externos** en la app que
-  usa el niño. Si una red o un proveedor desaparece, la app sigue
-  funcionando.
+  contenido corren en el teléfono o la tableta. El progreso se guarda en
+  el dispositivo, no en una cuenta en la nube.
+- **Local primero, internet opcional.** La app arranca y su experiencia
+  completa de aprendizaje funciona sin conexión, siempre. Solo las
+  funciones que de verdad lo necesiten pueden usar internet (descargar
+  contenido nuevo es el ejemplo natural); son opcionales, jamás bloquean
+  la app, y lo descargado queda en el dispositivo. Nada de cuentas ni
+  recogida de datos personales de niños por la red.
 - **iOS después, con el camino listo.** La ruta de Apple queda documentada
   antes de construirla, y el trabajo de Android se hace de forma que no
   haya que rehacerlo para iOS. Ver [docs/DESARROLLO.md](docs/DESARROLLO.md).
@@ -140,12 +191,43 @@ de nadie.
 
 ## Estado
 
-Estado honesto, octubre de 2026: el fork se acaba de crear. Lo que hay hoy
-en el árbol es la v0.2.0 original, una app web que corre en Cloudflare
-Workers o como servidor Node independiente (ver INSTALL.md). El trabajo
-nativo y en el dispositivo aún no empieza; este README y
-docs/DESARROLLO.md registran la dirección que tomará, y este repositorio
-reflejará el estado real del trabajo conforme avance.
+Estado real de esta rama (`android`), 18 de octubre de 2026. `main`
+conserva la app web original tal como se forkeó; el trabajo nativo vive
+aquí.
+
+Construido y verificado:
+
+- **Conversión a Android (Fase 1)** en `mobile/`: una cáscara Capacitor
+  que corre el motor original dentro de la app, con almacenamiento local
+  de la misma interfaz KV, particionado por perfil de alumno desde el
+  nacimiento. El paquete empaquetado no pide ningún recurso de red.
+- **Puerta de calidad Marble en la build**: el validador oficial de
+  os-taxonomy debe pasar sobre la taxonomía empaquetada o la build se
+  cae (`tools/marble/`).
+- **El sistema de interfaz adoptado**: escalado desde el lado corto con
+  tope en tabletas, suelos de lectura, paleta propia y fuente
+  empaquetada, la tutora viva (nuestro SVG por capas con máquina de
+  estados WAAPI), nuestro set de iconos, un botón de escuchar con el TTS
+  del sistema y el sistema de tokens de movimiento. Pruebas: suite
+  original 4/4, suite del runtime móvil 4/4.
+- **La base del español**: nuestro andamiaje i18n (`tools/i18n/`:
+  overlay por id, manifiesto con hashes, contrato QA) y la base
+  comunitaria es-419, evaluada con nuestro protocolo y **adoptada como
+  base** de la fase en español. Está en revisión y **no es importable**:
+  ninguna línea suya se publica hasta que nuestra revisión bilingüe
+  completa la firme.
+
+Lo que aún no está construido, dicho sin rodeos:
+
+- **El APK debug.** Gradle no puede construir en nuestro sandbox de
+  build (su protocolo cliente-daemon usa sockets localhost que el
+  sandbox intercepta; causa raíz documentada en docs/DESARROLLO.md). El
+  proyecto está sincronizado y listo; el comando documentado lo
+  construye en una máquina normal.
+- **La prueba física en una tablet real** (incluido el modo avión) es
+  la puerta del dueño y aún no ha ocurrido.
+- La firma de release, la revisión formal de marca y cualquier decisión
+  de tienda quedan pendientes de sus propios pasos.
 
 Las modificaciones de este fork las mantiene Nido007-cmyk desde 2026, bajo
 los mismos términos por pieza descritos arriba (ver NOTICE).

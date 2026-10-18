@@ -67,7 +67,7 @@ y gobernadas por un **contrato QA**. El andamiaje es código nuestro
 base candidata evaluada de abajo, que conserva su licencia ODbL /
 CC BY-SA y su atribución.
 
-Las reglas: (1) nada entra en la app sin revisar — las dos bases en
+Las reglas: (1) nada entra en la app sin revisar: las dos bases en
 español que existen son borradores sin revisión humana declarada y solo
 pueden ahorrar el arranque de la fase ES, nunca la revisión; un overlay
 es importable solo cuando nuestra revisión bilingüe completa queda

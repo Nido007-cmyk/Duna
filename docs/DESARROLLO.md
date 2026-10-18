@@ -76,7 +76,7 @@ blackmail by the tutor: she celebrates and encourages, she never
 pressures. No rankings or social comparison between children. No live AI
 chat. No notifications that chase the child outside the app.
 
-## Phase 1 status (Android, branch `android`) — real state
+## Phase 1 status (Android, branch `android`): real state
 
 Built and verified in this repository:
 
@@ -157,7 +157,7 @@ no fork: that translation is our own work either way, under CC BY-SA
 - **Interactive experiments in the lesson visual slot.** The engine
   already serves a visual for each item (today: generated fraction
   visuals and `scene`, an inline SVG that passes a sanitizer which
-  strips scripts and handlers — that safety property stays). In its
+  strips scripts and handlers, and that safety property stays). In its
   phase, playable simulations (light the stove, watch the water boil,
   with temperature and slow motion) will hang off this same slot: the
   scene stays declarative data with a simulation id, and the interactive
@@ -295,7 +295,7 @@ anima, jamás presiona. Nada de rankings ni comparación social entre
 niños. Nada de chat con IA en vivo. Nada de notificaciones que persigan
 al niño fuera de la app.
 
-## Estado de la Fase 1 (Android, rama `android`) — estado real
+## Estado de la Fase 1 (Android, rama `android`): estado real
 
 Construido y verificado en este repositorio:
 

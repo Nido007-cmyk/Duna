@@ -18,9 +18,9 @@ local adapters written for this fork:
 `/api/*` and `/parent` are answered on the device by the original
 worker. No server, no account, no live AI. **Local first, internet
 optional**: the app starts and the full learning experience works with
-no connection at all; the packaged copy does not even request web
-fonts (the build strips the external font link and falls back to
-system fonts). A future content-download feature may use the network
+no connection at all; the packaged copy requests no remote resource
+(the build strips the external font link and the skin serves the
+bundled OFL font, Fredoka). A future content-download feature may use the network
 as an optional enhancement; it must never block the app, and anything
 downloaded stays on the device. No accounts and no collection of
 children's personal data are built or planned without an explicit
@@ -45,6 +45,12 @@ npm run apk:debug     # build + sync + Gradle assembleDebug
 
 The APK lands in `android/app/build/outputs/apk/debug/app-debug.apk`.
 
+Build status in our own sandbox: every step above passes except the
+Gradle invocation itself, which is blocked there (its client-daemon
+protocol uses localhost sockets the sandbox intercepts; root cause and
+detail in `docs/DESARROLLO.md`). On a normal machine the commands above
+are the whole build.
+
 ## Code ownership
 
 Everything under `mobile/` is new code by this fork
@@ -68,6 +74,9 @@ descargado quedará en el dispositivo. Al instalarse, la app siembra la
 misión de ejemplo del repo (validada en la build con el validador
 original) con la fecha de hoy, para que el bucle de misiones funcione
 desde el primer minuto. Construcción: `npm install`, `npm test`,
-`npm run build`, `npm run apk:debug`. Todo el código de `mobile/` es
+`npm run build`, `npm run apk:debug`. En nuestro sandbox de build todos
+los pasos pasan salvo la invocación de Gradle, bloqueada allí (causa
+raíz en `docs/DESARROLLO.md`); en una máquina normal esos comandos son
+toda la build. Todo el código de `mobile/` es
 creación de este fork (© 2026 Nido007-cmyk, MIT); la app envuelta y los
 datos Marble conservan sus licencias y atribuciones.
