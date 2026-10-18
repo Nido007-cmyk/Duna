@@ -42,8 +42,11 @@ Using the taxonomy inside an app does not put the app code under ODbL.
 
 ## Our direction
 
-We are taking Jane where our other project, NIDO, already lives: onto the
-device, depending on no one.
+**Our product name is Duna.** We are developing this fork under that
+name; "Jane" is the name of the upstream project, and it stays in place
+wherever it refers to the original work and its authors. We are taking
+Duna where our other project, NIDO, already lives: onto the device,
+depending on no one.
 
 - **Native apps, Android first.** The learning engine and the content move
   onto the phone or tablet itself. Progress is stored on the device, not
@@ -116,8 +119,11 @@ la app bajo ODbL.
 
 ## Nuestra dirección
 
-Llevamos Jane a donde ya vive nuestro otro proyecto, NIDO: al dispositivo,
-sin depender de nadie.
+**Nuestro nombre de producto es Duna.** Desarrollamos este fork con ese
+nombre; «Jane» es el nombre del proyecto original, y se queda en su sitio
+donde se refiere a la obra original y a sus autores. Llevamos Duna a
+donde ya vive nuestro otro proyecto, NIDO: al dispositivo, sin depender
+de nadie.
 
 - **Apps nativas, Android primero.** El motor de aprendizaje y el
   contenido pasan al teléfono o la tableta. El progreso se guarda en el

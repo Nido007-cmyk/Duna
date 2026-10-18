@@ -53,9 +53,12 @@ that live on the device, in the same spirit as our NIDO project.
   NOTICE, and the fork link stays visible on GitHub.
 - Not affiliated with Marble or Generative Spark, Inc., beyond the
   attribution the ODbL and CC BY-SA licenses require.
-- The name Jane belongs to the upstream project. If this fork ever ships
-  under its own name, the change will be recorded here and in README.md,
-  with every attribution kept.
+- The name Jane belongs to the upstream project. This fork is developed
+  under its own product name, **Duna**, chosen by the project owner and
+  recorded here as promised, with every attribution kept. The name was
+  screened before adoption and no collision was found in children's
+  education or in educational software; a formal trademark review remains
+  a required step before any public launch.
 
 ---
 
@@ -119,6 +122,10 @@ nuestro proyecto NIDO.
   NOTICE, y el enlace de fork queda visible en GitHub.
 - No estamos afiliados con Marble ni con Generative Spark, Inc., más allá
   de la atribución que exigen las licencias ODbL y CC BY-SA.
-- El nombre Jane pertenece al proyecto original. Si este fork se publica
-  algún día con nombre propio, el cambio se registrará aquí y en README.md,
-  conservando todas las atribuciones.
+- El nombre Jane pertenece al proyecto original. Este fork se desarrolla
+  con nombre propio, **Duna**, elegido por el dueño del proyecto y
+  registrado aquí como se prometió, conservando todas las atribuciones.
+  El nombre se cribó antes de su adopción y no se encontró colisión en
+  educación infantil ni en software educativo; la revisión formal de
+  marca queda como paso obligatorio antes de cualquier lanzamiento
+  público.
