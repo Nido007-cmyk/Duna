@@ -1,12 +1,12 @@
 <!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Learning Adventure with Jane</title>
+<title>Duna · Learning Adventure</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
-<meta name="theme-color" content="#7c4dff"><link rel="stylesheet" href="/app.css"><script src="/vendor/ui.js" defer></script><script src="/fx.js" defer></script></head><body>
+<meta name="theme-color" content="#7c4dff"><link rel="stylesheet" href="/app.css"><link rel="stylesheet" href="/duna-skin.css"><script src="/vendor/ui.js" defer></script><script src="/fx.js" defer></script><script src="/duna-tutor.js" defer></script><script src="/duna-listen.js" defer></script></head><body>
 <a class="skip" href="#pcard">Skip to the question</a>
-<header><span class="chip" id="pts">⭐ 0</span><span class="chip" id="stars">🌟 0</span><span class="chip streak" id="streak">🔥 0</span><span class="chip world" id="pct">🗺️ 0%</span><button class="chip snd" id="snd" type="button" aria-label="Sound off">🔇</button>
-<nav role="tablist" aria-label="Sections"><button class="tab on" role="tab" aria-selected="true" data-v="play">🎮 Play</button><button class="tab" role="tab" aria-selected="false" tabindex="-1" data-v="map">🏝️ My World</button><button class="tab" role="tab" aria-selected="false" tabindex="-1" data-v="quests">🗺️ Quests<span class="dot" hidden></span></button><button class="tab" role="tab" aria-selected="false" tabindex="-1" data-v="trophies">🏆 Trophies</button></nav></header>
+<header><span class="chip" id="pts">⭐ 0</span><span class="chip" id="stars">🌟 0</span><span class="chip streak" id="streak">🔥 0</span><span class="chip world" id="pct">🗺️ 0%</span><button class="chip snd" id="snd" type="button" aria-label="Sound off"><img src="/icons/sound-off.svg" alt="" width="24" height="24"></button>
+<nav role="tablist" aria-label="Sections"><button class="tab on" role="tab" aria-selected="true" data-v="play"><img class="tic" src="/icons/play.svg" alt="" width="26" height="26">Play</button><button class="tab" role="tab" aria-selected="false" tabindex="-1" data-v="map"><img class="tic" src="/icons/world.svg" alt="" width="26" height="26">My World</button><button class="tab" role="tab" aria-selected="false" tabindex="-1" data-v="quests"><img class="tic" src="/icons/quests.svg" alt="" width="26" height="26">Quests<span class="dot" hidden></span></button><button class="tab" role="tab" aria-selected="false" tabindex="-1" data-v="trophies"><img class="tic" src="/icons/trophies.svg" alt="" width="26" height="26">Trophies</button></nav></header>
 <main id="play">
-<div class="card"><div class="jane"><div class="avatar">👩‍🏫</div><div class="bubble" id="jane" aria-live="polite">Hi <span class="lname">Explorer</span>! I'm Jane. Let's explore your learning world together! 🍕</div></div></div>
+<div class="card"><div class="jane"><div class="avatar"><img src="/tutora-duna.svg" alt="Duna, your guide" width="70" height="70"></div><div class="bubble" id="jane" aria-live="polite">Hi <span class="lname">Explorer</span>! I'm Duna. Let's explore your learning world together! 🍕</div></div></div>
 <div class="card" id="intro" hidden></div>
 <div class="qstrip" id="qstrip" hidden></div>
 <div class="card loading" id="pcard" tabindex="-1" aria-live="polite"><div class="framebar" id="frame"></div><div class="topic" id="topic"></div><div id="bossbar"></div><div id="timer"></div>

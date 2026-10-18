@@ -1,0 +1,170 @@
+/* Duna · creación propia. © 2026 Nido007-cmyk. Licencia MIT.
+   PIEL v2 de Duna: implementa el sistema de interfaz adoptado (diseño de
+   Grok reconciliado por la casa, ver docs/DESARROLLO.md y la especificación
+   en el proyecto). Se carga DESPUÉS del CSS original, que no se modifica:
+   la piel es la costura completa de la identidad visual.
+
+   El sistema, en breve:
+   - Unidad u = clamp(12px, lado corto / 42, 18px). Con u escala lo
+     tipográfico y de composición; JAMÁS escala lo táctil (48/56px fijos),
+     los suelos de lectura, los bordes de estado ni los iconos de
+     significado.
+   - Suelos de lectura que NUNCA bajan (si no cabe, se reorganiza, no se
+     encoge): pregunta 22, opciones 18, cuerpo/burbuja 16, notas 14,
+     título de tema 18.
+   - Paleta propia: violeta #6B4EFF, cielo #4FC3F7, naranja #FF8A65,
+     rosa #FF6B9A, verde #4CAF7D, sol #FFD166; fondo cielo a arena.
+   - Fuente redonda OFL empaquetada (Fredoka, local): nada remoto.
+   - Tarjetas radio 24px; botones que se hunden al pulsar; estados con
+     borde (sólido; punteado para repaso). */
+
+@font-face{
+  font-family:'Fredoka';
+  src:url('/fonts/fredoka.ttf') format('truetype');
+  font-weight:400 700;
+  font-style:normal;
+  font-display:swap;
+}
+
+:root{
+  --u:clamp(12px, 2.381vmin, 18px);
+  --violeta:#6B4EFF;
+  --cielo:#4FC3F7;
+  --naranja:#FF8A65;
+  --rosa:#FF6B9A;
+  --verde:#4CAF7D;
+  --sol:#FFD166;
+  --tinta:#2E2A33;
+  --fondo-arriba:#E8F4FF;
+  --fondo-abajo:#FFF8E7;
+  --crema-avatar:#FFF1CF;
+  --fs-pregunta:clamp(22px, calc(var(--u) * 1.83), 28px);
+  --fs-opciones:clamp(18px, calc(var(--u) * 1.5), 22px);
+  --fs-cuerpo:clamp(16px, calc(var(--u) * 1.33), 20px);
+  --fs-notas:clamp(14px, calc(var(--u) * 1.17), 16px);
+  --fs-tema:clamp(18px, calc(var(--u) * 1.5), 22px);
+  --fs-entrada:clamp(20px, calc(var(--u) * 1.7), 28px);
+}
+
+/* Escala base del CSS original (en rem): lado corto manda, suelo legible,
+   tope de tableta. Los roles héroe de abajo se fijan en px con sus suelos. */
+html{font-size:clamp(14px, 4.1026vmin, 25.6px);}
+
+body{
+  font-family:'Fredoka', system-ui, 'Segoe UI', Roboto, sans-serif;
+  background:linear-gradient(180deg, var(--fondo-arriba) 0%, var(--fondo-abajo) 100%);
+  color:var(--tinta);
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+button, input, .tab, .chip{font-family:inherit;}
+
+/* Superficies */
+.card{border-radius:24px;}
+#intro{background:linear-gradient(135deg, #FFF6E3, #FFE9C9);}
+a{color:var(--violeta);}
+
+/* Pestañas: activas en violeta con indicador inferior de sol */
+.tab.on{background:var(--violeta); color:#fff; box-shadow:inset 0 -4px 0 var(--sol), 0 3px 0 #0002;}
+.chip.world{background:var(--cielo); color:#123;}
+.chip.streak{background:var(--naranja);}
+
+/* Tutora: hueco de arte INTERCAMBIABLE (un solo archivo, /tutora-duna.svg).
+   56px en teléfono, 80px en tableta, según la tabla de la especificación. */
+.avatar{
+  width:clamp(56px, calc(var(--u) * 4.7), 80px);
+  height:clamp(56px, calc(var(--u) * 4.7), 80px);
+  background:var(--crema-avatar);
+  overflow:hidden;
+  padding:3px;
+}
+.avatar img{width:100%; height:100%; display:block; border-radius:50%;}
+.bubble{
+  background:#fff;
+  border:2px solid #6B4EFF55;
+  border-radius:24px;
+  font-size:var(--fs-cuerpo);
+  line-height:1.35;
+}
+
+/* Roles de lectura con suelo (nunca bajan) */
+.q{font-size:var(--fs-pregunta); line-height:1.3;}
+.topic{font-size:var(--fs-tema); color:var(--violeta);}
+.small, .foot, .badges, .legend{font-size:var(--fs-notas);}
+.mc button, .choices button, .pic, .ord li, .match button{font-size:var(--fs-opciones);}
+input{font-size:var(--fs-entrada);}
+.evidence{font-size:var(--fs-cuerpo);}
+
+/* Estados de la tarjeta de pregunta: jefe en naranja suave (no agresivo),
+   repaso como celebración de memoria con borde punteado naranja. */
+#pcard.boss{border:4px solid var(--naranja); background:linear-gradient(#fff, #FFF1E8);}
+#pcard.review{border:3px dashed var(--naranja);}
+
+/* Objetivos táctiles: fijos, no escalan con u */
+button, .tab{min-height:48px;}
+.mc button, .choices button, .check, #f button{min-height:56px;}
+input{min-height:56px;}
+.tcell{min-height:56px;}
+.chip{display:inline-flex; align-items:center; min-height:40px;}
+
+/* Los botones se hunden al pulsar (resorte) */
+button:active{transform:translateY(3px); box-shadow:0 2px 0 #0003;}
+
+/* Foco visible siempre; las cajas de texto ya traen su borde de foco. */
+:focus-visible:not(input){outline:4px solid var(--violeta); outline-offset:2px; border-radius:8px;}
+
+/* Iconografía propia (set SVG en /icons/, estilo pegatina del sistema) */
+.tab .tic{width:26px; height:26px; vertical-align:-7px; margin-right:6px;}
+.chip.snd img{width:24px; height:24px; display:block;}
+
+/* SISTEMA DE MOVIMIENTO (investigación 2026-10-18, apartado 4: la vara
+   premium del dueño). Tokens cerrados: no se inventan duraciones ni curvas
+   fuera de esta escala. Solo se animan transform y opacity (60 fps en
+   Android modesto); ninguna animación tapa la pregunta ni roba toques;
+   movimiento reducido lo apaga todo sin romper nada (bloque al final).
+   Los resortes viven como constantes en el código de efectos y de la
+   tutora (duna-tutor.js): spring-firme 520/30, spring-suave 320/24,
+   spring-fiesta 380/15 (solo celebración, nunca en lectura). */
+:root{
+  --dur-tap:90ms;
+  --dur-fast:160ms;
+  --dur-med:240ms;
+  --dur-slow:360ms;
+  --dur-fiesta:640ms;
+  --curva-std:cubic-bezier(0.2, 0, 0, 1);
+  --curva-entrada:cubic-bezier(0.05, 0.7, 0.1, 1);
+  --curva-salida:cubic-bezier(0.3, 0, 1, 1);
+}
+.card, .tab, .chip, .bubble{transition:transform var(--dur-tap) var(--curva-std), background-color var(--dur-med) var(--curva-std), box-shadow var(--dur-med) var(--curva-std);}
+button{transition:transform var(--dur-tap) var(--curva-std), box-shadow var(--dur-tap) var(--curva-std), background-color var(--dur-med) var(--curva-std);}
+
+/* Aviso sin conexión: píldora discreta abajo, nunca bloquea ni tapa un
+   control de forma permanente; la maneja el runtime (boot.mjs). */
+#duna-offline{
+  position:fixed; left:50%; bottom:calc(12px + env(safe-area-inset-bottom));
+  transform:translateX(-50%);
+  background:#2E2A33; color:#FFF8E7;
+  font-size:var(--fs-notas); font-weight:600;
+  padding:10px 18px; border-radius:999px;
+  box-shadow:0 6px 18px #0004; z-index:50;
+  pointer-events:none;
+}
+#duna-offline[hidden]{display:none;}
+
+/* Movimiento reducido: la piel también lo respeta (fx.js hace lo suyo) */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{animation-duration:.01s !important; animation-iteration-count:1 !important; transition-duration:.01s !important;}
+}
+
+/* Botón Escuchar (TTS del sistema): píldora discreta junto a la pregunta */
+.duna-listen{
+  display:inline-flex; align-items:center; gap:8px;
+  min-height:48px; padding:8px 16px; margin:2px 0 6px;
+  background:#fff; color:var(--violeta);
+  border:2px solid #6B4EFF55; border-radius:999px;
+  font-size:var(--fs-notas); box-shadow:0 3px 0 #0002;
+}
+.duna-listen img{width:24px; height:24px; display:block;}
+.duna-listen:active{background:#EFEAFF;}
+
+/* Con la tutora viva manda su respiración WAAPI, no el bob genérico */
+.avatar.duna-live{animation:none;}

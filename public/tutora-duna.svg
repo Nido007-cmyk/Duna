@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <!-- Duna, la tutora: niña exploradora · arte original de este fork, unificado
+       desde el concepto adoptado (sombrero violeta con faro, pelo largo
+       ondulado, pañuelo azul, chaqueta violeta). © 2026 Nido007-cmyk. MIT.
+       v3 POR CAPAS: la máquina de estados de duna-tutor.js anima los grupos
+       por id (respiración en #t-all, parpadeo y mirada en #t-eyes, bocas por
+       expresión, casco de batalla en #t-casco). Sin JS se ve el saludo. -->
+  <g id="t-all">
+  <!-- Pelo trasero -->
+  <path d="M120 40 C66 40 40 84 42 140 C43 172 36 196 30 214 C50 206 58 212 68 220 C76 208 88 210 97 220 L143 220 C152 210 164 208 172 220 C182 212 190 206 210 214 C204 196 197 172 198 140 C200 84 174 40 120 40 Z" fill="#6B4226"/>
+  <!-- Chaqueta y camisa -->
+  <path d="M48 240 C52 205 82 188 120 188 C158 188 188 205 192 240 Z" fill="#8A6FD6"/>
+  <path d="M100 190 L140 190 L146 240 L94 240 Z" fill="#4FC3F7"/>
+  <!-- Mechones laterales sobre los hombros -->
+  <path d="M52 108 C44 140 46 176 56 206 C62 218 74 220 80 210 C70 178 68 142 72 112 Z" fill="#6B4226"/>
+  <path d="M188 108 C196 140 194 176 184 206 C178 218 166 220 160 210 C170 178 172 142 168 112 Z" fill="#6B4226"/>
+  <!-- Cara -->
+  <ellipse cx="120" cy="118" rx="53" ry="49" fill="#F6C08A"/>
+  <!-- Flequillo -->
+  <path d="M67 112 C68 78 94 60 120 60 C146 60 172 78 173 112 C160 88 142 80 120 80 C98 80 80 88 67 112 Z" fill="#6B4226"/>
+  <!-- Sombrero violeta -->
+  <path d="M60 82 C60 48 88 30 120 30 C152 30 180 48 180 82 Z" fill="#9B7EDE"/>
+  <path d="M60 74 C84 64 156 64 180 74 L180 84 C152 74 88 74 60 84 Z" fill="#7A5FC0"/>
+  <ellipse cx="120" cy="84" rx="78" ry="13" fill="#8A6FD6"/>
+  <!-- Faro sobre el sombrero -->
+  <path d="M112 32 L115 12 L125 12 L128 32 Z" fill="#FFFFFF"/>
+  <rect x="114.4" y="16" width="11.2" height="4" fill="#6B4EFF"/>
+  <rect x="113.6" y="24" width="12.8" height="4" fill="#6B4EFF"/>
+  <path d="M110 12 L120 2 L130 12 Z" fill="#5B3DF0"/>
+  <!-- Casco de batalla (expresión batalla; oculto por defecto) -->
+  <g id="t-casco" style="display:none">
+    <path d="M58 88 C58 40 88 18 120 18 C152 18 182 40 182 88 C182 96 176 100 168 98 L72 98 C64 100 58 96 58 88 Z" fill="#FF8A65"/>
+    <path d="M58 84 C88 74 152 74 182 84 L182 94 C152 84 88 84 58 94 Z" fill="#E56B45"/>
+    <circle cx="120" cy="52" r="9" fill="#FFD166" stroke="#E56B45" stroke-width="3"/>
+  </g>
+  <!-- Orejas y mejillas -->
+  <circle cx="68" cy="122" r="7" fill="#F6C08A"/>
+  <circle cx="172" cy="122" r="7" fill="#F6C08A"/>
+  <ellipse cx="84" cy="140" rx="8.5" ry="4.6" fill="#F2A18E" opacity="0.85"/>
+  <ellipse cx="156" cy="140" rx="8.5" ry="4.6" fill="#F2A18E" opacity="0.85"/>
+  <!-- Pestañas -->
+  <path d="M88 108 C92 103 100 102 105 106" stroke="#3A2418" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M135 106 C140 102 148 103 152 108" stroke="#3A2418" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Ojos abiertos: parpadeo y mirada mueven este grupo -->
+  <g id="t-eyes" style="transform-origin:120px 122px">
+    <ellipse cx="99" cy="122" rx="8" ry="11" fill="#3A2418"/>
+    <ellipse cx="141" cy="122" rx="8" ry="11" fill="#3A2418"/>
+    <circle cx="96" cy="117" r="2.8" fill="#FFFFFF"/>
+    <circle cx="138" cy="117" r="2.8" fill="#FFFFFF"/>
+  </g>
+  <!-- Ojos cerrados (celebrando y repaso; ocultos por defecto) -->
+  <g id="t-eyes-closed" style="display:none">
+    <path d="M90 122 C94 116 104 116 108 122" stroke="#3A2418" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+    <path d="M132 122 C136 116 146 116 150 122" stroke="#3A2418" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+  </g>
+  <!-- Nariz -->
+  <path d="M118 132 C120 135 122 135 123 133" stroke="#D98E5F" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+  <!-- Bocas por expresión (una visible; manda duna-tutor.js) -->
+  <path id="t-mouth-saludo" d="M106 145 C112 155 128 155 134 145" stroke="#8A4B2A" stroke-width="3.6" stroke-linecap="round" fill="none"/>
+  <path id="t-mouth-celebra" style="display:none" d="M104 143 C110 160 130 160 136 143 C130 150 110 150 104 143 Z" fill="#8A4B2A"/>
+  <ellipse id="t-mouth-piensa" style="display:none" cx="126" cy="150" rx="4.6" ry="5.6" fill="#8A4B2A"/>
+  <path id="t-mouth-animo" style="display:none" d="M109 147 C114 153 126 153 131 147" stroke="#8A4B2A" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+  <path id="t-mouth-batalla" style="display:none" d="M108 149 L132 149" stroke="#8A4B2A" stroke-width="3.6" stroke-linecap="round" fill="none"/>
+  <!-- Pañuelo azul -->
+  <path d="M92 161 C104 172 136 172 148 161 L148 176 C136 185 104 185 92 176 Z" fill="#4FC3F7"/>
+  <circle cx="120" cy="170" r="6.5" fill="#3AA8DC"/>
+  </g>
+</svg>

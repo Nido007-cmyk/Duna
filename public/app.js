@@ -14,7 +14,7 @@ function say(t){const b=$('jane');b.innerHTML=gl(t);b.classList.remove('pop');vo
 function confetti(n=40){for(let i=0;i<n;i++){const e=document.createElement('div');e.className='confetti';e.textContent=['🎉','⭐','🍕','✨','🎈','💜'][i%6];e.style.left=Math.random()*100+'vw';e.style.animationDuration=1.5+Math.random()*2+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),4000);}}
 function banner(t){const b=document.createElement('div');b.className='banner';b.innerHTML=`<div>${t}</div>`;document.body.appendChild(b);setTimeout(()=>b.remove(),2000);}
 function chips(s){$('pts').textContent='⭐ '+s.points+' pts';$('stars').textContent='🌟 '+s.stars;$('streak').textContent='🔥 '+s.streak;$('pct').textContent=`🗺️ ${s.progress.pct}%`;}
-let LN='Explorer';function setLearner(L){if(!L?.name||L.name===LN&&document.title.includes(LN))return;LN=L.name;document.querySelectorAll('.lname').forEach(e=>e.textContent=LN);document.title=`${LN}'s Learning Adventure with Jane`;}
+let LN='Explorer';function setLearner(L){if(!L?.name||L.name===LN&&document.title.includes(LN))return;LN=L.name;document.querySelectorAll('.lname').forEach(e=>e.textContent=LN);document.title=`${LN}'s Learning Adventure with Duna`;}
 function render(s){st=s;if(s?.learner)setLearner(s.learner);chips(s);const p=s.item;clearInterval(timerInt);$('timer').innerHTML='';if(!p)return;
  const f=p.format||'quest';$('frame').className='framebar f-'+f;$('frame').textContent=FRAMES[f]||'🗡️ Quest';$('pcard').className='card '+f;
  $('topic').textContent=`${ISL[p.topic.subject]?.e||'📚'} ${p.topic.name}${p.level?` · Lv ${p.level}`:''}`;

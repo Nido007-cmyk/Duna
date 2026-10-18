@@ -51,8 +51,8 @@ const watched=new WeakSet();function autoList(el){const u=U();if(!u||!el||watche
 function kbd(root,sel,label){root?.querySelectorAll(sel).forEach(el=>{if(el.hasAttribute('tabindex'))return;el.setAttribute('tabindex','0');el.setAttribute('role','button');if(label)el.setAttribute('aria-label',label(el));});}
 document.addEventListener('keydown',e=>{const t=e.target;if((e.key==='Enter'||e.key===' ')&&t?.getAttribute?.('role')==='button'&&t.tagName!=='BUTTON'){e.preventDefault();t.dispatchEvent(new MouseEvent('click',{bubbles:true,clientX:0,clientY:0}));}});
 // ---------- sound toggle ----------
-const LBL={off:['🔇','Sound off'],quiet:['🔈','Sound quiet'],on:['🔊','Sound on']};
-function soundButton(btn){if(!btn)return;const paint=()=>{const m=store.get('sound')||'off';btn.textContent=LBL[m][0];btn.title=LBL[m][1]+' (tap to change)';btn.setAttribute('aria-label',LBL[m][1]);btn.setAttribute('aria-pressed',m!=='off');};
+const LBL={off:['/icons/sound-off.svg','Sound off'],quiet:['/icons/sound-quiet.svg','Sound quiet'],on:['/icons/sound-on.svg','Sound on']};
+function soundButton(btn){if(!btn)return;const paint=()=>{const m=store.get('sound')||'off';btn.innerHTML=`<img src="${LBL[m][0]}" alt="" width="24" height="24">`;btn.title=LBL[m][1]+' (tap to change)';btn.setAttribute('aria-label',LBL[m][1]);btn.setAttribute('aria-pressed',m!=='off');};
   btn.onclick=()=>{const m=store.get('sound')||'off',n={off:'quiet',quiet:'on',on:'off'}[m];store.set('sound',n);paint();if(n!=='off')sound('pop');};paint();}
 window.FX={anim,enter,stagger,shake,bump,flip,sound,haptic,burst,good,bad,view,place,autoList,kbd,soundButton,reduced};
 })();
