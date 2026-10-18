@@ -129,12 +129,28 @@ Upstream data warnings stay on our QA list: os-taxonomy issues #5 (a few
 edges possibly inverted or age-inconsistent), #11 (some topic names at
 odds with their descriptions or standards) and #25 (Science cluster
 entries without topics in `clusters.json`). We do not edit the taxonomy
-in this phase. `curriculum-standards.json` is NOT packaged in the app
-(per-source licensing; see Doctrine). The cluster summaries, the
-`reason` of each edge and per-topic standard codes are raw material for
-a future parent report, not app data today. No Spanish translation of
-Marble exists anywhere: the bilingual phase will be our own translation
-(CC BY-SA 4.0, as Phase 3 notes).
+in this phase. The name fixes proposed in upstream PR #17 join the QA
+list: candidates only, applied case by case and only after the upstream
+validator passes on the result. `curriculum-standards.json` is NOT
+packaged in the app (per-source licensing; see Doctrine). The cluster
+summaries, the `reason` of each edge and per-topic standard codes are
+raw material for a future parent report, not app data today.
+
+Spanish bases (premise corrected by a second ecosystem sweep on
+2026-10-18): two community translations of the taxonomy DO exist, both
+drafts with no declared human review. The es-419 base
+(Tropicalrambler/os-taxonomy) was evaluated with our own protocol and
+ADOPTED AS THE BASE of the Spanish phase: it may save the start of the
+translation, never the review, and no line of it reaches the app until
+our complete bilingual review signs its manifest (it is stored, not
+importable, in `tools/i18n/bases/es-419/`). The es-MX base
+(davidmedel/marble-taxonomy-mx) is not adopted as text (its own
+manifest declares machine translation, DRAFT_ONLY, publication
+blocked); its scaffolding pattern (overlay by id, hashed manifest,
+validators, QA contract) is adopted in our own writing in
+`tools/i18n/`. Jane's kid layer (kid-prompts, glossary) is translated in
+no fork: that translation is our own work either way, under CC BY-SA
+4.0 like the rest of the derived text.
 
 ## Backlog (decided, future phases)
 
@@ -333,13 +349,31 @@ Los avisos de datos de upstream quedan en nuestra lista de QA: issues
 #5 de os-taxonomy (algunas aristas posiblemente invertidas o con edades
 incoherentes), #11 (algunos nombres de temas contradicen su descripción
 o sus estándares) y #25 (entradas de clusters de Science sin temas en
-`clusters.json`). En esta fase no editamos la taxonomía.
+`clusters.json`). En esta fase no editamos la taxonomía. Las
+correcciones de nombres propuestas en el PR #17 de upstream entran en
+la lista QA: solo candidatas, aplicadas caso a caso y únicamente con
+el validador oficial pasando sobre el resultado.
 `curriculum-standards.json` NO se empaqueta en la app (licencias por
 fuente; ver Doctrina). Los resúmenes de clusters, el `reason` de cada
 arista y los códigos de estándares por tema son materia prima de un
-futuro informe de padres, no datos de la app hoy. No existe traducción
-al español de Marble en ningún sitio: la fase bilingüe será traducción
-propia (CC BY-SA 4.0, como dice la Fase 3).
+futuro informe de padres, no datos de la app hoy.
+
+Bases en español (premisa corregida por la segunda barrida del
+ecosistema, 2026-10-18): SÍ existen dos traducciones comunitarias de
+la taxonomía, ambas borradores sin revisión humana declarada. La base
+es-419 (Tropicalrambler/os-taxonomy) quedó evaluada con nuestro
+protocolo y ADOPTADA COMO BASE de la fase en español: puede ahorrar el
+arranque de la traducción, nunca la revisión, y ninguna línea suya
+llega a la app hasta que nuestra revisión bilingüe completa firme su
+manifiesto (queda guardada, no importable, en
+`tools/i18n/bases/es-419/`). La base es-MX (davidmedel/
+marble-taxonomy-mx) no se adopta como texto (su propio manifiesto la
+declara traducción automática, DRAFT_ONLY, publicación bloqueada); su
+patrón de andamiaje (overlay por id, manifiesto con hashes,
+validadores, contrato QA) sí se adopta, escrito por nosotros en
+`tools/i18n/`. La capa infantil de Jane (kid-prompts, glosario) no está
+traducida en ningún fork: esa traducción es trabajo propio pase lo que
+pase, bajo CC BY-SA 4.0 como el resto del texto derivado.
 
 ## Backlog (decidido, fases futuras)
 
