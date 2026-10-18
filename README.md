@@ -1,222 +1,145 @@
 # Jane
 
-**Jane** is a friendly, adaptive learning app for kids, designed around ages ~8-12 (upper elementary) and named after its tutor character.
-The learner's name, target age and grade are settings.
-It runs as a single Cloudflare Worker with static assets and Workers KV, or as a standalone Node server (or Docker
-container) with file-based storage, and it is built on the open
-[Marble Skill Taxonomy](https://github.com/withmarbleapp/os-taxonomy): 1,590 micro-topics across 8 subjects,
-linked by 3,221 prerequisite edges.
+A friendly, adaptive learning app for kids, designed around ages 8 to 12
+(upper elementary). Placement walks a knowledge graph of 1,590 micro-topics
+across 8 subjects, linked by 3,221 prerequisite edges, so each learner is
+met where they actually are. There is no live AI in the app by design:
+lessons are written and checked ahead of time, and the app only serves
+content a person can read and review first.
 
-> **v0.2.0.** It's a child's learning app, so all personal data is excluded from the repo, and every path has a clear
-> license (see [LICENSING.md](LICENSING.md)). What's next: [Roadmap](#roadmap). Changes: [CHANGELOG.md](CHANGELOG.md).
+## Origin
 
-## Philosophy
+This repository is a fork of [kentlangley/Jane](https://github.com/kentlangley/Jane),
+created and designed by Kent Langley and Landon. The application code is
+theirs and is licensed under MIT (see [LICENSE](LICENSE)). We forked it on
+October 18, 2026 to develop it in a new direction, described below. The
+original project's documentation (INSTALL.md, LESSONS.md, docs/) is still
+in this tree, and the fork relationship stays visible on GitHub.
 
-When I (Kent) thought about creating this with Landon, my thought was: here is an incredible taxonomy of knowledge as a
-knowledge graph (powah!), AND pretty much any LLM these days of any power knows all the stuff in the taxonomy cold, so
-let's lean on that. **Note that this system is NOT live AI. That is on purpose.**
+This fork is not affiliated with Kent Langley or Landon, and it is not
+affiliated with Marble or Generative Spark, Inc. beyond the attribution
+their license requires, which we keep intact everywhere it appears.
 
-- **The knowledge graph is the backbone.** The [Marble Skill Taxonomy](https://github.com/withmarbleapp/os-taxonomy)
-  (1,590 topics, 3,221 prerequisites) decides *what* to learn, *in what order*, and *what mastery looks like*.
-  Placement, inference, spaced review and the island map all come from it.
-- **An LLM is an author, offline.** It writes things ahead of time: the kid-friendly questions, the glossary entries,
-  and each night's quest. Everything it writes is checked (`build.mjs` and `publish-lessons.mjs` validate it) before it
-  is published.
-- **The app your kid uses has no live AI.** There's no chatbot, no text generated while the kid plays, and nothing is
-  sent to a model during play. Jane's lines, the questions and the hints are all fixed content or simple procedural
-  generators.
+## Licenses, in short
 
-Why on purpose:
-- **Predictable and safe for a kid.** Jane can only say what's already been written and checked. There are no surprises
-  and no off-topic chats.
-- **Reviewable.** Every question and quest is a plain file you can read before (or after) it's shown.
-- **Private.** The kid's answers stay in your own storage, and no model sees them while they play.
-- **Cheap.** No per-question API calls. It runs on a free-tier Worker.
-- **Light to run.** It needs no AI service and no API key: `npm start` on any computer with Node 22, a Docker
-  container, or a free-tier Cloudflare Worker. It keeps working if the nightly author skips a night.
-- **Transparent for parents.** You can see exactly what gets shown, in the packs and on the parent report.
+Every path in this repository has a clear license. The full map is in
+[LICENSING.md](LICENSING.md); the summary:
 
-## Why "Jane"?
+- **Application code: MIT** License, copyright 2026 Kent Langley and Landon
+  (see [LICENSE](LICENSE)).
+- **The Marble Skill Taxonomy data** (`data/marble/`, and the kid friendly
+  layer derived from it): database under **ODbL 1.0**, text under
+  **CC BY-SA 4.0**, copyright Generative Spark, Inc. (Marble).
+- **Lesson packs, quests and project docs: CC BY-SA 4.0.**
 
-The tutor is named after Jane, the AI who first appears in *Speaker for the Dead*, the second book of Orson Scott Card's
-*Ender's Game* series. In the books, Jane is a companion and teacher to Ender, and that inspired the name of this
-friendly tutor. The name is just a nod to the books: this project has no affiliation with Orson Scott Card or his publishers.
-
-## Features
-
-- **Adaptive placement over the 1,590-topic graph.** Diagnostic questions walk the prerequisite graph to find where
-  the learner is, aiming at a configurable target age (`LEARNER_AGE`).
-- **Inference.** Getting a harder topic right credits its prerequisites ("inferred" mastery); misses step down to
-  easier prerequisites.
-- **Spaced repetition.** Leitner boxes with gaps of 1 → 3 → 7 → 21 → 60 days; reviews come back automatically.
-- **Island map ("My World").** Each subject is an island and each topic is a stone, colored mastered / review due /
-  learning / ready / locked. Tap a stone for *Explore now!* or *Practice now* mini-sessions.
-- **Quests.** Each daily lesson pack is a quest with a story hook, stages, a boss finale and a quest medal, plus an
-  animated "New quest!" reveal and a Quests tab. **At most 3 quests are active at once**; at the cap, the nightly job
-  publishes a *catch-up boost* for the oldest one instead of a new quest.
-- **Nightly lesson packs.** `export-progress.mjs` exports weak spots, strengths, frontier topics and due reviews.
-  You (or an AI assistant) write tomorrow's pack following [LESSONS.md](LESSONS.md), then
-  `publish-lessons.mjs` validates and publishes it.
-- **Interactive formats:** multiple choice, fill-in-the-blank, order, match, picture choice, number line,
-  fraction bars, true/false speed rounds, "why" and fun-fact cards, scenes and templates.
-- **Glossary popups.** Key words get a playful dotted underline; tap or hover shows a kid-friendly definition. Tapping a
-  term never counts as an answer. Lookups are logged so the next quests can reuse those words.
-- **Creative answers.** Open questions ("as brave as a ___") accept any sensible answer and celebrate it. Fuzzy
-  matching handles plurals, articles and small typos. After 2 misses, the app shows a kind "learning moment"
-  instead of counting it as wrong.
-- **Medals & trophies.** Bronze, silver or gold topic medals (by depth in the graph), streaks, stars and quest medals.
-- **Parent report (`/parent`).** A calm, read-only report: overall %, time today and this week, wins and struggle spots,
-  words looked up, charts, per-subject progress, quest history, upcoming reviews, a searchable answer log and medals.
-  It works on phones and prints cleanly. All times are Pacific Time.
-- **Sandbox.** `/api/sandbox?on=1` switches your browser to a copy of the progress for testing, so the real record is
-  never touched.
-
-## How this was built
-
-Jane was designed by **Kent Langley and Landon**, and developed with **Grok Bot**, an AI assistant. Grok Bot wrote and
-iterated on the code, the content and these docs from their feedback: what was fun, what was confusing, what was too
-hard. Each night Grok Bot also acts as the **lesson author**. It reads the day's export and writes the next quest
-following [LESSONS.md](LESSONS.md). That role is just the scripts' interface, so anyone can fill it, by hand or with
-any assistant (see [How the nightly cycle works](docs/NIGHTLY.md)).
-
-## Nightly lessons
-
-A nightly cycle turns the day's answers into tomorrow's quest: **export → check the quest cap → write a quest or a
-catch-up boost → validate → publish**. It runs on whatever scheduler you choose (cron, launchd, a CI schedule, or by
-hand). The two scripts are the whole interface, and no outside service is needed. A Cloudflare Cron Trigger is the natural
-built-in option, and a **built-in nightly generator** (a `scheduled()` handler) is a planned feature. Details and a
-diagram: **[docs/NIGHTLY.md](docs/NIGHTLY.md)**.
-
-## UI polish
-
-The kid app and parent report are plain HTML/CSS/JS (no framework). A small vendored bundle
-(`public/vendor/ui.js`, about 19 KB gzipped, built from `vendor/entry.mjs`) adds Motion springs, Floating UI popovers,
-canvas-confetti and AutoAnimate. `public/fx.js` wires them in: tactile press/hover states, spring entrances, View Transitions
-between tabs and map zooms, haptics (where supported), optional synthesized sound effects (off by default; 🔇/🔈/🔊 toggle in
-the header), skeleton loading states, keyboard support (tab arrows, Esc, focus rings, focusable islands) and
-`prefers-reduced-motion` support. Everything still works if the bundle doesn't load.
-
-## Architecture
-
-```
-Browser (public/: index.html, app.js, app.css; parent.js/css; tax.json, glossary.json)
-   │
-   ├── Cloudflare: static assets served first, then the Worker          (./deploy.sh)
-   └── Node:       server/index.mjs serves public/ and calls the Worker  (npm start, Docker)
-   ▼
-src/worker.js  ── /api/* JSON API, /parent HTML report (read-only); the same code on both hosts
-   ├─ src/engine.js   topic states, placement & inference, Leitner reviews, packs/quests, grading, learning moments
-   ├─ src/gen.js      procedural math generators (GENERATED by build.mjs from prototype/server.js)
-   └─ src/parent.js   parent report data + HTML shell
-   ▼
-Storage: Workers KV (binding JANE_KV) on Cloudflare, or one JSON file per key in DATA_DIR on Node (server/file-kv.mjs)
-   progress              the learner's single progress record
-   log:YYYY-MM-DD        that day's answer log (Pacific Time days)
-   lessons:YYYY-MM-DD    published lesson pack / quest
-   boost:YYYY-MM-DD      catch-up boost for a quest
-   sandbox:*             sandbox copies (testing only)
-```
-
-- **`build.mjs`** turns `data/marble/` + `data/kid-prompts/` + `data/glossary.txt` into `public/tax.json` and
-  `public/glossary.json`, and extracts the math generators into `src/gen.js`. It also validates the inputs.
-- **`server/`** is the standalone Node server: `index.mjs` (HTTP, `/healthz`), `assets.mjs` (static files, like
-  Cloudflare's assets binding) and `file-kv.mjs` (the KV `get`/`put`/`list` subset on JSON files). No runtime dependencies.
-- **CLI scripts** (`export-progress.mjs`, `publish-lessons.mjs`, `backup-progress.mjs`) talk to KV through
-  `wrangler`, or to the local files with `--local` / `STORAGE=file` (`lib-cli.mjs`).
-- **`prototype/`** is the early, **math-only** version of Jane: a zero-dependency Node server (`server.js`). It is
-  *not* the full app (no taxonomy, quests, map or parent report). It's kept because `build.mjs` takes the math
-  generators from it. For the full app on Node, use `npm start` (`server/`).
-
-## Learner settings
-
-On Cloudflare, set in the `[vars]` block of your (gitignored) `wrangler.toml` (see `wrangler.toml.example`). On Node
-and Docker, set them as environment variables:
-
-| Var | Default | Used for |
-|---|---|---|
-| `LEARNER_NAME` | `Explorer` | Greetings, "X's Learning World", trophy case, parent report. Kid-facing text and lesson packs write `{name}` and the Worker fills it in |
-| `LEARNER_AGE` | `10` | Target age for placement, topic choice and the nightly export |
-| `LEARNER_GRADE` | `upper elementary` | Parent report and lesson-pack warnings |
-
-## Repository layout
-
-| Path | Contents |
-|---|---|
-| `src/`, `public/` | Worker and browser app |
-| `server/` | Standalone Node server and file storage (`npm start`) |
-| `Dockerfile`, `docker-compose.yml` | Docker option (non-root, volume for data, health check) |
-| `test/` | End-to-end smoke test for the Node server (`npm test`) |
-| `data/marble/` | Marble Skill Taxonomy v1, unchanged, with its LICENSE, LICENSE-CONTENT, PROVENANCE.md, CITATION.cff |
-| `data/kid-prompts/`, `data/glossary.txt` | Kid-friendly layer derived from the taxonomy |
-| `packs/examples/` | A generic example quest. Real nightly packs (`packs/*.json`) are gitignored |
-| `LESSONS.md`, `docs/` | Lesson-pack rules and the nightly workflow |
-| `prototype/` | Early math-only Node prototype (source of the math generators); not the full app |
-| `build.mjs`, `deploy.sh`, `reset.sh`, `*-progress.mjs`, `publish-lessons.mjs` | Build and ops scripts |
-
-## Getting started
-
-See **[INSTALL.md](INSTALL.md)** for all three options (Node, Docker, Cloudflare). For the daily content loop, see
-**[How the nightly cycle works](docs/NIGHTLY.md)**.
-
-```bash
-npm install
-LEARNER_NAME=Sam npm start                 # A. Node: http://localhost:8787, data in ./local-data
-docker compose up -d                       # B. Docker: same, data in a volume
-cp wrangler.toml.example wrangler.toml     # C. Cloudflare: fill in your account id and KV namespace id,
-./deploy.sh                                #    then back up live progress, build, deploy
-```
-
-## Adapt it to your setup
-
-The repo is written so you can hand it to your own AI coding assistant or bot (a general-purpose assistant or a coding
-agent, such as Grok, Claude Code or similar) and have it adapted to your setup. Everything it needs is in the docs.
-
-- **Hosting.** Jane runs on **Cloudflare Workers + KV** (`./deploy.sh`), as a **standalone Node server** with
-  file-based storage (`npm start`), or in **Docker** (`docker compose up -d`). For another host (another edge or
-  serverless platform, a VPS), start from `server/index.mjs`: it shows the two things the Worker needs, an `ASSETS`
-  fetcher for `public/` and a `JANE_KV` store. ([`prototype/`](prototype/) is only the early math-only version.) To swap the storage layer, implement `get`, `put` and `list` (by key prefix) for the progress record, the daily answer
-  logs (`log:YYYY-MM-DD`) and the lesson packs (`lessons:` / `boost:` keys). The CLI scripts reach the same keys
-  through `lib-cli.mjs`.
-- **Nightly authoring.** Run it on any scheduler, with a person or any assistant as the author
-  (see [docs/NIGHTLY.md](docs/NIGHTLY.md)). An assistant that has its own computer, like Grok Bot, can run the whole
-  nightly cycle there: export, write, validate, publish.
-
-Suggested prompt to paste into your assistant:
-
-> Read README.md, INSTALL.md, LESSONS.md and docs/NIGHTLY.md in this repo. Deploy Jane to `<my host: Cloudflare Workers /
-> this computer with npm start / Docker / my VPS>`, creating the storage it needs. Set `LEARNER_NAME` to `<name>`, `LEARNER_AGE` to `<age>` and
-> `LEARNER_GRADE` to `<grade>`, keeping secrets and ids out of git. Back up progress before every deploy. Then schedule
-> the nightly cycle for about 1:00 AM `<my time zone>`: run export-progress.mjs, write tomorrow's quest (or a catch-up
-> boost) following LESSONS.md, validate with publish-lessons.mjs --dry-run, then publish. Only message me if something
-> fails or needs my attention.
-
-## Roadmap
-
-See [CHANGELOG.md](CHANGELOG.md) for what's shipped.
-
-**v0.2** (shipped)
-- **Standalone Node server** for the full app with file-based storage (`npm start`), plus a **Docker** option.
-
-**Later**
-- **Built-in nightly generator** that authors packs offline only, validates every pack before publishing, and never uses live AI during play ([details](docs/NIGHTLY.md#planned-a-built-in-nightly-generator)).
-- **GitHub Action** running gitleaks on every push.
-- **Multi-learner support** (more than one kid per deployment).
-- **Passcode for the parent page.**
-
-## Privacy
-
-There is **no** child data in this repository. Progress, answer logs, exports, backups, real lesson packs, sandbox data,
-screenshots, `local-data/`, `wrangler.toml` and tokens are all gitignored (and kept out of Docker images by
-`.dockerignore`). See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## License & attribution
-
-- Code: **MIT**, © 2026 Kent Langley and Landon ([LICENSE](LICENSE)).
-- Marble taxonomy (`data/marble/`): **ODbL 1.0** (database) + **CC BY-SA 4.0** (content); upstream notices in
-  [PROVENANCE.md](data/marble/PROVENANCE.md).
-- Derived data (kid prompts, glossary, bundled taxonomy): **ODbL 1.0** / **CC BY-SA 4.0**, adapted by Kent Langley and Landon.
-- Lesson packs, quests, LESSONS.md and docs: **CC BY-SA 4.0**, © 2026 Kent Langley and Landon.
-
-Full map: [LICENSING.md](LICENSING.md) · [NOTICE](NOTICE) · [CITATION.cff](CITATION.cff)
+Required attribution, shown by the app and kept here as upstream wrote it:
 
 > Marble Skill Taxonomy (v1) · © Generative Spark, Inc. (Marble) · https://withmarble.com · licensed under ODbL 1.0 (database) and CC BY-SA 4.0 (content).
+
+If we change or extend the taxonomy data, our version of the data stays
+under ODbL 1.0 and its text under CC BY-SA 4.0. Our code stays MIT.
+Using the taxonomy inside an app does not put the app code under ODbL.
+
+## Our direction
+
+We are taking Jane where our other project, NIDO, already lives: onto the
+device, depending on no one.
+
+- **Native apps, Android first.** The learning engine and the content move
+  onto the phone or tablet itself. Progress is stored on the device, not
+  in a cloud account.
+- **No servers, no accounts, no outside services** in the app the child
+  uses. If a network or a provider disappears, the app keeps working.
+- **iOS later, with the path ready.** The route for Apple is documented
+  before we build it, and the Android work is done so it does not have to
+  be redone for iOS. See [docs/DESARROLLO.md](docs/DESARROLLO.md).
+- **Bilingual EN/ES** as the project matures, with the CC BY-SA note that
+  applies to translated taxonomy text (see the development doc).
+
+## Status
+
+Honest status, October 2026: the fork was just created. What is in the tree
+today is upstream v0.2.0, a web app that runs on Cloudflare Workers or as a
+standalone Node server (see INSTALL.md). The native, on-device work has not
+started yet; this README and docs/DESARROLLO.md record the direction it
+will take, and this repository will reflect the real state of the work as
+it moves.
+
+Modifications in this fork are maintained by Nido007-cmyk from 2026, under
+the same per-piece terms described above (see NOTICE).
+
+---
+
+# Jane (español)
+
+Una app de aprendizaje adaptativo y amable para niños, pensada para edades
+de 8 a 12 años. La ubicación del alumno recorre un grafo de conocimiento de
+1.590 microtemas en 8 materias, unidos por 3.221 relaciones de
+prerrequisito, para encontrar a cada niño donde realmente está. La app no
+usa IA en vivo, por diseño: las lecciones se escriben y se revisan antes, y
+la app solo muestra contenido que una persona ya pudo leer.
+
+## Origen
+
+Este repositorio es un fork de [kentlangley/Jane](https://github.com/kentlangley/Jane),
+creado y diseñado por Kent Langley y Landon. El código de la aplicación es
+suyo y está bajo licencia MIT (ver [LICENSE](LICENSE)). Hicimos el fork el
+18 de octubre de 2026 para desarrollarla en una dirección nueva, descrita
+abajo. La documentación original (INSTALL.md, LESSONS.md, docs/) sigue en
+este árbol, y la relación de fork queda visible en GitHub.
+
+Este fork no está afiliado con Kent Langley ni con Landon, ni con Marble o
+Generative Spark, Inc., más allá de la atribución que su licencia exige y
+que mantenemos intacta en todos los lugares donde aparece.
+
+## Licencias, en resumen
+
+Cada ruta de este repositorio tiene una licencia clara. El mapa completo
+está en [LICENSING.md](LICENSING.md); el resumen:
+
+- **Código de la aplicación: MIT**, copyright 2026 Kent Langley and Landon
+  (ver [LICENSE](LICENSE)).
+- **Los datos de la taxonomía Marble** (`data/marble/` y la capa infantil
+  derivada de ella): base de datos bajo **ODbL 1.0** y texto bajo
+  **CC BY-SA 4.0**, copyright de Generative Spark, Inc. (Marble).
+- **Paquetes de lecciones, misiones y documentos del proyecto:
+  CC BY-SA 4.0.**
+
+Atribución obligatoria, tal como la escribió el proyecto original:
+
+> Marble Skill Taxonomy (v1) · © Generative Spark, Inc. (Marble) · https://withmarble.com · licensed under ODbL 1.0 (database) and CC BY-SA 4.0 (content).
+
+Si cambiamos o ampliamos los datos de la taxonomía, nuestra versión de los
+datos se queda bajo ODbL 1.0 y su texto bajo CC BY-SA 4.0. Nuestro código
+sigue siendo MIT. Usar la taxonomía dentro de una app no pone el código de
+la app bajo ODbL.
+
+## Nuestra dirección
+
+Llevamos Jane a donde ya vive nuestro otro proyecto, NIDO: al dispositivo,
+sin depender de nadie.
+
+- **Apps nativas, Android primero.** El motor de aprendizaje y el
+  contenido pasan al teléfono o la tableta. El progreso se guarda en el
+  dispositivo, no en una cuenta en la nube.
+- **Sin servidores, sin cuentas, sin servicios externos** en la app que
+  usa el niño. Si una red o un proveedor desaparece, la app sigue
+  funcionando.
+- **iOS después, con el camino listo.** La ruta de Apple queda documentada
+  antes de construirla, y el trabajo de Android se hace de forma que no
+  haya que rehacerlo para iOS. Ver [docs/DESARROLLO.md](docs/DESARROLLO.md).
+- **Bilingüe EN/ES** conforme el proyecto madura, con la nota de CC BY-SA
+  que aplica al texto traducido de la taxonomía (ver el documento de
+  desarrollo).
+
+## Estado
+
+Estado honesto, octubre de 2026: el fork se acaba de crear. Lo que hay hoy
+en el árbol es la v0.2.0 original, una app web que corre en Cloudflare
+Workers o como servidor Node independiente (ver INSTALL.md). El trabajo
+nativo y en el dispositivo aún no empieza; este README y
+docs/DESARROLLO.md registran la dirección que tomará, y este repositorio
+reflejará el estado real del trabajo conforme avance.
+
+Las modificaciones de este fork las mantiene Nido007-cmyk desde 2026, bajo
+los mismos términos por pieza descritos arriba (ver NOTICE).
