@@ -136,6 +136,24 @@ a future parent report, not app data today. No Spanish translation of
 Marble exists anywhere: the bilingual phase will be our own translation
 (CC BY-SA 4.0, as Phase 3 notes).
 
+## Backlog (decided, future phases)
+
+- **Interactive experiments in the lesson visual slot.** The engine
+  already serves a visual for each item (today: generated fraction
+  visuals and `scene`, an inline SVG that passes a sanitizer which
+  strips scripts and handlers — that safety property stays). In its
+  phase, playable simulations (light the stove, watch the water boil,
+  with temperature and slow motion) will hang off this same slot: the
+  scene stays declarative data with a simulation id, and the interactive
+  behaviour lives in our own runtime modules shipped with the app.
+  First set: hero topics in science and mathematics. Our creation from
+  zero: the presentation material that inspired this (a Marble team
+  video) is not in the open repositories and is not copied.
+- **Constellation view of learning.** An evolution of My World and of
+  the parent report: the prerequisite graph drawn as a constellation
+  whose stars light up with what the child has mastered. Same rule:
+  our own creation from zero, in its phase.
+
 ## Interface debt (recorded, not hidden)
 
 The parent report keeps its inherited stylesheet (the app strips its
@@ -322,6 +340,25 @@ arista y los códigos de estándares por tema son materia prima de un
 futuro informe de padres, no datos de la app hoy. No existe traducción
 al español de Marble en ningún sitio: la fase bilingüe será traducción
 propia (CC BY-SA 4.0, como dice la Fase 3).
+
+## Backlog (decidido, fases futuras)
+
+- **Experimentos interactivos en el hueco visual de la lección.** El
+  motor ya sirve un visual por ítem (hoy: visuales de fracciones
+  generados y `scene`, un SVG en línea que pasa un sanitizador que
+  retira scripts y manejadores: esa propiedad de seguridad se queda).
+  En su fase, las simulaciones jugables (encender la estufa, ver hervir
+  el agua, con temperatura y cámara lenta) colgarán de este mismo
+  hueco: la escena se queda como dato declarativo con un id de
+  simulación, y el comportamiento interactivo vive en módulos de runtime
+  nuestros que viajan con la app. Primer set: temas héroe de ciencias y
+  matemáticas. Creación nuestra desde cero: el material de presentación
+  que lo inspiró (un video del equipo de Marble) no está en los
+  repositorios abiertos y no se copia.
+- **Vista de constelación del aprendizaje.** Una evolución de My World
+  y del informe de padres: el grafo de prerrequisitos dibujado como una
+  constelación cuyas estrellas se encienden con lo que el niño domina.
+  Misma regla: creación nuestra desde cero, en su fase.
 
 ## Deuda de interfaz (registrada, no escondida)
 
